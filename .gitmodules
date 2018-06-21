@@ -1,6 +1,3 @@
-[submodule "wasm-experiment/boost"]
-	path = wasm-experiment/boost
-	url = git@github.com:NQNStudios/boost.git
 [submodule "wasm-experiment/emsdk"]
 	path = wasm-experiment/emsdk
 	url = https://github.com/juj/emsdk.git
