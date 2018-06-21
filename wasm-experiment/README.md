@@ -2,11 +2,11 @@
 
 First, initialize submodules:
 
-`git submodule update --init`
+`git submodule update --init --recursive`
 
 Install the Emscripten SDK. First, follow the platform-specific instructions for your operating system here: https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html
 
-Then run `./activate-em.sh`
+Then run `source ./activate-em.sh`
 
 ## Process
 
