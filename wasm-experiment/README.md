@@ -1,8 +1,5 @@
 # Porting Classic Blades of Exile to WebAssembly
 
-First, initialize submodules:
-
-`git submodule update --init --recursive`
 
 Install the Emscripten SDK. First, follow the platform-specific instructions for your operating system here: https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html
 

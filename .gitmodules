@@ -1,3 +1,0 @@
-[submodule "wasm-experiment/emsdk"]
-	path = wasm-experiment/emsdk
-	url = https://github.com/juj/emsdk.git
