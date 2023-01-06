@@ -171,16 +171,17 @@ cKey cControl::parseKey(string what){
 
 cDialog::cDialog(cDialog* p) : parent(p) {}
 
-cDialog::cDialog(std::string path, cDialog* p) : parent(p) {
-	loadFromFile(path + ".xml");
+cDialog::cDialog(std::string path, cDialog* p, bool prepend_dir) : parent(p) {
+	loadFromFile(path + ".xml", prepend_dir);
 }
 
 extern fs::path progDir;
-void cDialog::loadFromFile(std::string path){
+void cDialog::loadFromFile(std::string path, bool prepend_dir){
 	static const cKey enterKey = {true, key_enter};
 	bg = defaultBackground;
 	fname = path;
-	fs::path cPath = progDir/"data"/"dialogs"/path;
+	fs::path cPath = path;
+	if(prepend_dir) cPath = progDir/"data"/"dialogs"/cPath;
 	try{
 		TiXmlBase::SetCondenseWhiteSpace(false);
 		Document xml(cPath.string().c_str());
