@@ -485,7 +485,7 @@ bool cDialog::sendInput(cKey key) {
 	if(topWindow == nullptr) return false;
 	std::string field = topWindow->currentFocus;
 	if(field.empty()) return true;
-	dynamic_cast<cTextField*>(topWindow->controls[field])->handleInput(key);
+	dynamic_cast<cTextField&>(topWindow->getControl(field)).handleInput(key);
 	return true;
 }
 
@@ -656,7 +656,7 @@ void cDialog::handle_one_event(const sf::Event& currentEvent) {
 				// we have an upcoming TextEntered event which contains more information.
 				// Otherwise, handle it right away. But never handle enter or escape.
 				if((key.spec && key.k != key_enter && key.k != key_esc) || mod_contains(key.mod, mod_ctrl))
-					dynamic_cast<cTextField*>(controls[currentFocus])->handleInput(key);
+					dynamic_cast<cTextField&>(getControl(currentFocus)).handleInput(key);
 				pendingKey = key;
 				if(key.k != key_enter && key.k != key_esc) itemHit = "";
 			}
@@ -665,7 +665,7 @@ void cDialog::handle_one_event(const sf::Event& currentEvent) {
 			if(!pendingKey.spec && !currentFocus.empty()) {
 				pendingKey.c = currentEvent.text.unicode;
 				if(pendingKey.c != '\t')
-					dynamic_cast<cTextField*>(controls[currentFocus])->handleInput(pendingKey);
+					dynamic_cast<cTextField&>(getControl(currentFocus)).handleInput(pendingKey);
 			}
 			break;
 		case sf::Event::MouseButtonPressed:
