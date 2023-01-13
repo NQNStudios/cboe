@@ -68,9 +68,9 @@
 			<button name='edit20' type='large' top='383' left='324'>Create/Edit</button>
 		</page>
 	</stack>
-	<button name='prev' type='left' def-key='left' top='327' left='431'/>
-	<button name='next' type='right' def-key='right' top='355' left='431'/>
-	<button name='okay' type='regular' top='383' left='431'>OK</button>
+	<button name='prev' type='left' def-key='left' top='411' left='130'/>
+	<button name='next' type='right' def-key='right' top='411' left='200'/>
+	<button name='okay' type='regular' top='411' left='350'>OK</button>
 	<pict type='dlog' num='16' top='8' left='8'/>
 	<text size='large' top='6' left='50' width='256' height='17'>Scenario event timers</text>
 	<text top='25' left='50' width='438' height='55'>
