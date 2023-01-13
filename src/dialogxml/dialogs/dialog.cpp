@@ -787,7 +787,7 @@ bool cDialog::setFocus(cTextField* newFocus, bool force) {
 			currentFocus = iter->first;
 			return true;
 		}
-		if (iter->second->isContainer()) {
+		if(iter->second->isContainer()) {
 			cContainer* tmp = dynamic_cast<cContainer*>(iter->second);
 			std::string foundKey = "";
 			tmp->forEach([&](std::string key, cControl& child) {
@@ -795,8 +795,8 @@ bool cDialog::setFocus(cTextField* newFocus, bool force) {
 					foundKey = key;
 				}
 			});
-			if (!foundKey.empty()) {
-				if (!force && !newFocus->triggerFocusHandler(*this, foundKey, false)) return false;
+			if(!foundKey.empty()) {
+				if(!force && !newFocus->triggerFocusHandler(*this, foundKey, false)) return false;
 				currentFocus = foundKey;
 				return true;
 			}
