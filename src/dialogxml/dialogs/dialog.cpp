@@ -412,8 +412,16 @@ void cDialog::loadFromFile(const DialogDefn& file){
 	currentFocus = "";
 	for(ctrlIter iter = controls.begin(); iter != controls.end(); iter++){
 		if(typeid(iter->second) == typeid(cTextField*)){
-			if(currentFocus.empty()) currentFocus = iter->first;
+			currentFocus = iter->first;
 			break;
+		}
+		if(iter->second->isContainer()){
+			cContainer* tmp = dynamic_cast<cContainer*>(iter->second);
+			tmp->forEach([&](std::string key, cControl& child) {
+				if (typeid(&child) == typeid(cTextField*)) {
+					if (currentFocus.empty()) currentFocus = iter->first;
+				}
+			});
 		}
 	}
 }
@@ -796,9 +804,8 @@ bool cDialog::setFocus(cTextField* newFocus, bool force) {
 }
 
 cTextField* cDialog::getFocus() {
-	auto iter = controls.find(currentFocus);
-	if(iter == controls.end()) return nullptr;
-	return dynamic_cast<cTextField*>(iter->second);
+	if (currentFocus.empty()) return nullptr;
+	return dynamic_cast<cTextField*>(&getControl(currentFocus));
 }
 
 void cDialog::attachClickHandlers(std::function<bool(cDialog&,std::string,eKeyMod)> handler, std::vector<std::string> controls) {
