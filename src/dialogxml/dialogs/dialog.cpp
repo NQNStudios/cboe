@@ -417,7 +417,7 @@ void cDialog::loadFromFile(const DialogDefn& file){
 		}
 		if(iter->second->isContainer()){
 			cContainer* tmp = dynamic_cast<cContainer*>(iter->second);
-			tmp->forEach([&](std::string key, cControl& child) {
+			tmp->forEach([this, iter](std::string key, cControl& child) {
 				if (typeid(&child) == typeid(cTextField*)) {
 					if (currentFocus.empty()) currentFocus = iter->first;
 				}
