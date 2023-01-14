@@ -3143,8 +3143,8 @@ void edit_scenario_events() {
 	
 	cDialog evt_dlg(*ResMgr::dialogs.get("edit-scenario-events"));
 	cStack& stk = dynamic_cast<cStack&>(evt_dlg["list"]);
-	evt_dlg["prev"].attachClickHandler(std::bind([&] { return stk.setPage(0); }));
-	evt_dlg["next"].attachClickHandler(std::bind([&] { return stk.setPage(1); }));
+	evt_dlg["prev"].attachClickHandler([&stk] (cDialog&, std::string, eKeyMod) { return stk.setPage(0); });
+	evt_dlg["next"].attachClickHandler([&stk] (cDialog&, std::string, eKeyMod) { return stk.setPage(1); });
 	evt_dlg["okay"].attachClickHandler(save_scenario_events);
 	for(int i = 0; i < scenario.scenario_timers.size(); i++) {
 		stk.setPage(i / 10);
