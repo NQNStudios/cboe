@@ -269,8 +269,9 @@ static TiXmlElement* pop_next_action(const char* expected_action_type) {
 		throw stream.str();
 	}
 
-	// root->RemoveChild(next_action);
-	return next_action;
+	TiXmlElement* clone = next_action->Clone()->ToElement();
+	root->RemoveChild(next_action);
+	return clone;
 }
 
 void init_boe(int argc, char* argv[]) {
