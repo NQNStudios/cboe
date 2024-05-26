@@ -3,9 +3,14 @@
 #include "universe/universe.hpp"
 
 #include <boost/filesystem/operations.hpp>
+#include <boost/lexical_cast.hpp>
 #include <unordered_map>
 #include <string>
 #include <memory>
+#include <iostream>
+#include <iomanip>
+#include <ctime>
+#include <sstream>
 #include "boe.graphics.hpp"
 #include "boe.newgraph.hpp"
 #include "boe.fileio.hpp"
@@ -215,12 +220,77 @@ static void init_ui() {
 	init_buttons();
 }
 
+static bool recording = false;
+static bool replaying = false;
+static TiXmlDocument* log_document;
+static std::string log_file;
+static void init_action_log(const char* command, const char* file) {
+	if (strcmp(command, "record") == 0) {
+		// Get a time stamp
+		std::time_t t = time(nullptr);
+		auto tm = *std::localtime(&t);
+		std::ostringstream stream;
+		stream << "BoE " << std::put_time(&tm, "%d-%m-%Y %H-%M-%S") << ".xml";
+		log_file = stream.str();
+		file = log_file.c_str();
+		std::cout << "Recording this session: " << file << std::endl;
+		recording = true;
+
+		log_document = new TiXmlDocument();
+		TiXmlElement root_element("actions");
+		log_document->InsertEndChild(root_element);
+		log_document->SaveFile(log_file);
+	}
+	else if (strcmp(command, "play") == 0) {
+		log_document = new TiXmlDocument();
+		if (!log_document->LoadFile(file)) {
+			std::cout << "Failed to load file " << file << std::endl;
+		}
+		replaying = true;
+	}
+}
+
+static void record_action(const char* action_type, std::string inner_text) {
+	TiXmlElement* root = log_document->RootElement();
+	TiXmlElement next_action(action_type);
+	TiXmlText action_text(inner_text);
+	next_action.InsertEndChild(action_text);
+	root->InsertEndChild(next_action);
+	log_document->SaveFile(log_file);
+}
+
+static TiXmlElement* pop_next_action(const char* expected_action_type) {
+	TiXmlElement* root = log_document->RootElement();
+	TiXmlElement* next_action = root->FirstChildElement();
+	
+	if (expected_action_type != NULL && strcmp(next_action->Value(), expected_action_type)) {
+		std::ostringstream stream;
+		stream << "Replay error! Expected '" << expected_action_type << "' action next";
+		throw stream.str();
+	}
+
+	// root->RemoveChild(next_action);
+	return next_action;
+}
+
 void init_boe(int argc, char* argv[]) {
 	set_up_apple_events(argc, argv);
 	init_directories(argv[0]);
 #ifdef __APPLE__
 	init_menubar(); // Do this first of all because otherwise a default File and Window menu will be seen
 #endif
+	// Command line args:
+	// 	Blades of Exile record 	      # record this session in a time-stamped xml file
+	//  Blades of Exile play <file>   # replay a session from an xml file
+	if (argc > 1) {
+		char* file = NULL;
+		if (argc > 2) {
+			file = argv[2];
+		}
+		init_action_log(argv[1], file);
+	}
+
+	// TODO preferences need to be recorded in the action log for deterministic replay
 	sync_prefs();
 	init_shaders();
 	init_tiling();
@@ -236,7 +306,22 @@ void init_boe(int argc, char* argv[]) {
 	set_cursor(watch_curs);
 	init_buf();
 	check_for_intel();
-	srand(time(nullptr));
+
+	// Seed the RNG
+	if (replaying) {
+		auto srand_element = pop_next_action("srand");
+		
+		std::string ts(srand_element->GetText());
+		srand(atoi(ts.c_str()));
+	} else {
+		auto t = time(nullptr);
+		if (recording) {
+			std::string ts = boost::lexical_cast<std::string>(t);
+			record_action("srand", ts);
+		}
+		srand(t);
+	}
+	std::cout << rand() << std::endl;
 	init_screen_locs();	
 	init_startup();
 	flushingInput = true;
