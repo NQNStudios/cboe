@@ -281,7 +281,7 @@ void init_boe(int argc, char* argv[]) {
 	init_menubar(); // Do this first of all because otherwise a default File and Window menu will be seen
 #endif
 	// Command line args:
-	// 	Blades of Exile record 	      # record this session in a time-stamped xml file
+	//  Blades of Exile record 	      # record this session in a time-stamped xml file
 	//  Blades of Exile play <file>   # replay a session from an xml file
 	if (argc > 1) {
 		char* file = NULL;
