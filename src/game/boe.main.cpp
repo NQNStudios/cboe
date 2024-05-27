@@ -222,54 +222,58 @@ static void init_ui() {
 
 static bool recording = false;
 static bool replaying = false;
-static TiXmlDocument* log_document;
+using namespace ticpp;
+static Document log_document;
 static std::string log_file;
-static void init_action_log(const char* command, const char* file) {
-	if (strcmp(command, "record") == 0) {
+static void init_action_log(std::string command, std::string file) {
+	if (command == "record") {
 		// Get a time stamp
 		std::time_t t = time(nullptr);
 		auto tm = *std::localtime(&t);
 		std::ostringstream stream;
-		stream << "BoE " << std::put_time(&tm, "%d-%m-%Y %H-%M-%S") << ".xml";
+		stream << "BoE_" << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S") << ".xml";
 		log_file = stream.str();
-		file = log_file.c_str();
-		std::cout << "Recording this session: " << file << std::endl;
-		recording = true;
-
-		log_document = new TiXmlDocument();
-		TiXmlElement root_element("actions");
-		log_document->InsertEndChild(root_element);
-		log_document->SaveFile(log_file);
+		
+		try {
+			Element root_element("actions");
+			log_document.InsertEndChild(root_element);
+			log_document.SaveFile(log_file);
+			recording = true;
+			std::cout << "Recording this session: " << log_file << std::endl;
+		} catch(...) {
+			std::cout << "Failed to write to file " << log_file << std::endl;
+		}
 	}
-	else if (strcmp(command, "play") == 0) {
-		log_document = new TiXmlDocument();
-		if (!log_document->LoadFile(file)) {
+	else if (command == "replay") {
+		try {
+			log_document.LoadFile(file);
+			replaying = true;
+		} catch(...) {
 			std::cout << "Failed to load file " << file << std::endl;
 		}
-		replaying = true;
 	}
 }
 
-static void record_action(const char* action_type, std::string inner_text) {
-	TiXmlElement* root = log_document->RootElement();
-	TiXmlElement next_action(action_type);
-	TiXmlText action_text(inner_text);
+static void record_action(std::string action_type, std::string inner_text) {
+	Element* root = log_document.FirstChildElement();
+	Element next_action(action_type);
+	Text action_text(inner_text);
 	next_action.InsertEndChild(action_text);
 	root->InsertEndChild(next_action);
-	log_document->SaveFile(log_file);
+	log_document.SaveFile(log_file);
 }
 
-static TiXmlElement* pop_next_action(const char* expected_action_type) {
-	TiXmlElement* root = log_document->RootElement();
-	TiXmlElement* next_action = root->FirstChildElement();
+static Element* pop_next_action(std::string expected_action_type="") {
+	Element* root = log_document.FirstChildElement();
+	Element* next_action = root->FirstChildElement();
 	
-	if (expected_action_type != NULL && strcmp(next_action->Value(), expected_action_type)) {
+	if (expected_action_type != "" && next_action->Value() != expected_action_type) {
 		std::ostringstream stream;
 		stream << "Replay error! Expected '" << expected_action_type << "' action next";
 		throw stream.str();
 	}
 
-	TiXmlElement* clone = next_action->Clone()->ToElement();
+	Element* clone = next_action->Clone()->ToElement();
 	root->RemoveChild(next_action);
 	return clone;
 }
@@ -284,7 +288,7 @@ void init_boe(int argc, char* argv[]) {
 	//  Blades of Exile record        # record this session in a time-stamped xml file
 	//  Blades of Exile play <file>   # replay a session from an xml file
 	if (argc > 1) {
-		char* file = NULL;
+		std::string file = "";
 		if (argc > 2) {
 			file = argv[2];
 		}
