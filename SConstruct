@@ -199,13 +199,15 @@ elif platform == "win32":
 		vcpkg_other_libs = list(filter(path.exists, vcpkg_other_libs))
 		vcpkg_other_bins = [path.join(d.get_abspath(), 'bin') for d in vcpkg_other_packages]
 		vcpkg_other_bins = list(filter(path.exists, vcpkg_other_bins))
-
-		include_paths=[path.join(vcpkg_installed, 'include')] + vcpkg_other_includes
+		project_includes = []
+		for (root, dirs, files) in os.walk('src'):
+			project_includes.append(path.join(os.getcwd(), root))
+		include_paths=project_includes
 		env.Append(
-			LINKFLAGS=['/SUBSYSTEM:WINDOWS','/ENTRY:mainCRTStartup',f'/MACHINE:X{arch_short}'],
+			LINKFLAGS=['/SUBSYSTEM:WINDOWS','/ENTRY:mainCRTStartup',f'/MACHINE:X{arch_short}', '/VERBOSE', '/NODEFAULTLIB:libboost_filesystem-vc142-mt-x64-1_85.lib'],
 			CXXFLAGS=['/EHsc','/MD','/FIglobal.hpp'],
 			CPPPATH=include_paths,
-			LIBPATH=[path.join(vcpkg_installed, 'lib')] + vcpkg_other_libs + vcpkg_other_bins,
+			LIBPATH=[],
 			LIBS=Split("""
 				kernel32
 				user32
@@ -300,10 +302,6 @@ if not env.GetOption('clean'):
 		print("There's a problem with your compiler!")
 		Exit(1)
 
-	if not conf.CheckLib('zlib' if (platform == "win32" and 'mingw' not in env["TOOLS"]) else 'z'):
-		print('zlib must be installed!')
-		Exit(1)
-
 	def check_lib(lib, disp, suffixes=[], versions=[], msvc_versions=[]):
 		if "mingw" in env["TOOLS"] and lib.startswith("sfml"):
 			lib = "lib" + lib
@@ -338,6 +336,8 @@ if not env.GetOption('clean'):
 	boost_versions = ['-1_84'] # This is a bit of a hack. :(
 	suffixes = ['-mt', f'-mt-x{env["bits"]}']
 
+	zlib = 'zlib' if (platform == "win32" and 'mingw' not in env["TOOLS"]) else 'z'
+	check_lib(zlib, 'zlib', [], [])
 
 	check_header('boost/lexical_cast.hpp', 'Boost.LexicalCast')
 	check_header('boost/optional.hpp', 'Boost.Optional')
@@ -347,10 +347,11 @@ if not env.GetOption('clean'):
 	check_header('boost/spirit/include/classic.hpp', 'Boost.Spirit.Classic')
 	check_lib('boost_system', 'Boost.System', suffixes, boost_versions)
 	check_lib('boost_filesystem', 'Boost.Filesystem', suffixes, boost_versions)
-	check_lib('sfml-system', 'SFML-system')
-	check_lib('sfml-window', 'SFML-window')
-	check_lib('sfml-audio', 'SFML-audio')
-	check_lib('sfml-graphics', 'SFML-graphics')
+	sfml_suffixes = ['-d']
+	check_lib('sfml-system', 'SFML-system', sfml_suffixes)
+	check_lib('sfml-window', 'SFML-window', sfml_suffixes)
+	check_lib('sfml-audio', 'SFML-audio', sfml_suffixes)
+	check_lib('sfml-graphics', 'SFML-graphics', sfml_suffixes)
 
 	# Make sure Catch2 is cloned
 	if not path.exists('deps/Catch2/README.md'):
@@ -369,6 +370,7 @@ if not env.GetOption('clean'):
 	if platform == 'posix':
 		def check_tgui(conf, second_attempt=False):
 			if conf.CheckLib('libtgui', language='C++'):
+				bundled_libs.append('tgui')
 				return conf
 			else:
 				if second_attempt:
@@ -450,7 +452,31 @@ Export("data_dir")
 SConscript(["rsrc/SConscript", "doc/SConscript"])
 
 # Bundle required frameworks and libraries
-
+def handle_bundled_libs(extension, prefix=''):
+	target_dirs = ["#build/Blades of Exile", "#build/test"]
+	for lib in bundled_libs:
+		for lpath in env['LIBPATH']:
+			def check_path(src_file):
+				_dir = os.path.dirname(src_file)
+				print(f'checking {_dir} for {prefix}{lib}')
+				try:
+					print(os.listdir(_dir))
+				except:
+					pass
+				if path.exists(src_file) and src_file != "/usr/lib/x86_64-linux-gnu/libz.so":
+					for targ in target_dirs:
+						for so in os.listdir(_dir):
+							if os.path.basename(src_file) in so:
+								print(f'found {path.join(_dir, so)}')
+								env.Install(targ, path.join(_dir, so))
+						return True
+				return False
+			if check_path(path.join(lpath, prefix + lib + extension)):
+				break
+			elif check_path(path.join(lpath.replace('lib', 'bin'), prefix + lib + extension)):
+				break
+			elif check_path(path.join(lpath, 'x86_64-linux-gnu', prefix + lib + extension)):
+				break
 if platform == "darwin":
 	app_targets = []
 	if 'game' in targets:
@@ -482,20 +508,7 @@ elif platform == "win32":
 		brotlidec
 		brotlicommon
 	""")
-	target_dirs = ["#build/Blades of Exile", "#build/test"]
-	for lib in bundled_libs:
-		for lpath in env['LIBPATH']:
-			src_file = path.join(lpath, lib + ".dll")
-			if path.exists(src_file):
-				for targ in target_dirs:
-					env.Install(targ, src_file)
-				break
-			elif 'lib' in lpath:
-				src_file = path.join(lpath.replace('lib', 'bin'), lib + ".dll")
-				if path.exists(src_file):
-					for targ in target_dirs:
-						env.Install(targ, src_file)
-					break
+	handle_bundled_libs(".dll")
 	# Extra: Microsoft redistributable libraries installer
 	if 'msvc' in env["TOOLS"]:
 		if path.exists("deps/VCRedistInstall.exe"):
@@ -503,11 +516,41 @@ elif platform == "win32":
 		else:
 			print("WARNING: Cannot find installer for the MSVC redistributable libraries for your version of Visual Studio.")
 			print("Please download it from Microsoft's website and place it at:")
-			print("      deps/VCRedistInstall.exe")
+			print("	  deps/VCRedistInstall.exe")
 			# Create it so its lack doesn't cause makensis to break
 			# (Because the installer is an optional component.)
 			os.makedirs("build/Blades of Exile", exist_ok=True)
 			open("build/Blades of Exile/VCRedistInstall.exe", 'w').close()
+elif platform == "posix":
+	targets = [
+		"Blades of Exile",
+		"BoE Character Editor",
+		"BoE Scenario Editor",
+	]
+	def patchelf():
+		to_patch = targets + [so for so in os.listdir("build/Blades of Exile") if '.so' in so]
+		for targ in to_patch:
+			subprocess.call(['patchelf', '--set-rpath', '.', targ], cwd='build/Blades of Exile')
+	atexit.register(patchelf)
+	bundled_libs += Split("""
+		GL
+		X11
+		stdc++
+		Xrandr
+		Xcursor
+		udev
+		openal
+		vorbisenc
+		vorbisfile
+		vorbis
+		ogg
+		FLAC
+		freetype
+		GLdispatch
+		GLX
+		xcb
+	""")
+	handle_bundled_libs(".so", "lib")
 
 if env["package"]:
 	if platform == "darwin":
