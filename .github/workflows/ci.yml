@@ -3,7 +3,7 @@
 
 	on: {
 		push: {
-			branches: [ master, ci ]
+			branches: [ master, ci, builds ]
 		},
 		pull_request: {
 			branches: [ master ]
@@ -155,7 +155,19 @@
 					name: build and unit test,
 					run: '.\.github\workflows\scripts\win\scons-build.bat'
 				},
-
+				{
+					name: 'Tar files',
+					run: 'tar -cvf cboe-win.tar "Blades of Exile"',
+					working-directory: '${{ github.workspace }}/build'
+				},
+				{
+					name: 'Upload Artifact',
+					uses: actions/upload-artifact@v4,
+					with: {
+						name: cboe-win,
+						path: '${{ github.workspace }}/build/cboe-win.tar'
+					}
+				},
 			]
 		},
 		# win-mingw: {
