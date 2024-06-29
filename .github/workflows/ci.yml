@@ -59,7 +59,20 @@
 				{
 					name: build and unit test,
 					run: ./.github/workflows/scripts/mac/scons-build.sh
-				}
+				},
+				{
+					name: 'Tar files',
+					run: 'tar -cvf cboe-mac.tar "Blades of Exile"',
+					working-directory: '${{ github.workspace }}/build'
+				},
+				{
+					name: 'Upload Artifact',
+					uses: actions/upload-artifact@v4,
+					with: {
+						name: cboe-mac,
+						path: '${{ github.workspace }}/build/cboe-mac.tar'
+					}
+				},
 			]
 		},
 		win-vs32: {
