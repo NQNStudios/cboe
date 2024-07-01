@@ -225,6 +225,19 @@
 				{
 					name: build and unit test,
 					run: CCFLAGS=-fdiagnostics-color=always scons
+				},
+				{
+					name: 'Tar files',
+					run: 'tar -cvf cboe-linux.tar "Blades of Exile"',
+					working-directory: '${{ github.workspace }}/build'
+				},
+				{
+					name: 'Upload Artifact',
+					uses: actions/upload-artifact@v4,
+					with: {
+						name: cboe-linux,
+						path: '${{ github.workspace }}/build/cboe-linux.tar'
+					}
 				}
 			],
 		}
