@@ -49,6 +49,7 @@ fix_app() {
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbis "0" "0"
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbisenc "2" "2"
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbisfile "3" "3"
+        connect_dylib_in_app "$1" /usr/local/opt/libpng/lib libpng16 "16" "16"
     fi
 }
 
