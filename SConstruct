@@ -449,6 +449,8 @@ if platform == "darwin":
 		target_dir = path.join(install_dir, targ + '.app', 'Contents/Frameworks')
 		binary = path.join(install_dir, targ + '.app', 'Contents/MacOS', targ)
 		env.Command(Dir(target_dir), binary, [Delete(target_dir), bundle_libraries_for])
+	# After building, fix the rpaths of the executables and their bundled libs:
+	atexit.register(lambda: subprocess.call(['.github/workflows/scripts/mac/fix-rpaths.sh']))
 elif platform == "win32":
 	bundled_libs += Split("""
 		libsndfile-1
