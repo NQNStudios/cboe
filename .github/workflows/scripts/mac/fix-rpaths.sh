@@ -30,6 +30,12 @@ connect_dylib_in_app() {
     install_name_tool -change "$2/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libsfml-audio.2.6.1.dylib"
     install_name_tool -change "@rpath/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libsfml-graphics.2.6.1.dylib"
     install_name_tool -change "$2/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libsfml-graphics.2.6.1.dylib"
+    install_name_tool -change "@rpath/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libvorbisenc.2.dylib"
+    install_name_tool -change "$2/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libvorbisenc.2.dylib"
+    install_name_tool -change "@rpath/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libvorbisfile.3.dylib"
+    install_name_tool -change "$2/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libvorbisfile.3.dylib"
+    install_name_tool -change "@rpath/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libfreetype.6.dylib"
+    install_name_tool -change "$2/$3$OLD_SUFFIX.dylib" "@rpath/$3$NEW_SUFFIX.dylib" "$FRAMEWORKS/libfreetype.6.dylib"
 }
 
 # fix_app <app name>
@@ -47,6 +53,7 @@ fix_app() {
         connect_dylib_in_app "$1" /usr/local/opt/flac/lib libFLAC "12" "12"
         connect_dylib_in_app "$1" /usr/local/opt/libogg/lib libogg "0" "0.8.5"
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbis "0" "0"
+        connect_dylib_in_app "$1" /usr/local/Cellar/libvorbis/1.3.7/lib libvorbis "0" "0"
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbisenc "2" "2"
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbisfile "3" "3"
         connect_dylib_in_app "$1" /usr/local/opt/libpng/lib libpng16 "16" "16"
