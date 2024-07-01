@@ -450,7 +450,7 @@ if platform == "darwin":
 		binary = path.join(install_dir, targ + '.app', 'Contents/MacOS', targ)
 		env.Command(Dir(target_dir), binary, [Delete(target_dir), bundle_libraries_for])
 	# After building, fix the rpaths of the executables and their bundled libs:
-	atexit.register(lambda: subprocess.call(['.github/workflows/scripts/mac/fix-rpaths.sh'], cwd='build/Blades of Exile'))
+	atexit.register(lambda: subprocess.call([path.join(os.getcwd(), '.github/workflows/scripts/mac/fix-rpaths.sh')], cwd='build/Blades of Exile'))
 elif platform == "win32":
 	bundled_libs += Split("""
 		libsndfile-1
