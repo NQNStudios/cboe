@@ -45,7 +45,7 @@ fix_app() {
         connect_dylib_in_app "$1" /usr/local/opt/sfml/lib libsfml-graphics "2.6" "2.6.1"
         connect_dylib_in_app "$1" /usr/local/opt/freetype/lib libfreetype "6" "6"
         connect_dylib_in_app "$1" /usr/local/opt/flac/lib libFLAC "12" "12"
-        connect_dylib_in_app "$1" /usr/local/opt/libogg/lib libogg "0" "0"
+        connect_dylib_in_app "$1" /usr/local/opt/libogg/lib libogg "0" "0.8.5"
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbis "0" "0"
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbisenc "2" "2"
         connect_dylib_in_app "$1" /usr/local/opt/libvorbis/lib libvorbisfile "3" "3"
