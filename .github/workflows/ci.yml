@@ -46,6 +46,9 @@
 		},
 		macos-scons: {
 			runs-on: macos-12,
+			env: {
+				MACOSX_DEPLOYMENT_TARGET: 10.15
+			},
 			steps:  [
 				{
 					name: checkout,
@@ -70,9 +73,6 @@
 						platform: x64,
 						configuration: Release
 					},
-					env: {
-						MACOSX_DEPLOYMENT_TARGET: 10.15
-					}
 				},
 				{
 					name: Build SFML,
@@ -81,9 +81,6 @@
 					with: {
 						sfml: 2.6.1,
 						config: Release
-					},
-					env: {
-						MACOSX_DEPLOYMENT_TARGET: 10.15
 					}
 				},
 				{
@@ -106,7 +103,7 @@
 						name: cboe-mac,
 						path: '${{ github.workspace }}/build/cboe-mac.tar'
 					}
-				},
+				}
 			]
 		},
 		win-vs32: {
