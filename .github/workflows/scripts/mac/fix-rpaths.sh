@@ -1,5 +1,9 @@
 #!/bin/sh -v
 
+# This janky script is meant to fix the dylib connections of your
+# Blades of Exile build whether you installed them via homebrew,
+# built them from source, or whatever.
+
 # add_rpath_to_app <app name>
 add_rpath_to_app() {
     APP="$1.app/Contents/MacOS/$1"
@@ -46,9 +50,13 @@ fix_app() {
         connect_dylib_in_app "$1" /usr/local/opt/boost/lib libboost_system
         connect_dylib_in_app "$1" /usr/local/opt/boost/lib libboost_filesystem
         connect_dylib_in_app "$1" /usr/local/opt/sfml/lib libsfml-system "2.6" "2.6.1"
+        connect_dylib_in_app "$1" @rpath libsfml-system "2.6" "2.6.1"
         connect_dylib_in_app "$1" /usr/local/opt/sfml/lib libsfml-window "2.6" "2.6.1"
+        connect_dylib_in_app "$1" @rpath libsfml-window "2.6" "2.6.1"
         connect_dylib_in_app "$1" /usr/local/opt/sfml/lib libsfml-audio "2.6" "2.6.1"
+        connect_dylib_in_app "$1" @rpath libsfml-audio "2.6" "2.6.1"
         connect_dylib_in_app "$1" /usr/local/opt/sfml/lib libsfml-graphics "2.6" "2.6.1"
+        connect_dylib_in_app "$1" @rpath libsfml-graphics "2.6" "2.6.1"
         connect_dylib_in_app "$1" /usr/local/opt/freetype/lib libfreetype "6" "6"
         connect_dylib_in_app "$1" /usr/local/opt/flac/lib libFLAC "12" "12"
         connect_dylib_in_app "$1" /usr/local/opt/libogg/lib libogg "0" "0.8.5"
