@@ -50,15 +50,26 @@
 				{
 					name: checkout,
 					uses: actions/checkout@v2,
-				with: { submodules: true }
+					with: { submodules: true }
+				},
+				{
+					name: Build Boost,
+					id: boost,
+					uses: egor-tensin/build-boost@v1,
+					with: {
+						version: 1.85.0,
+						libraries: filesystem system,
+						platform: x64,
+						configuration: Release
+					}
 				},
 				{
 					name: install dependencies,
-					run: brew install scons SFML Boost
+					run: brew install scons SFML
 				},
 				{
 					name: build and unit test,
-					run: ./.github/workflows/scripts/mac/scons-build.sh
+					run: './.github/workflows/scripts/mac/scons-build.sh INCLUDEPATH="${{ steps.boost.outputs.root }}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}"',
 				},
 				{
 					name: 'Tar files',
