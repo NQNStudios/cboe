@@ -69,6 +69,9 @@
 						libraries: filesystem system,
 						platform: x64,
 						configuration: Release
+					},
+					env: {
+						MACOSX_DEPLOYMENT_TARGET: 10.15
 					}
 				},
 				{
@@ -78,6 +81,9 @@
 					with: {
 						sfml: 2.6.1,
 						config: Release
+					},
+					env: {
+						MACOSX_DEPLOYMENT_TARGET: 10.15
 					}
 				},
 				{
