@@ -85,6 +85,9 @@
 					run: brew install scons
 				},
 				{
+					run: 'ls ${{steps.sfml.path}}/lib'
+				}
+				{
 					name: build and unit test,
 					run: './.github/workflows/scripts/mac/scons-build.sh INCLUDEPATH="${{ steps.boost.outputs.root }}:${{steps.sfml.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}:${{steps.sfml.path}}/lib"',
 				},
