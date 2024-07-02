@@ -86,7 +86,7 @@
 				},
 				{
 					name: build and unit test,
-					run: './.github/workflows/scripts/mac/scons-build.sh INCLUDEPATH="${{ steps.boost.outputs.root }}:${{steps.sfml.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}:${{steps.sfml.path}}/lib" FRAMEWORKPATH="${{steps.sfml.path}}/lib"',
+					run: './.github/workflows/scripts/mac/scons-build.sh INCLUDEPATH="${{ steps.boost.outputs.root }}:${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}:${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"',
 				},
 				{
 					name: 'Tar files',
