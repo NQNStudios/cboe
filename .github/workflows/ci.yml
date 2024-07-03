@@ -91,20 +91,20 @@
 					name: build and unit test,
 					run: './.github/workflows/scripts/mac/scons-build.sh INCLUDEPATH="${{ steps.boost.outputs.root }}:${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}:${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"',
 				},
-				#{
-					#name: code-sign the app,
-					#if: '${{ github.ref == "refs/heads/builds" }}',
-					#run: './.github/workflows/scripts/mac/sign-apps.sh',
-					#env: {
-						#PROD_MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }},
-						#PROD_MACOS_CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }},
-						#PROD_MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }},
-						#PROD_MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }},
-						#PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }},
-						#PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }},
-						#PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }},
-					#}
-				#},
+				{
+					name: code-sign the app,
+					if: ${{ github.ref == "refs/heads/builds" }},
+					run: './.github/workflows/scripts/mac/sign-apps.sh',
+					env: {
+						PROD_MACOS_CERTIFICATE: ${{ secrets.PROD_MACOS_CERTIFICATE }},
+						PROD_MACOS_CERTIFICATE_PWD: ${{ secrets.PROD_MACOS_CERTIFICATE_PWD }},
+						PROD_MACOS_CERTIFICATE_NAME: ${{ secrets.PROD_MACOS_CERTIFICATE_NAME }},
+						PROD_MACOS_CI_KEYCHAIN_PWD: ${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }},
+						PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }},
+						PROD_MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }},
+						PROD_MACOS_NOTARIZATION_PWD: ${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}
+					}
+				},
 				{
 					name: 'Tar files',
 					run: 'tar -cvf cboe-mac.tar "Blades of Exile"',
