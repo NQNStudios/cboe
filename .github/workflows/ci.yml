@@ -100,7 +100,7 @@
 				},
 				{
 					name: codesign the app,
-					if: '${{ github.ref == "refs/heads/builds" }}',
+					if: "${{ github.ref == 'refs/heads/builds' }}",
 					run: './.github/workflows/scripts/mac/sign-apps.sh',
 				},
 				{
