@@ -92,7 +92,7 @@
 					run: './.github/workflows/scripts/mac/scons-build.sh INCLUDEPATH="${{ steps.boost.outputs.root }}:${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}:${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"',
 				},
 				{
-					name: code-sign the app,
+					name: codesign the app,
 					if: ${{ github.ref == "refs/heads/builds" }},
 					run: './.github/workflows/scripts/mac/sign-apps.sh',
 					env: {
