@@ -64,6 +64,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu' }}
       - name: Build zlib for windows
         run: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64 && msbuild zlib.sln && dir
+        shell: cmd
         working-directory: deps/zlib/build
         if: ${{ matrix.os == 'windows' }}
 
