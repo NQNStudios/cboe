@@ -5,3 +5,7 @@
 	path = deps/TGUI
 	url = https://github.com/texus/TGUI.git
 	branch = 0.9
+[submodule "deps/zlib"]
+	path = deps/zlib
+	url = https://github.com/madler/zlib
+	branch = master
