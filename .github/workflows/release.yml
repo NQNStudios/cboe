@@ -19,9 +19,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
-				with:
+        with:
           submodules: true
-			- name: Cache Boost
+      - name: Cache Boost
         uses: actions/cache@v2
         with:
           path: '${{ runner.workspace }}/boost_*.tar.gz'
@@ -29,11 +29,11 @@ jobs:
       - name: Build Boost
         id: boost
         uses: egor-tensin/build-boost@v1
-					with:
-						version: ${{ matrix.boost-version }}
-						libraries: filesystem system
-						platform: x64
-						configuration: ${{ matrix.configuration }}
+          with:
+            version: ${{ matrix.boost-version }}
+            libraries: filesystem system
+            platform: x64
+            configuration: ${{ matrix.configuration }}
       - name: Build SFML
         id: sfml
         uses: oprypin/install-sfml@v1
@@ -42,13 +42,13 @@ jobs:
           config: ${{ matrix.configuration }}
       - name: Windows build dependencies
         run: 'vcpkg install libxml2 && pip install scons'
-				if: ${{ matrix.os == 'windows' }}
+        if: ${{ matrix.os == 'windows' }}
       - name: Mac build dependencies
         run: brew install scons
-				if: ${{ matrix.os == 'macos' }}
+        if: ${{ matrix.os == 'macos' }}
       - name: Linux build dependencies
         run: sudo apt-get update && sudo apt-get install scons libxml2-utils zlib1g zenity
         if: ${{ matrix.os == 'ubuntu' }}
       - name: Install TGUI
         run: 'sudo ./.github/workflows/scripts/linux/install-tgui.sh'
-				if: ${{ matrix.os == 'ubuntu' }}
+        if: ${{ matrix.os == 'ubuntu' }}
