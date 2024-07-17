@@ -52,9 +52,11 @@ jobs:
           submodules: true
       - name: Build zlib for linux
         run: cmake -S . -B build -D CMAKE_EXE_LINKER_FLAGS=-static -D CMAKE_SHARED_LINKER_FLAGS=-static && cmake install .
+        working-directory: deps/zlib
         if: ${{ matrix.os == 'ubuntu' }}
       - name: Build zlib for windows
         run: cmake -S . -B build -D CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded && cmake install .
+        working-directory: deps/zlib
         if: ${{ matrix.os == 'windows' }}
       - name: Cache Boost
         uses: actions/cache@v4
