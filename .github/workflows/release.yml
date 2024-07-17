@@ -35,7 +35,6 @@ jobs:
         - 2.6.1
         configuration:
         - Release
-        - Debug
     runs-on: '${{ matrix.os }}-${{ matrix.os-versions[matrix.os] }}'
     steps:
       - name: checkout
