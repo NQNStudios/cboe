@@ -58,6 +58,9 @@ jobs:
           libraries: filesystem system
           platform: x64
           configuration: ${{ matrix.configuration }}
+      - name: debug boost libs
+        run: dir D:\a\cboe\boost\stage\x64\Release\lib
+        if: ${{ matrix.os == 'windows' }}
       - name: Build SFML
         id: sfml
         uses: oprypin/install-sfml@v1
