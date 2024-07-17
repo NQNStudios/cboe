@@ -452,8 +452,8 @@ def handle_bundled_libs(extension):
 				break
 			elif 'lib' in lpath:
 				src_file = path.join(lpath.replace('lib', 'bin'), lib + extension)
-				print(src_file)
 				if path.exists(src_file):
+					print(src_file)
 					for targ in target_dirs:
 						env.Install(targ, src_file)
 					break
