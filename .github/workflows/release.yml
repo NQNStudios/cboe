@@ -50,14 +50,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Build zlib for linux
-        run: cmake -S . -B build -D CMAKE_EXE_LINKER_FLAGS=-static -D CMAKE_SHARED_LINKER_FLAGS=-static && ls build
+      - name: CMake zlib for linux
+        run: cmake -S . -B build -D CMAKE_EXE_LINKER_FLAGS=-static -D CMAKE_SHARED_LINKER_FLAGS=-static
         working-directory: deps/zlib
         if: ${{ matrix.os == 'ubuntu' }}
-      - name: Build zlib for windows
-        run: cmake -S . -B build -D CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded && ls build
+      - name: CMake zlib for windows
+        run: cmake -S . -B build -D CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
         working-directory: deps/zlib
-        if: ${{ matrix.os == 'windows' }}
+      - name: Build zlib
+        run: make && make install && ls
+        working-directory: deps/zlib/build
+        if: ${{ matrix.os == 'windows' || matrix.os == 'ubuntu' }}
       - name: Cache Boost
         uses: actions/cache@v4
         with:
