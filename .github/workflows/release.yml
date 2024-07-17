@@ -5,6 +5,15 @@ on:
     branches: [ master, ci, builds ]
 jobs:
   release:
+    env:
+      MACOSX_DEPLOYMENT_TARGET: 10.15
+      PROD_MACOS_CERTIFICATE: '${{ secrets.PROD_MACOS_CERTIFICATE }}'
+      PROD_MACOS_CERTIFICATE_PWD: '${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}'
+      PROD_MACOS_CERTIFICATE_NAME: '${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}'
+      PROD_MACOS_CI_KEYCHAIN_PWD: '${{ secrets.PROD_MACOS_CI_KEYCHAIN_PWD }}'
+      PROD_MACOS_NOTARIZATION_APPLE_ID: '${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}'
+      PROD_MACOS_NOTARIZATION_TEAM_ID: '${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}'
+      PROD_MACOS_NOTARIZATION_PWD: '${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}'
     strategy:
       matrix:
         os:
@@ -14,7 +23,11 @@ jobs:
         os-versions:
         - macos: 12
           ubuntu: 22.04
-          window: 2019
+          windows: 2019
+        scons-script:
+        - macos: './.github/workflows/scripts/mac/scons-build.sh'
+          windows: './.github/workflows/scripts/windows/scons-build.bat'
+          ubuntu: scons
         boost-version:
         - 1.85.0
         sfml-version:
@@ -59,3 +72,16 @@ jobs:
       - name: Install TGUI
         run: 'sudo ./.github/workflows/scripts/linux/install-tgui.sh'
         if: ${{ matrix.os == 'ubuntu' }}
+      - name: Build
+        run: '${{ matrix.scons-script[matrix.os] }} INCLUDEPATH="${{ steps.boost.outputs.root }}:${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}:${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"'
+			- name: Codesign and notarize
+        run: './.github/workflows/scripts/mac/sign-apps.sh'
+        if: "${{ github.ref == 'refs/heads/builds' }} && ${{ matrix.os == 'macos' }}"
+			- name: 'Tar files',
+        run: 'tar -cvf cboe-${{ matrix.os }}.tar "Blades of Exile"'
+        working-directory: '${{ github.workspace }}/build'
+			- name: 'Upload Artifact',
+        uses: actions/upload-artifact@v4,
+        with:
+          name: cboe-${{ matrix.os }}
+          path: '${{ github.workspace }}/build/cboe-${{ matrix.os }}.tar'
