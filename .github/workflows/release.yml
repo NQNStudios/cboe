@@ -1,10 +1,10 @@
+on:
+  push:
+    branches: [ master, ci, builds ]
+  pull_request:
+    branches: [ master, ci, builds ]
 jobs:
   release:
-    on:
-      push:
-        branches: [ master, ci, builds ]
-      pull_request:
-        branches: [ master, ci, builds ]
     strategy:
       matrix:
         os:
