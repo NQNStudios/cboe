@@ -11,10 +11,11 @@ jobs:
         - macos
         - ubuntu
         - windows
-        os-versions:
-          macos: 12
-          ubuntu: 22.04
+        os-versions: {
+          macos: 12,
+          ubuntu: 22.04,
           window: 2019
+        }
         boost-version:
         - 1.85.0
         sfml-version:
