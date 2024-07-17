@@ -29,11 +29,11 @@ jobs:
       - name: Build Boost
         id: boost
         uses: egor-tensin/build-boost@v1
-          with:
-            version: ${{ matrix.boost-version }}
-            libraries: filesystem system
-            platform: x64
-            configuration: ${{ matrix.configuration }}
+        with:
+          version: ${{ matrix.boost-version }}
+          libraries: filesystem system
+          platform: x64
+          configuration: ${{ matrix.configuration }}
       - name: Build SFML
         id: sfml
         uses: oprypin/install-sfml@v1
