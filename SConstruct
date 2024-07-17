@@ -283,6 +283,8 @@ if path.exists('deps/lib64'):
 if path.exists('deps/include'):
 	env.Append(CPPPATH=[path.join(os.getcwd(), '/deps/include')])
 
+env.append(LIBPATH=[path.join(os.getcwd(), 'deps/zlib/build/Release')])
+
 # Include directories
 
 
