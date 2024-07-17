@@ -29,6 +29,10 @@ jobs:
         - macos: './.github/workflows/scripts/mac/scons-build.sh'
           windows: './.github/workflows/scripts/win/scons-build.bat'
           ubuntu: scons
+        path-separator:
+        - macos: ':'
+          ubuntu: ':'
+          windows: ';'
         boost-version:
         - 1.85.0
         sfml-version:
