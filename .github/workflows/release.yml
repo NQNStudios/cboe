@@ -77,7 +77,7 @@ jobs:
         run: 'sudo ./.github/workflows/scripts/linux/install-tgui.sh'
         if: ${{ matrix.os == 'ubuntu' }}
       - name: Build
-        run: '${{ matrix.scons-script[matrix.os] }} INCLUDEPATH="${{ steps.boost.outputs.root }}:${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}:${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"'
+        run: '${{ matrix.scons-script[matrix.os] }} INCLUDEPATH="${{ steps.boost.outputs.root }}${{ matrix.path-separator[matrix.os] }}${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}${{ matrix.path-separator[matrix.os] }}${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"'
       - name: Codesign and notarize
         run: './.github/workflows/scripts/mac/sign-apps.sh'
         if: ${{ matrix.os == 'macos' }}
