@@ -14,6 +14,7 @@ jobs:
       PROD_MACOS_NOTARIZATION_APPLE_ID: '${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}'
       PROD_MACOS_NOTARIZATION_TEAM_ID: '${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}'
       PROD_MACOS_NOTARIZATION_PWD: '${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}'
+      VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
     strategy:
       fail-fast: false
       matrix:
