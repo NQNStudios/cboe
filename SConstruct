@@ -438,7 +438,21 @@ Export("data_dir")
 SConscript(["rsrc/SConscript", "doc/SConscript"])
 
 # Bundle required frameworks and libraries
-
+def handle_bundled_libs(extension):
+	target_dirs = ["#build/Blades of Exile", "#build/test"]
+	for lib in bundled_libs:
+		for lpath in env['LIBPATH']:
+			src_file = path.join(lpath, lib + extension)
+			if path.exists(src_file):
+				for targ in target_dirs:
+					env.Install(targ, src_file)
+				break
+			elif 'lib' in lpath:
+				src_file = path.join(lpath.replace('lib', 'bin'), lib + extension)
+				if path.exists(src_file):
+					for targ in target_dirs:
+						env.Install(targ, src_file)
+					break
 if platform == "darwin":
 	targets = [
 		"Blades of Exile",
@@ -470,20 +484,7 @@ elif platform == "win32":
 		brotlidec
 		brotlicommon
 	""")
-	target_dirs = ["#build/Blades of Exile", "#build/test"]
-	for lib in bundled_libs:
-		for lpath in env['LIBPATH']:
-			src_file = path.join(lpath, lib + ".dll")
-			if path.exists(src_file):
-				for targ in target_dirs:
-					env.Install(targ, src_file)
-				break
-			elif 'lib' in lpath:
-				src_file = path.join(lpath.replace('lib', 'bin'), lib + ".dll")
-				if path.exists(src_file):
-					for targ in target_dirs:
-						env.Install(targ, src_file)
-					break
+	handle_bundled_libs(".dll")
 	# Extra: Microsoft redistributable libraries installer
 	if 'msvc' in env["TOOLS"]:
 		if path.exists("deps/VCRedistInstall.exe"):
@@ -496,6 +497,8 @@ elif platform == "win32":
 			# (Because the installer is an optional component.)
 			os.makedirs("build/Blades of Exile", exist_ok=True)
 			open("build/Blades of Exile/VCRedistInstall.exe", 'w').close()
+elif platform == "posix":
+	handle_bundled_libs(".so")
 
 if env["package"]:
 	if platform == "darwin":
