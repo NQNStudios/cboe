@@ -64,7 +64,6 @@ jobs:
         if: ${{ matrix.os == 'ubuntu' }}
       - name: Build zlib for windows
         run: './.github/workflows/scripts/win/zlib-build.bat'
-        working-directory: deps/zlib/build
         if: ${{ matrix.os == 'windows' }}
 
 
