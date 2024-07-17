@@ -15,8 +15,10 @@ jobs:
           macos: 12
           ubuntu: 22.04
           window: 2019
-        boost-version: 1.85.0
-        sfml-version: 2.6.1
+        boost-version:
+        - 1.85.0
+        sfml-version:
+        - 2.6.1
         configuration:
         - Release
         - Debug
