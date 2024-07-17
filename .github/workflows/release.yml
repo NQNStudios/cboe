@@ -15,6 +15,7 @@ jobs:
       PROD_MACOS_NOTARIZATION_TEAM_ID: '${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}'
       PROD_MACOS_NOTARIZATION_PWD: '${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}'
     strategy:
+      fail-fast: false
       matrix:
         os:
         - macos
