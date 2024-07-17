@@ -74,13 +74,13 @@ jobs:
         if: ${{ matrix.os == 'ubuntu' }}
       - name: Build
         run: '${{ matrix.scons-script[matrix.os] }} INCLUDEPATH="${{ steps.boost.outputs.root }}:${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}:${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"'
-			- name: Codesign and notarize
+      - name: Codesign and notarize
         run: './.github/workflows/scripts/mac/sign-apps.sh'
         if: "${{ github.ref == 'refs/heads/builds' }} && ${{ matrix.os == 'macos' }}"
-			- name: 'Tar files',
+      - name: 'Tar files',
         run: 'tar -cvf cboe-${{ matrix.os }}.tar "Blades of Exile"'
         working-directory: '${{ github.workspace }}/build'
-			- name: 'Upload Artifact',
+      - name: 'Upload Artifact',
         uses: actions/upload-artifact@v4,
         with:
           name: cboe-${{ matrix.os }}
