@@ -323,10 +323,12 @@ if not env.GetOption('clean'):
 		for test in possible_names:
 			if conf.CheckLib(test, language='C++'):
 				bundled_libs.append(test)
+				print(test)
 				return # Success!
 			for ver in versions:
 				if conf.CheckLib(test + ver, language='C++'):
 					bundled_libs.append(test + ver)
+					print(test + ver)
 					return # Success!
 		print(disp, 'must be installed!')
 		print("  If you're sure it's installed, try passing LIBPATH=...")
@@ -338,8 +340,8 @@ if not env.GetOption('clean'):
 			print("  If you're sure it's installed, try passing INCLUDEPATH=...")
 			Exit(1)
 
-	boost_versions = ['', '-1_84'] # This is a bit of a hack. :(
-	suffixes = ['', '-mt', f'-mt-x{env["bits"]}']
+	boost_versions = ['-1_84'] # This is a bit of a hack. :(
+	suffixes = ['-mt', f'-mt-x{env["bits"]}']
 
 
 	check_header('boost/lexical_cast.hpp', 'Boost.LexicalCast')
