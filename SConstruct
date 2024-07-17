@@ -338,7 +338,7 @@ if not env.GetOption('clean'):
 			print("  If you're sure it's installed, try passing INCLUDEPATH=...")
 			Exit(1)
 
-	boost_versions = ['-1_84'] # This is a bit of a hack. :(
+	boost_versions = ['-1_85'] # This is a bit of a hack. :(
 	suffixes = ['-mt', f'-mt-x{env["bits"]}']
 
 
