@@ -51,7 +51,7 @@ jobs:
         with:
           submodules: true
       - name: CMake zlib for linux
-        run: cmake -S . -B build -D CMAKE_EXE_LINKER_FLAGS=-static -D CMAKE_SHARED_LINKER_FLAGS=-static
+        run: cmake -S . -B build
         working-directory: deps/zlib
         if: ${{ matrix.os == 'ubuntu' }}
       - name: CMake zlib for windows
@@ -63,7 +63,7 @@ jobs:
         working-directory: deps/zlib/build
         if: ${{ matrix.os == 'ubuntu' }}
       - name: Build zlib for windows
-        run: .github/workflows/scripts/win/zlib-build.bat 
+        run: './.github/workflows/scripts/win/zlib-build.bat'
         working-directory: deps/zlib/build
         if: ${{ matrix.os == 'windows' }}
 
