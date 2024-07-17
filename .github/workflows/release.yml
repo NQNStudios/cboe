@@ -57,6 +57,7 @@ jobs:
       - name: CMake zlib for windows
         run: cmake -S . -B build -D CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
         working-directory: deps/zlib
+        if: ${{ matrix.os == 'windows' }}
       - name: Build zlib
         run: make && make install && ls
         working-directory: deps/zlib/build
