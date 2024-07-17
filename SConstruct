@@ -208,7 +208,7 @@ elif platform == "win32":
 			LINKFLAGS=['/SUBSYSTEM:WINDOWS','/ENTRY:mainCRTStartup',f'/MACHINE:X{arch_short}'],
 			CXXFLAGS=['/EHsc','/MD','/FIglobal.hpp'],
 			CPPPATH=include_paths,
-			LIBPATH=[]
+			LIBPATH=[],
 			LIBS=Split("""
 				kernel32
 				user32
