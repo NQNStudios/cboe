@@ -466,8 +466,8 @@ def handle_bundled_libs(extension, prefix=''):
 				break
 			elif check_path(path.join(lpath.replace('lib', 'bin'), prefix + lib + extension)):
 				break
-			else: 
-				check_path(path.join(lpath, 'x86_64-linux-gnu', prefix + lib + extension))
+			elif check_path(path.join(lpath, 'x86_64-linux-gnu', prefix + lib + extension)):
+				break
 if platform == "darwin":
 	targets = [
 		"Blades of Exile",
