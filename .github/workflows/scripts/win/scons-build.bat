@@ -12,4 +12,7 @@ REM )
 
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
 
+@echo %LINK%
+@echo %_LINK_%
+
 scons bits=64 %*
