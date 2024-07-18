@@ -448,6 +448,9 @@ def handle_bundled_libs(extension, prefix=''):
 	target_dirs = ["#build/Blades of Exile", "#build/test"]
 	for lib in bundled_libs:
 		for lpath in env['LIBPATH']:
+			# handle zlib edge case on linux
+			if lib.endswith('lib') and prefix == 'lib':
+				lib = lib.replace('lib', '')
 			print(f'checking {lpath} for {prefix}{lib}')
 			
 			try:
