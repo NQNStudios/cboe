@@ -25,11 +25,11 @@ jobs:
           path-separator: ':'
         - name: ubuntu
           version: 22.04
-          scons-script: './.github/workflows/scripts/win/scons-build.bat'
+          scons-script: scons
           path-separator: ':'
         - name: windows
           version: 2019
-          scons-script: scons
+          scons-script: './.github/workflows/scripts/win/scons-build.bat'
           path-separator: ';'
         boost-version:
         - 1.85.0
