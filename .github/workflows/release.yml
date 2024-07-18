@@ -87,7 +87,7 @@ jobs:
       - name: upload boost libs for inspection
         uses: actions/upload-artifact@v4
         with:
-          name: boost-artifact
+          name: boost-artifact-${{ matrix.os }}
           path: ${{ steps.boost.outputs.librarydir }}
       - name: Build SFML
         id: sfml
