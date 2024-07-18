@@ -229,7 +229,6 @@ elif platform == "win32":
 	def build_app_package(env, source, build_dir, info):
 		env.Install(build_dir, source)
 elif platform == "posix":
-	env.Append(RPATH=["$ORIGIN"])
 	env.Append(CXXFLAGS=["-std=c++14","-include","global.hpp"])
 	def build_app_package(env, source, build_dir, info):
 		env.Install(build_dir, source)
@@ -514,10 +513,30 @@ elif platform == "win32":
 			os.makedirs("build/Blades of Exile", exist_ok=True)
 			open("build/Blades of Exile/VCRedistInstall.exe", 'w').close()
 elif platform == "posix":
+	targets = [
+		"Blades of Exile",
+		"BoE Character Editor",
+		"BoE Scenario Editor",
+	]
+	for targ in targets:
+		atexit.register(lambda: subprocess.call(['patchelf', '--set-rpath', '$ORIGIN', targ], cwd='build/Blades of Exile'))
 	bundled_libs += Split("""
 		GL
 		X11
 		stdc++
+		Xrandr
+		Xcursor
+		udev
+		openal
+		vorbisenc
+		vorbisfile
+		vorbis
+		ogg
+		FLAC
+		freetype
+		GLdispatch
+		GLX
+		xcb
 	""")
 	handle_bundled_libs(".so", "lib")
 
