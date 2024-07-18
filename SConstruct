@@ -444,20 +444,24 @@ Export("data_dir")
 SConscript(["rsrc/SConscript", "doc/SConscript"])
 
 # Bundle required frameworks and libraries
-def handle_bundled_libs(extension):
+def handle_bundled_libs(extension, prefix=''):
 	target_dirs = ["#build/Blades of Exile", "#build/test"]
 	for lib in bundled_libs:
 		for lpath in env['LIBPATH']:
-			print(f'checking {lpath} for {lib}')
-			print(os.listdir(lpath))
-			src_file = path.join(lpath, lib + extension)
+			print(f'checking {lpath} for {prefix}{lib}')
+			
+			try:
+				print(os.listdir(lpath))
+			except:
+				pass
+			src_file = path.join(lpath, prefix + lib + extension)
 			if path.exists(src_file):
 				print(src_file)
 				for targ in target_dirs:
 					env.Install(targ, src_file)
 				break
 			elif 'lib' in lpath:
-				src_file = path.join(lpath.replace('lib', 'bin'), lib + extension)
+				src_file = path.join(lpath.replace('lib', 'bin'), prefix + lib + extension)
 				if path.exists(src_file):
 					print(src_file)
 					for targ in target_dirs:
@@ -508,7 +512,7 @@ elif platform == "win32":
 			os.makedirs("build/Blades of Exile", exist_ok=True)
 			open("build/Blades of Exile/VCRedistInstall.exe", 'w').close()
 elif platform == "posix":
-	handle_bundled_libs(".so")
+	handle_bundled_libs(".so", "lib")
 
 if env["package"]:
 	if platform == "darwin":
