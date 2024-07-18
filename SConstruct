@@ -519,7 +519,7 @@ elif platform == "posix":
 		"BoE Scenario Editor",
 	]
 	for targ in targets:
-		atexit.register(lambda: subprocess.call(['patchelf', '--set-rpath', '$ORIGIN', targ], cwd='build/Blades of Exile'))
+		atexit.register(lambda: subprocess.call(['patchelf', '--set-rpath', '.', targ], cwd='build/Blades of Exile'))
 	bundled_libs += Split("""
 		GL
 		X11
