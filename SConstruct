@@ -467,6 +467,13 @@ def handle_bundled_libs(extension, prefix=''):
 					for targ in target_dirs:
 						env.Install(targ, src_file)
 					break
+			else:
+				src_file = path.join(lpath, 'x86_64-linux-gnu', prefix + lib + extension)
+				if path.exists(src_file):
+					print(src_file)
+					for targ in target_dirs:
+						env.Install(targ, src_file)
+					break
 if platform == "darwin":
 	targets = [
 		"Blades of Exile",
