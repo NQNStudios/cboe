@@ -19,28 +19,25 @@ jobs:
       fail-fast: false
       matrix:
         os:
-        - macos
-        - ubuntu
-        - windows
-        os-versions:
-        - macos: 12
-          ubuntu: 22.04
-          windows: 2019
-        scons-script:
-        - macos: './.github/workflows/scripts/mac/scons-build.sh'
-          windows: './.github/workflows/scripts/win/scons-build.bat'
-          ubuntu: scons
-        path-separator:
-        - macos: ':'
-          ubuntu: ':'
-          windows: ';'
+        - name: macos
+          version: 12
+          scons-script: './.github/workflows/scripts/mac/scons-build.sh'
+          path-separator: ':'
+        - name: ubuntu
+          version: 22.04
+          scons-script: './.github/workflows/scripts/win/scons-build.bat'
+          path-separator: ':'
+        - name: windows
+          version: 2019
+          scons-script: scons
+          path-separator: ';'
         boost-version:
         - 1.85.0
         sfml-version:
         - 2.6.1
         configuration:
         - Release
-    runs-on: '${{ matrix.os }}-${{ matrix.os-versions[matrix.os] }}'
+    runs-on: '${{ matrix.os.name }}-${{ matrix.os.version }}'
     steps:
       - name: Export GitHub Actions cache environment variables
         uses: actions/github-script@v7
@@ -53,18 +50,18 @@ jobs:
       - name: CMake zlib for linux
         run: cmake -S . -B build
         working-directory: deps/zlib
-        if: ${{ matrix.os == 'ubuntu' }}
+        if: ${{ matrix.os.name == 'ubuntu' }}
       - name: CMake zlib for windows
         run: cmake -S . -B build -D CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
         working-directory: deps/zlib
-        if: ${{ matrix.os == 'windows' }}
+        if: ${{ matrix.os.name == 'windows' }}
       - name: Build zlib for linux
         run: make && sudo make install
         working-directory: deps/zlib/build
-        if: ${{ matrix.os == 'ubuntu' }}
+        if: ${{ matrix.os.name == 'ubuntu' }}
       - name: Build zlib for windows
         run: './.github/workflows/scripts/win/zlib-build.bat x64'
-        if: ${{ matrix.os == 'windows' }}
+        if: ${{ matrix.os.name == 'windows' }}
 
 
       - name: Cache Boost
@@ -80,14 +77,14 @@ jobs:
           libraries: filesystem system
           platform: x64
           configuration: ${{ matrix.configuration }}
-          static: ${{ matrix.os == 'windows' }}
+          static: ${{ matrix.os.name == 'windows' }}
       - name: debug boost libs
         run: dir D:\a\cboe\boost\stage\x64\Release\lib
-        if: ${{ matrix.os == 'windows' }}
+        if: ${{ matrix.os.name == 'windows' }}
       - name: upload boost libs for inspection
         uses: actions/upload-artifact@v4
         with:
-          name: boost-artifact-${{ matrix.os }}
+          name: boost-artifact-${{ matrix.os.name }}
           path: ${{ steps.boost.outputs.librarydir }}
       - name: Build SFML
         id: sfml
@@ -97,26 +94,26 @@ jobs:
           config: ${{ matrix.configuration }}
       - name: Windows build dependencies
         run: 'vcpkg install libxml2 && pip install scons'
-        if: ${{ matrix.os == 'windows' }}
+        if: ${{ matrix.os.name == 'windows' }}
       - name: Mac build dependencies
         run: brew install scons
-        if: ${{ matrix.os == 'macos' }}
+        if: ${{ matrix.os.name == 'macos' }}
       - name: Linux build dependencies
         run: sudo apt-get update && sudo apt-get install scons libxml2-utils zenity
-        if: ${{ matrix.os == 'ubuntu' }}
+        if: ${{ matrix.os.name == 'ubuntu' }}
       - name: Install TGUI
         run: 'sudo ./.github/workflows/scripts/linux/install-tgui.sh'
-        if: ${{ matrix.os == 'ubuntu' }}
+        if: ${{ matrix.os.name == 'ubuntu' }}
       - name: Build
-        run: '${{ matrix.scons-script[matrix.os] }} INCLUDEPATH="${{ steps.boost.outputs.root }}${{ matrix.path-separator[matrix.os] }}${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}${{ matrix.path-separator[matrix.os] }}${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"'
+        run: '${{ matrix.os.scons-script }} INCLUDEPATH="${{ steps.boost.outputs.root }}${{ matrix.os.path-separator }}${{steps.sfml.outputs.path}}/include" LIBPATH="${{ steps.boost.outputs.librarydir }}${{ matrix.os.path-separator }}${{steps.sfml.outputs.path}}/lib" FRAMEWORKPATH="${{steps.sfml.outputs.path}}/lib"'
       - name: Codesign and notarize
         run: './.github/workflows/scripts/mac/sign-apps.sh'
-        if: ${{ matrix.os == 'macos' }}
+        if: ${{ matrix.os.name == 'macos' }}
       - name: 'Tar files'
-        run: 'tar -cvf cboe-${{ matrix.os }}.tar "Blades of Exile"'
+        run: 'tar -cvf cboe-${{ matrix.os.name }}.tar "Blades of Exile"'
         working-directory: '${{ github.workspace }}/build'
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: cboe-${{ matrix.os }}
-          path: '${{ github.workspace }}/build/cboe-${{ matrix.os }}.tar'
+          name: cboe-${{ matrix.os.name }}
+          path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}.tar'
