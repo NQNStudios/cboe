@@ -447,35 +447,25 @@ def handle_bundled_libs(extension, prefix=''):
 	target_dirs = ["#build/Blades of Exile", "#build/test"]
 	for lib in bundled_libs:
 		for lpath in env['LIBPATH']:
-			print(f'checking {lpath} for {prefix}{lib}')
-			
-			try:
-				print(os.listdir(lpath))
-			except:
-				pass
-			src_file = path.join(lpath, prefix + lib + extension)
-			if path.exists(src_file):
-				print(src_file)
-				for targ in target_dirs:
-					env.Install(targ, src_file)
-				break
-			elif 'lib' in lpath:
-				src_file = path.join(lpath.replace('lib', 'bin'), prefix + lib + extension)
-				if path.exists(src_file):
-					print(src_file)
-					for targ in target_dirs:
-						env.Install(targ, src_file)
-					break
-			src_file = path.join(lpath, 'x86_64-linux-gnu', prefix + lib + extension)
-			try:
-				print(os.listdir(path.join(lpath, 'x86_64-linux-gnu')))
-			except:
-				pass
-			if path.exists(src_file) and src_file != "/usr/lib/x86_64-linux-gnu/libz.so":
-				print(src_file)
-				for targ in target_dirs:
-					env.Install(targ, src_file)
-				break
+            def check_path(src_file):
+                _dir = os.path.dirname(src_file)
+                print(f'checking {_dir} for {prefix}{lib}')
+                try:
+                    print(os.listdir(_dir))
+                except:
+                    pass
+                if path.exists(src_file) and src_file != "/usr/lib/x86_64-linux-gnu/libz.so":
+                    print(f'found {src_file}')
+                    for targ in target_dirs:
+                        env.Install(targ, src_file)
+                        return True
+                return False
+            if check_path(path.join(lpath, prefix + lib + extension)):
+                break
+            elif check_path(path.join(lpath.replace('lib', 'bin'), prefix + lib + extension):
+                break
+            else: 
+                check_path(path.join(lpath, 'x86_64-linux-gnu', prefix + lib + extension))
 if platform == "darwin":
 	targets = [
 		"Blades of Exile",
