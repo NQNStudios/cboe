@@ -459,7 +459,7 @@ def handle_bundled_libs(extension, prefix=''):
 					for targ in target_dirs:
 						for so in os.listdir(_dir):
 							if os.path.basename(src_file) in so:
-								print(f'found {path.join(_dir, so)')
+								print(f'found {path.join(_dir, so)}')
 								env.Install(targ, path.join(_dir, so))
 						return True
 				return False
@@ -508,12 +508,17 @@ elif platform == "win32":
 		else:
 			print("WARNING: Cannot find installer for the MSVC redistributable libraries for your version of Visual Studio.")
 			print("Please download it from Microsoft's website and place it at:")
-			print("      deps/VCRedistInstall.exe")
+			print("	  deps/VCRedistInstall.exe")
 			# Create it so its lack doesn't cause makensis to break
 			# (Because the installer is an optional component.)
 			os.makedirs("build/Blades of Exile", exist_ok=True)
 			open("build/Blades of Exile/VCRedistInstall.exe", 'w').close()
 elif platform == "posix":
+	bundled_libs += Split("""
+		GL
+		X11
+		stdc++
+	""")
 	handle_bundled_libs(".so", "lib")
 
 if env["package"]:
