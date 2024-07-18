@@ -284,6 +284,7 @@ if path.exists('deps/include'):
 	env.Append(CPPPATH=[path.join(os.getcwd(), '/deps/include')])
 
 env.Append(CPPPATH=[path.join(os.getcwd(), 'deps/zlib')])
+env.Append(CPPPATH=[path.join(os.getcwd(), 'deps/zlib/build')])
 env.Append(LIBPATH=[path.join(os.getcwd(), 'deps/zlib/build/Release')])
 
 # Include directories
