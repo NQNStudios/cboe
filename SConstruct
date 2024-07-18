@@ -205,7 +205,7 @@ elif platform == "win32":
 
 		include_paths=project_includes
 		env.Append(
-			LINKFLAGS=['/SUBSYSTEM:WINDOWS','/ENTRY:mainCRTStartup',f'/MACHINE:X{arch_short}', '/VERBOSE'],
+			LINKFLAGS=['/SUBSYSTEM:WINDOWS','/ENTRY:mainCRTStartup',f'/MACHINE:X{arch_short}', '/VERBOSE', '/NODEFAULTLIB:libboost_filesystem-vc142-mt-x64-1_85.lib'],
 			CXXFLAGS=['/EHsc','/MD','/FIglobal.hpp'],
 			CPPPATH=include_paths,
 			LIBPATH=[],
