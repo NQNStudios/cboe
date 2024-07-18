@@ -367,6 +367,7 @@ if not env.GetOption('clean'):
 	if platform == 'posix':
 		def check_tgui(conf, second_attempt=False):
 			if conf.CheckLib('libtgui', language='C++'):
+				bundled_libs.append('tgui')
 				return conf
 			else:
 				if second_attempt:
