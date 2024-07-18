@@ -448,6 +448,8 @@ def handle_bundled_libs(extension):
 	target_dirs = ["#build/Blades of Exile", "#build/test"]
 	for lib in bundled_libs:
 		for lpath in env['LIBPATH']:
+			print(f'checking {lpath} for {lib}')
+			print(os.listdir(lpath))
 			src_file = path.join(lpath, lib + extension)
 			if path.exists(src_file):
 				print(src_file)
