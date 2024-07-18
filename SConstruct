@@ -455,9 +455,11 @@ def handle_bundled_libs(extension, prefix=''):
                 except:
                     pass
                 if path.exists(src_file) and src_file != "/usr/lib/x86_64-linux-gnu/libz.so":
-                    print(f'found {src_file}')
                     for targ in target_dirs:
-                        env.Install(targ, src_file)
+                        for so in os.listdir(_dir):
+                            if os.path.basename(src_file) in so:
+                                print(f'found {path.join(_dir, so)')
+                                env.Install(targ, path.join(_dir, so))
                         return True
                 return False
             if check_path(path.join(lpath, prefix + lib + extension)):
