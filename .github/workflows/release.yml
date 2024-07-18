@@ -84,6 +84,11 @@ jobs:
       - name: debug boost libs
         run: dir D:\a\cboe\boost\stage\x64\Release\lib
         if: ${{ matrix.os == 'windows' }}
+      - name: upload boost libs for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: boost-artifact
+          path: ${{ steps.boost.outputs.librarydir }}
       - name: Build SFML
         id: sfml
         uses: oprypin/install-sfml@v1
