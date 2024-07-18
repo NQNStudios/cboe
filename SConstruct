@@ -229,6 +229,7 @@ elif platform == "win32":
 	def build_app_package(env, source, build_dir, info):
 		env.Install(build_dir, source)
 elif platform == "posix":
+	env.Append(RPATH=["$ORIGIN"])
 	env.Append(CXXFLAGS=["-std=c++14","-include","global.hpp"])
 	def build_app_package(env, source, build_dir, info):
 		env.Install(build_dir, source)
@@ -447,27 +448,27 @@ def handle_bundled_libs(extension, prefix=''):
 	target_dirs = ["#build/Blades of Exile", "#build/test"]
 	for lib in bundled_libs:
 		for lpath in env['LIBPATH']:
-            def check_path(src_file):
-                _dir = os.path.dirname(src_file)
-                print(f'checking {_dir} for {prefix}{lib}')
-                try:
-                    print(os.listdir(_dir))
-                except:
-                    pass
-                if path.exists(src_file) and src_file != "/usr/lib/x86_64-linux-gnu/libz.so":
-                    for targ in target_dirs:
-                        for so in os.listdir(_dir):
-                            if os.path.basename(src_file) in so:
-                                print(f'found {path.join(_dir, so)')
-                                env.Install(targ, path.join(_dir, so))
-                        return True
-                return False
-            if check_path(path.join(lpath, prefix + lib + extension)):
-                break
-            elif check_path(path.join(lpath.replace('lib', 'bin'), prefix + lib + extension):
-                break
-            else: 
-                check_path(path.join(lpath, 'x86_64-linux-gnu', prefix + lib + extension))
+			def check_path(src_file):
+				_dir = os.path.dirname(src_file)
+				print(f'checking {_dir} for {prefix}{lib}')
+				try:
+					print(os.listdir(_dir))
+				except:
+					pass
+				if path.exists(src_file) and src_file != "/usr/lib/x86_64-linux-gnu/libz.so":
+					for targ in target_dirs:
+						for so in os.listdir(_dir):
+							if os.path.basename(src_file) in so:
+								print(f'found {path.join(_dir, so)')
+								env.Install(targ, path.join(_dir, so))
+						return True
+				return False
+			if check_path(path.join(lpath, prefix + lib + extension)):
+				break
+			elif check_path(path.join(lpath.replace('lib', 'bin'), prefix + lib + extension):
+				break
+			else: 
+				check_path(path.join(lpath, 'x86_64-linux-gnu', prefix + lib + extension))
 if platform == "darwin":
 	targets = [
 		"Blades of Exile",
