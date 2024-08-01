@@ -103,7 +103,7 @@ else:
 	# Submodules and zipped source downloads from github do not include the repo (probably a good thing)
 	# TODO: This does not work on Windows
 	env.Command('src/tools/gitrev.hpp', '', r"""
-		printf '%s\n' '#define GIT_REVISION ""' '#define GIT_TAG ""' '#define GIT_TAG_REVISION ""' > #TARGET
+		printf '%s\\n' '#define GIT_REVISION ""' '#define GIT_TAG ""' '#define GIT_TAG_REVISION ""' > #TARGET
 	""")
 
 if platform == "darwin":
