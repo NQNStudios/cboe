@@ -92,7 +92,7 @@ def gen_gitrev(env, target, source):
 		print('#define GIT_TAG "' + fulltag + '"', file=gitrev_hpp)
 		print('#define GIT_TAG_REVISION "' + tagrev[0:7] + '"', file=gitrev_hpp)
 		print(file=gitrev_hpp)
-if path.exists(".git"):
+if path.exists(".git/HEAD"):
 	git_refs = ['.git/HEAD']
 	with open('.git/HEAD') as git_head:
 		git_head = git_head.read().split()
@@ -100,7 +100,7 @@ if path.exists(".git"):
 			git_refs.append(path.join('.git', git_head[1]))
 	env.Command('src/tools/gitrev.hpp', git_refs, gen_gitrev)
 else:
-	# Zipped source downloads from github do not include the repo (probably a good thing)
+	# Submodules and zipped source downloads from github do not include the repo (probably a good thing)
 	# TODO: This does not work on Windows
 	env.Command('src/tools/gitrev.hpp', '', r"""
 		echo -e "\n#define GIT_REVISION \"\"\n#define GIT_TAG \"\"\n#define GIT_TAG_REVISION \"\"\n" > #TARGET
