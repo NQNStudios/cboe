@@ -78,6 +78,7 @@ jobs:
           platform: x64
           configuration: ${{ matrix.configuration }}
           static: ${{ matrix.os.name == 'windows' }}
+
       - name: debug boost libs
         run: dir D:\a\cboe\boost\stage\x64\Release\lib
         if: ${{ matrix.os.name == 'windows' }}
