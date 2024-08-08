@@ -37,6 +37,7 @@ jobs:
         - 2.6.1
         configuration:
         - Release
+        - Debug
     runs-on: '${{ matrix.os.name }}-${{ matrix.os.version }}'
     steps:
       - name: Export GitHub Actions cache environment variables
@@ -79,13 +80,10 @@ jobs:
           configuration: ${{ matrix.configuration }}
           static: ${{ matrix.os.name == 'windows' }}
 
-      - name: debug boost libs
-        run: dir D:\a\cboe\boost\stage\x64\Release\lib
-        if: ${{ matrix.os.name == 'windows' }}
       - name: upload boost libs for inspection
         uses: actions/upload-artifact@v4
         with:
-          name: boost-artifact-${{ matrix.os.name }}
+          name: boost-artifact-${{ matrix.os.name }}-${{ matrix.configuration }}
           path: ${{ steps.boost.outputs.librarydir }}
       - name: Build SFML
         id: sfml
@@ -116,5 +114,5 @@ jobs:
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: cboe-${{ matrix.os.name }}
+          name: cboe-${{ matrix.os.name }}-${{ matrix.configuration }}
           path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}.tar'
