@@ -321,6 +321,7 @@ if not env.GetOption('clean'):
 			for suff in suffixes:
 				possible_names.append(possible_names[i] + suff)
 		for test in possible_names:
+			print(f'checking {test}')
 			if conf.CheckLib(test, language='C++'):
 				bundled_libs.append(test)
 				print(test)
