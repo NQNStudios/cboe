@@ -342,7 +342,7 @@ if not env.GetOption('clean'):
 			Exit(1)
 
 	boost_versions = ['-1_84'] # This is a bit of a hack. :(
-	suffixes = ['-mt', f'-mt-x{env["bits"]}', '-d']
+	suffixes = ['-mt', f'-mt-x{env["bits"]}']
 
 	zlib = 'zlib' if (platform == "win32" and 'mingw' not in env["TOOLS"]) else 'z'
 	check_lib(zlib, 'zlib', [], [])
@@ -355,10 +355,11 @@ if not env.GetOption('clean'):
 	check_header('boost/spirit/include/classic.hpp', 'Boost.Spirit.Classic')
 	check_lib('boost_system', 'Boost.System', suffixes, boost_versions)
 	check_lib('boost_filesystem', 'Boost.Filesystem', suffixes, boost_versions)
-	check_lib('sfml-system', 'SFML-system')
-	check_lib('sfml-window', 'SFML-window')
-	check_lib('sfml-audio', 'SFML-audio')
-	check_lib('sfml-graphics', 'SFML-graphics')
+	sfml_suffixes = ['-d']
+	check_lib('sfml-system', 'SFML-system', sfml_suffixes)
+	check_lib('sfml-window', 'SFML-window', sfml_suffixes)
+	check_lib('sfml-audio', 'SFML-audio', sfml_suffixes)
+	check_lib('sfml-graphics', 'SFML-graphics', sfml_suffixes)
 
 	# If building the tests, make sure Catch2 is cloned
 	if 'test' in targets and not path.exists('deps/Catch2/README.md'):
