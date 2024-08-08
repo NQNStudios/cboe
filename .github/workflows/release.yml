@@ -41,6 +41,7 @@ jobs:
         - Debug
     runs-on: '${{ matrix.os.name }}-${{ matrix.os.version }}'
     steps:
+      - run: echo $DEBUG_FLAG
       - name: Export GitHub Actions cache environment variables
         uses: actions/github-script@v7
         with:
