@@ -15,7 +15,7 @@ jobs:
       PROD_MACOS_NOTARIZATION_TEAM_ID: '${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}'
       PROD_MACOS_NOTARIZATION_PWD: '${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}'
       VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
-      DEBUG_FLAG: '${{ matrix.configuration == "Debug" && "true" || "false" }}
+      DEBUG_FLAG: '${{ matrix.configuration == "Debug" && "true" || "false" }}'
     strategy:
       fail-fast: false
       matrix:
