@@ -3,15 +3,15 @@
 butler_channel=""
 butler_exe=""
 release_dir=""
-if [ "$CI_OS_NAME" = "ubuntu-latest" ]; then
+if [ "$BUILD_OS" = "ubuntu" ]; then
     butler_channel=linux-amd64
     butler_exe=butler
     release_dir="linux"
-elif [ "$CI_OS_NAME" = "windows-latest" ]; then
+elif [ "$BUILD_OS" = "windows" ]; then
     butler_channel=windows-amd64
     butler_exe=butler.exe
     release_dir="windows"
-elif [ "$CI_OS_NAME" = "macos-latest" ]; then
+elif [ "$BUILD_OS" = "macos" ]; then
     butler_channel=darwin-amd64
     butler_exe=butler
     release_dir="macos"
@@ -25,3 +25,4 @@ unzip butler.zip
 chmod +x ${butler_exe}
 # just a sanity check run (and also helpful in case you're sharing CI logs)
 ./${butler_exe} -V
+./${butler_exe} push build/Blades of Exile/ nqn/blades-of-exile:${butler_channel}

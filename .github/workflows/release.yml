@@ -7,6 +7,7 @@ jobs:
   release:
     env:
       MACOSX_DEPLOYMENT_TARGET: 10.15
+      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       PROD_MACOS_CERTIFICATE: '${{ secrets.PROD_MACOS_CERTIFICATE }}'
       PROD_MACOS_CERTIFICATE_PWD: '${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}'
       PROD_MACOS_CERTIFICATE_NAME: '${{ secrets.PROD_MACOS_CERTIFICATE_NAME }}'
@@ -16,6 +17,7 @@ jobs:
       PROD_MACOS_NOTARIZATION_PWD: '${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}'
       VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
       DEBUG_FLAG: ${{ matrix.configuration == 'Debug' && 'true' || 'false' }}
+      BUILD_OS: ${{ matrix.os.name }}
     strategy:
       fail-fast: false
       matrix:
@@ -119,3 +121,6 @@ jobs:
         with:
           name: cboe-${{ matrix.os.name }}-${{ matrix.configuration }}
           path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}.tar'
+      - name: 'Itch.io release'
+        run: './.github/workflows/scripts/butler_push.sh'
+        if: startsWith(github.ref, 'refs/tags/')
