@@ -1,8 +1,12 @@
 on:
   push:
-    branches: [ builds ]
+    branches:
+      - builds
+    tags:
+      - "v*.*.*"
   pull_request:
-    branches: [ builds ]
+    branches:
+      - builds
 jobs:
   release:
     env:
