@@ -25,4 +25,4 @@ unzip butler.zip
 chmod +x ${butler_exe}
 # just a sanity check run (and also helpful in case you're sharing CI logs)
 ./${butler_exe} -V
-./${butler_exe} push build/Blades of Exile/ nqn/blades-of-exile:${butler_channel}
+./${butler_exe} push "build/Blades of Exile/" nqn/blades-of-exile:${butler_channel}
