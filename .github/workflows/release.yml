@@ -132,4 +132,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
       - name: 'Itch.io release'
         run: './.github/workflows/scripts/butler_push.sh'
+        shell: bash
         if: startsWith(github.ref, 'refs/tags/')
