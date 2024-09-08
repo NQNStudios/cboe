@@ -63,7 +63,7 @@ sign() {
     # Finally, we need to "attach the staple" to our executable, which will allow our app to be
     # validated by macOS even when an internet connection is not available.
     echo "Attach staple"
-    xcrun stapler staple "$APP_PATH"
+    xcrun stapler staple "$APP_PATH" || exit 1
 }
 
 sign "Blades of Exile"
