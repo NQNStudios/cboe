@@ -187,8 +187,10 @@ if platform == "darwin":
 						break
 					print(f'copying from {src_path}')
 					# Copying .frameworks needs to preserve symlinks by using cp -a
-					if subprocess.call(['cp', '-a', src_path, dest_path]) != 0:
-						print('cp -a failed')
+					try:
+						print(subprocess.check_output(['cp', '-av', src_path, dest_path], text=True))
+					except:
+						print('cp -av failed')
 						Exit(1)
 					# Recursively bundle the dependencies of each dependency:
 					bundle_libraries_for(target, [File(check_path)], env)
