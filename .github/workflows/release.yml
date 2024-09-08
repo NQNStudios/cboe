@@ -68,14 +68,7 @@ jobs:
       - name: Build
         run: '${{ matrix.os.scons-script }} test=false debug=$DEBUG_FLAG'
         shell: bash
-      - name: 'Tar unsigned files'
-        run: 'tar -cvf cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar "Blades of Exile"'
-        working-directory: '${{ github.workspace }}/build'
-      - name: upload pre-signing artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned
-          path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar'
+
       - name: Download fix-rpaths.py script
         run: git clone https://gist.github.com/NQNStudios/7145bcf6621891f5176c8caa165d6b93
       - name: Fix rpaths game
@@ -84,6 +77,15 @@ jobs:
         run: 'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/BoE Scenario Editor.app"'
       - name: Fix rpaths character editor
         run: 'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/BoE Character Editor.app"'
+
+      - name: 'Tar unsigned files'
+        run: 'tar -cvf cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar "Blades of Exile"'
+        working-directory: '${{ github.workspace }}/build'
+      - name: upload pre-signing artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned
+          path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar'
       - name: Codesign and notarize
         run: './.github/workflows/scripts/mac/sign-apps.sh'
         if: ${{ matrix.os.name == 'macos' }}
