@@ -27,6 +27,7 @@ jobs:
       matrix:
         os:
         - name: macos
+          deps: macos-universal
           version: 14
           scons-script: './.github/workflows/scripts/mac/scons-build.sh'
         - name: ubuntu
@@ -54,7 +55,7 @@ jobs:
         with:
           repository: NQNStudios/cboe-dependencies
           latest: true
-          fileName: 'dependencies-macos-universal-${{ matrix.configuration }}.tar'
+          fileName: 'dependencies-${{ matrix.os.deps || matrix.os.name }}-${{ matrix.configuration }}.tar'
           extract: true
           out-file-path: 'deps'
       - name: Windows build dependencies
