@@ -80,7 +80,9 @@ jobs:
         run: git clone https://gist.github.com/NQNStudios/7145bcf6621891f5176c8caa165d6b93
       - name: Fix rpaths
         run: |
-          'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/Blades of Exile.app" && \
+          'ls 7145bcf6621891f5176c8caa165d6b93 && \
+            ls "build/Blades of Exile" && \
+            python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/Blades of Exile.app" && \
             python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/BoE Scenario Editor.app" && \
             python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/BoE Character Editor.app"'
       - name: Codesign and notarize
