@@ -26,6 +26,7 @@ sign() {
     /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH"/Contents/Frameworks/*.dylib -v
     frameworks="$APP_PATH"/Contents/Frameworks/*.framework/Versions/A/*
     for framework in $frameworks; do
+        echo $framework
         if [ -f $framework ]; then
             /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime $framework -v
         fi
