@@ -74,6 +74,14 @@ jobs:
       - name: ls the dependencies after the build
         run: ls -R deps/lib
         shell: bash
+      - name: 'Tar unsigned files'
+        run: 'tar -cvf cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar "Blades of Exile"'
+        working-directory: '${{ github.workspace }}/build'
+      - name: upload pre-signing artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned
+          path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar'
       - name: Codesign and notarize
         run: './.github/workflows/scripts/mac/sign-apps.sh'
         if: ${{ matrix.os.name == 'macos' }}
