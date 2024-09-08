@@ -185,6 +185,7 @@ if platform == "darwin":
 					dest_path = path.join(target[0].path, basefile)
 					if path.exists(dest_path):
 						break
+					print(f'copying from {src_path}')
 					Execute(Copy(dest_path, src_path))
 					bundle_libraries_for(target, [File(check_path)], env)
 					break
