@@ -80,9 +80,9 @@ jobs:
         run: git clone https://gist.github.com/NQNStudios/7145bcf6621891f5176c8caa165d6b93
       - name: Fix rpaths
         run: |
-          'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile.app" && \
-            python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/BoE Scenario Editor.app" && \
-            python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/BoE Character Editor.app"'
+          'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/Blades of Exile.app" && \
+            python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/BoE Scenario Editor.app" && \
+            python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/BoE Character Editor.app"'
       - name: Codesign and notarize
         run: './.github/workflows/scripts/mac/sign-apps.sh'
         if: ${{ matrix.os.name == 'macos' }}
