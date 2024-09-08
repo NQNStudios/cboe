@@ -30,6 +30,7 @@ sign() {
                 /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$framework" -v
             fi
         done)
+    ls -R "$APP_PATH"/Contents/Frameworks/*.framework
     /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH"/Contents/Frameworks/*.framework/Versions/A/Resources/Info.plist -v
     /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH/Contents/Info.plist" -v
 
