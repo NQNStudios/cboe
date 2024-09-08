@@ -78,8 +78,6 @@ jobs:
           path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar'
       - name: Download fix-rpaths.py script
         run: git clone https://gist.github.com/NQNStudios/7145bcf6621891f5176c8caa165d6b93
-      - run: ls 7145bcf6621891f5176c8caa165d6b93
-      - run: 'ls "build/Blades of Exile"'
       - name: Fix rpaths game
         run: 'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/Blades of Exile.app"'
       - name: Fix rpaths scenario editor
