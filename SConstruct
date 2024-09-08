@@ -186,7 +186,8 @@ if platform == "darwin":
 					if path.exists(dest_path):
 						break
 					print(f'copying from {src_path}')
-					# Copying .frameworks needs to preserve symlinks by using cp -a
+					# Copying .frameworks needs to preserve symlinks by using cp -a.
+					# SCons provides Copy(symlinks=True) but that doesn't seem to work.
 					try:
 						print(subprocess.check_output(['cp', '-av', src_path, dest_path], text=True))
 					except:
