@@ -50,7 +50,7 @@ jobs:
         with:
           submodules: true
       - name: Download dependency build
-      - uses: robinraju/release-downloader@v1
+        uses: robinraju/release-downloader@v1
         with:
           repository: NQNStudios/cboe-dependencies
           latest: true
