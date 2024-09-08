@@ -53,9 +53,6 @@ jobs:
           fileName: 'dependencies-${{ matrix.os.deps || matrix.os.name }}-${{ matrix.configuration }}.tar'
           extract: true
           out-file-path: 'deps'
-      - name: ls the dependencies
-        run: ls -R deps/lib
-        shell: bash
       - name: Windows build dependencies
         run: 'vcpkg install libxml2 && pip install scons'
         if: ${{ matrix.os.name == 'windows' }}
@@ -70,9 +67,6 @@ jobs:
         if: ${{ matrix.os.name == 'ubuntu' }}
       - name: Build
         run: '${{ matrix.os.scons-script }} test=false debug=$DEBUG_FLAG'
-        shell: bash
-      - name: ls the dependencies after the build
-        run: ls -R deps/lib
         shell: bash
       - name: 'Tar unsigned files'
         run: 'tar -cvf cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar "Blades of Exile"'
