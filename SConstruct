@@ -185,7 +185,6 @@ if platform == "darwin":
 					dest_path = path.join(target[0].path, basefile)
 					if path.exists(dest_path):
 						break
-					print(f'copying from {src_path}')
 					# Copying .frameworks needs to preserve symlinks by using cp -a.
 					# SCons provides Copy(symlinks=True) but that doesn't seem to work.
 					try:
