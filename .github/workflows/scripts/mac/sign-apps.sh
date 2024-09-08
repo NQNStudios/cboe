@@ -24,10 +24,13 @@ sign() {
     # We finally codesign our app bundle, specifying the Hardened runtime option
 
     /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH"/Contents/Frameworks/*.dylib -v
-    /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH"/Contents/Frameworks/*.framework/Versions/A/* -v
+    frameworks="$APP_PATH"/Contents/Frameworks/*.framework/Versions/A/*
+    for framework in $frameworks; do
+        if [ -f $framework ]; then
+            /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime $framework -v
+        fi
+    done
     /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH"/Contents/Frameworks/*.framework/Versions/A/Resources/Info.plist -v
-    #/usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH"/Contents/Frameworks/*.framework/Versions/Current/* -v
-    #/usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH"/Contents/Frameworks/*.framework/Versions/Current/Resources/* -v
     /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH/Contents/Info.plist" -v
 
     /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH" -v
