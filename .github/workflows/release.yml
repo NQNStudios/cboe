@@ -66,7 +66,7 @@ jobs:
         run: 'sudo ./.github/workflows/scripts/linux/install-tgui.sh'
         if: ${{ matrix.os.name == 'ubuntu' }}
       - name: Build
-        run: '${{ matrix.os.scons-script }} test=false debug=$DEBUG_FLAG
+        run: '${{ matrix.os.scons-script }} test=false debug=$DEBUG_FLAG'
         shell: bash
 
       - name: Download fix-rpaths.py script
