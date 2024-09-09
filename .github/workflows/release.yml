@@ -27,13 +27,21 @@ jobs:
       matrix:
         os:
         - name: macos
+          suffix: '-intel'
+          deps: macos-universal
+          version: 12
+          scons-script: './.github/workflows/scripts/mac/scons-build.sh'
+        - name: macos
+          suffix: '-silicon'
           deps: macos-universal
           version: 14
           scons-script: './.github/workflows/scripts/mac/scons-build.sh'
         - name: ubuntu
+          suffix: ''
           version: 22.04
           scons-script: scons
         - name: windows
+          suffix: ''
           version: 2019
           scons-script: './.github/workflows/scripts/win/scons-build.bat'
         configuration:
@@ -79,28 +87,28 @@ jobs:
         run: 'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/BoE Character Editor.app"'
 
       - name: 'Tar unsigned files'
-        run: 'tar -cvf cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar "Blades of Exile"'
+        run: 'tar -cvf cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}-unsigned.tar "Blades of Exile"'
         working-directory: '${{ github.workspace }}/build'
       - name: upload pre-signing artifact
         uses: actions/upload-artifact@v4
         with:
           name: cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned
-          path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}-${{ matrix.configuration }}-unsigned.tar'
+          path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}-unsigned.tar'
       - name: Codesign and notarize
         run: './.github/workflows/scripts/mac/sign-apps.sh'
         if: ${{ matrix.os.name == 'macos' }}
       - name: 'Tar files'
-        run: 'tar -cvf cboe-${{ matrix.os.name }}-${{ matrix.configuration }}.tar "Blades of Exile"'
+        run: 'tar -cvf cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}.tar "Blades of Exile"'
         working-directory: '${{ github.workspace }}/build'
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: cboe-${{ matrix.os.name }}-${{ matrix.configuration }}
-          path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}-${{ matrix.configuration }}.tar'
+          name: cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}
+          path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}.tar'
       - name: Github release
         uses: softprops/action-gh-release@v2
         with:
-          files: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}-${{ matrix.configuration }}.tar'
+          files: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}.tar'
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
       - name: 'Itch.io release'
         run: './.github/workflows/scripts/butler_push.sh'
