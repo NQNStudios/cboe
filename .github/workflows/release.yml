@@ -10,6 +10,7 @@ on:
 jobs:
   release:
     env:
+      ARCH: ${{ matrix.os.flag }}
       MACOSX_DEPLOYMENT_TARGET: 10.13
       BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       PROD_MACOS_CERTIFICATE: '${{ secrets.PROD_MACOS_CERTIFICATE }}'
@@ -28,10 +29,12 @@ jobs:
         os:
         - name: macos
           suffix: '-intel'
+          flag: x86_64
           deps: macos-universal
           version: 12
           scons-script: './.github/workflows/scripts/mac/scons-build.sh'
         - name: macos
+          flag: arm64
           suffix: '-silicon'
           deps: macos-universal
           version: 14
