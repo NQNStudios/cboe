@@ -11,7 +11,6 @@ jobs:
   release:
     env:
       MACOSX_DEPLOYMENT_TARGET: 10.13
-      EXTRA_FLAGS: ${{ matrix.os.name == 'macos' && 'CXXFLAGS="-arch x86_64 -arch arm64"'|| ''}}
       BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       PROD_MACOS_CERTIFICATE: '${{ secrets.PROD_MACOS_CERTIFICATE }}'
       PROD_MACOS_CERTIFICATE_PWD: '${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}'
@@ -67,7 +66,7 @@ jobs:
         run: 'sudo ./.github/workflows/scripts/linux/install-tgui.sh'
         if: ${{ matrix.os.name == 'ubuntu' }}
       - name: Build
-        run: '${{ matrix.os.scons-script }} test=false debug=$DEBUG_FLAG $EXTRA_FLAGS'
+        run: '${{ matrix.os.scons-script }} test=false debug=$DEBUG_FLAG
         shell: bash
 
       - name: Download fix-rpaths.py script
