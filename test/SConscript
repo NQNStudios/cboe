@@ -1,5 +1,6 @@
-
+import atexit
 import subprocess
+import os
 
 Import("env platform party_classes common_sources")
 arch_short = '64' if (env['bits'] == '64') else '86'
@@ -23,13 +24,19 @@ else:
 	test = env.Program("#build/bin/boe_test", test_sources + party_classes + common_sources)
 
 def run_tests(env,target,source):
-	app = str(source[0].abspath)
-	exit_code = subprocess.call(app)
-	if exit_code == 0:
-		open(target[0].abspath,'w').write("PASSED\n")
-	else:
-		print(f'Unit test failure! Exit code: {exit_code}')
-		exit(exit_code)
+	def run_subprocess():
+		app = str(source[0].abspath)
+		exit_code = subprocess.call(app)
+		if exit_code == 0:
+			open(target[0].abspath,'w').write("PASSED\n")
+		else:
+			print(f'Unit test failure! Exit code: {exit_code}')
+			# basic exit() won't change the exit code in an atexit callback.
+			# os._exit() will, but it can't handle large Windows error codes
+			# which boe_test *can* throw.
+			os._exit(1)
+	# The tests subprocess has to happen AFTER all DLLs have been installed in the CI
+	atexit.register(run_subprocess)
 
 env.Install("#build/test/", test)
 if debug_symbols is not None:
