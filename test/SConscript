@@ -1,6 +1,7 @@
 import atexit
 import subprocess
 import os
+from os.path import basename
 
 Import("env platform party_classes common_sources")
 arch_short = '64' if (env['bits'] == '64') else '86'
@@ -24,9 +25,18 @@ else:
 	test = env.Program("#build/bin/boe_test", test_sources + party_classes + common_sources)
 
 def run_tests(env,target,source):
+	cwd = os.getcwd()
 	def run_subprocess():
 		app = str(source[0].abspath)
-		exit_code = subprocess.call(app)
+		# The target absolute path is in build/bin, but the dynamic libs are installed
+		# in build/test (the current directory when run_tests() is called)
+		app = basename(app)
+		# On Windows, subprocess exe paths are not relative to the cwd argument:
+		if str(platform) == "win32":
+			app = f'build/test/{app}'
+		else:
+			app = f'./{app}'
+		exit_code = subprocess.call(app, cwd=cwd)
 		if exit_code == 0:
 			open(target[0].abspath,'w').write("PASSED\n")
 		else:
