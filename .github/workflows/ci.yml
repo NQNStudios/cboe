@@ -205,6 +205,12 @@
 				{
 					name: build and unit test headless,
 					run: 'xvfb-run ./.github/workflows/scripts/linux/scons-build.sh'
+				},
+				{
+					uses: actions/upload-artifact@v4,
+					with: {
+						path: build
+					}
 				}
 			]
 		}
