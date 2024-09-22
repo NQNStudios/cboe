@@ -9,6 +9,9 @@
 
 #include <sys/utsname.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "strdlog.hpp"
 
 extern sf::RenderWindow mainPtr;
 
@@ -129,6 +132,13 @@ void setWindowFloating(sf::Window& win, bool floating) {
 }
 
 void init_fileio() {
+	std::string command = "zenity --help";
+	FILE* hfile = popen(command.c_str(), "r");
+	int result = pclose(hfile);
+	if(result != 0){
+		showError("Open Blades of Exile for Linux requires zenity for file management.", "Please install zenity through your distribution's official package manager and try launching Blades of Exile again. Sorry!");
+		exit(result);
+	}
 }
 
 static std::string runFileDialog(const std::string& file, bool save) {
