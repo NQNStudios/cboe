@@ -36,6 +36,10 @@ sign() {
     /usr/bin/codesign --force -s "$PROD_MACOS_CERTIFICATE_NAME" --options runtime "$APP_PATH" -v
 
     # NOTARIZATION STEP
+    if [ "$NOTARIZE" = "no" ];
+    then
+        return
+    fi
     # (same source)
 
     # Store the notarization credentials so that we can prevent a UI password dialog

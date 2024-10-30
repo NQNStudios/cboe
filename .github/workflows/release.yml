@@ -105,7 +105,7 @@ jobs:
           name: cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}-unsigned
           path: '${{ github.workspace }}/build/cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}-unsigned.tar'
       - name: Codesign and notarize
-        run: './.github/workflows/scripts/mac/sign-apps.sh'
+        run: 'NOTARIZE="no" ./.github/workflows/scripts/mac/sign-apps.sh'
         if: ${{ matrix.os.name == 'macos' }}
       - name: 'Tar files'
         run: 'tar -cvf cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}.tar "Blades of Exile"'
