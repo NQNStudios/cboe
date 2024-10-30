@@ -235,7 +235,9 @@ elif platform == "win32":
 	def build_app_package(env, source, build_dir, info):
 		env.Install(build_dir, source)
 elif platform == "posix":
-	env.Append(CXXFLAGS=["-std=c++14","-include","global.hpp"])
+	env.Append(
+		CXXFLAGS=["-std=c++14","-include","global.hpp"],
+		LINKFLAGS=["-rpath", "./"])
 	def build_app_package(env, source, build_dir, info):
 		env.Install(build_dir, source)
 

@@ -86,6 +86,7 @@ jobs:
 
       - name: Download fix-rpaths.py script
         run: git clone https://gist.github.com/NQNStudios/7145bcf6621891f5176c8caa165d6b93
+        if: ${{ matrix.os.name == 'macos' }}
       - name: Fix rpaths game
         run: 'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/Blades of Exile.app"'
         if: ${{ matrix.os.name == 'macos' }}
