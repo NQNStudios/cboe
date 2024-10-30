@@ -23,6 +23,7 @@ jobs:
       VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
       DEBUG_FLAG: ${{ matrix.configuration == 'Debug' && 'true' || 'false' }}
       BUILD_OS: ${{ matrix.os.name }}
+      SFML_DIR: lib/cmake/SFML
     strategy:
       fail-fast: false
       matrix:
