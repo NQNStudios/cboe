@@ -75,7 +75,7 @@ jobs:
         run: brew install scons
         if: ${{ matrix.os.name == 'macos' }}
       - name: Linux build dependencies
-        run: sudo apt-get update && sudo apt-get install scons libxml2-utils libgl libgl-dev
+        run: sudo apt-get update && sudo apt-get install scons libxml2-utils libgl1-mesa libgl1-mesa-dev
         if: ${{ matrix.os.name == 'ubuntu' }}
       - name: Install TGUI
         run: 'sudo ./.github/workflows/scripts/linux/install-tgui.sh'
