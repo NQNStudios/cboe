@@ -27,26 +27,26 @@ jobs:
       fail-fast: false
       matrix:
         os:
-#        - name: macos
-#          suffix: '-intel'
-#          flag: x86_64
-#          deps: macos-universal
-#          version: 12
-#          scons-script: './.github/workflows/scripts/mac/scons-build.sh'
-#        - name: macos
-#          flag: arm64
-#          suffix: '-silicon'
-#          deps: macos-universal
-#          version: 14
-#          scons-script: './.github/workflows/scripts/mac/scons-build.sh'
-        - name: ubuntu
-          suffix: ''
-          version: 22.04
-          scons-script: scons
-#        - name: windows
+        - name: macos
+          suffix: '-intel'
+          flag: x86_64
+          deps: macos-universal
+          version: 12
+          scons-script: './.github/workflows/scripts/mac/scons-build.sh'
+        - name: macos
+          flag: arm64
+          suffix: '-silicon'
+          deps: macos-universal
+          version: 14
+          scons-script: './.github/workflows/scripts/mac/scons-build.sh'
+#        - name: ubuntu
 #          suffix: ''
-#          version: 2019
-#          scons-script: './.github/workflows/scripts/win/scons-build.bat'
+#          version: 22.04
+#          scons-script: scons
+        - name: windows
+          suffix: ''
+          version: 2019
+          scons-script: './.github/workflows/scripts/win/scons-build.bat'
         configuration:
         - Release
         - Debug
