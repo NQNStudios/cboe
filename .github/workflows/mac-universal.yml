@@ -44,7 +44,7 @@ jobs:
         if: ${{ matrix.os.name == 'macos' }}
 
       - name: 'Tar files'
-        run: 'tar -cvf cboe-macos-universal-${{matrix.configuration}}.tar "build/Blades of Exile"
+        run: 'tar -cvf cboe-macos-universal-${{matrix.configuration}}.tar "build/Blades of Exile"'
 
       # Upload everything as artifact
       - uses: actions/upload-artifact@v4
