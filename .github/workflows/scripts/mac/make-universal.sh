@@ -20,4 +20,4 @@ combine() {
 
 combine "Blades of Exile"
 combine "BoE Scenario Editor"
-combine "BoC Character Editor"
+combine "BoE Character Editor"
