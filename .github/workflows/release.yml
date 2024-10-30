@@ -11,7 +11,7 @@ jobs:
   release:
     env:
       ARCH: ${{ matrix.os.flag }}
-      MACOSX_DEPLOYMENT_TARGET: 10.13
+      MACOSX_DEPLOYMENT_TARGET: 10.15
       BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       PROD_MACOS_CERTIFICATE: '${{ secrets.PROD_MACOS_CERTIFICATE }}'
       PROD_MACOS_CERTIFICATE_PWD: '${{ secrets.PROD_MACOS_CERTIFICATE_PWD }}'
