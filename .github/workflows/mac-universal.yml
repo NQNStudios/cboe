@@ -40,7 +40,7 @@ jobs:
 
       # Codesigning is handled by the universal workflow!
       - name: Codesign and notarize
-        run: 'NOTARIZE="no" ./github/workflows/scripts/mac/sign-apps.sh'
+        run: 'NOTARIZE="no" .github/workflows/scripts/mac/sign-apps.sh'
 
       - name: 'Tar files'
         run: 'tar -cvf cboe-macos-universal-${{matrix.configuration}}.tar "build/Blades of Exile"'
