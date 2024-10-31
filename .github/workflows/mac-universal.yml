@@ -61,4 +61,4 @@ jobs:
       - name: 'Itch.io release'
         run: './.github/workflows/scripts/butler_push.sh'
         shell: bash
-        if: ${{ startsWith(github.ref, 'refs/tags/') && matrix.configuration == 'Release' }}
+        if: ${{ matrix.configuration == 'Release' }}
