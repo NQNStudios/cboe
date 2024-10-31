@@ -19,6 +19,10 @@ security import certificate.p12 -k build.keychain -P "$PROD_MACOS_CERTIFICATE_PW
 security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$PROD_MACOS_CI_KEYCHAIN_PWD" build.keychain
 
 sign() {
+    if [ "$SIGN" = "no" ];
+    then
+        return
+    fi
     APP_PATH="build/Blades of Exile/$1.app"
 
     # We finally codesign our app bundle, specifying the Hardened runtime option
@@ -40,6 +44,7 @@ sign() {
     then
         return
     fi
+
     # (same source)
 
     # Store the notarization credentials so that we can prevent a UI password dialog
