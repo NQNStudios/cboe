@@ -19,3 +19,9 @@ combine() {
 combine "Blades of Exile"
 combine "BoE Scenario Editor"
 combine "BoE Character Editor"
+
+cp -r "$SILICON/Blades of Exile/Blades of Exile Base" "build/Blades of Exile/"
+cp -r "$SILICON/Blades of Exile/Blades of Exile Scenarios" "build/Blades of Exile/"
+cp -r "$SILICON/Blades of Exile/data" "build/Blades of Exile/"
+cp -r "$SILICON/Blades of Exile/docs" "build/Blades of Exile/"
+cp "$SILICON/Blades of Exile/.itch.toml" "build/Blades of Exile/"
