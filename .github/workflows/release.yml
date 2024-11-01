@@ -97,7 +97,8 @@ jobs:
         run: 'python 7145bcf6621891f5176c8caa165d6b93/fix-rpaths.py "build/Blades of Exile/BoE Character Editor.app"'
         if: ${{ matrix.os.name == 'macos' }}
 
-      - run: cp .itch.toml build/Blades of Exile/.itch.toml
+      - run: cp .itch.toml "build/Blades of Exile/"
+        shell: bash
 
       - name: 'Tar unsigned files'
         run: 'tar -cvf cboe-${{ matrix.os.name }}${{ matrix.os.suffix }}-${{ matrix.configuration }}-unsigned.tar "Blades of Exile"'
