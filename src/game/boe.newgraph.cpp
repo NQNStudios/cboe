@@ -651,6 +651,10 @@ void draw_shop_graphics(bool pressed,rectangle clip_area_rect) {
 	style.pointSize = 18;
 	
 	talk_gworld.setActive(false);
+	if(!pressed){
+		clear_scale_aware_text(talk_gworld);
+	}
+
 	if(pressed) {
 		clip_rect(talk_gworld, clip_area_rect);
 	}
@@ -807,7 +811,7 @@ void refresh_shopping() {
 	rectangle from_rect(talk_gworld);
 	rectangle to_rect = from_rect;
 	to_rect.offset(talk_gword_offset_x, talk_gword_offset_y);
-	rect_draw_some_item(talk_gworld.getTexture(),from_rect,mainPtr,to_rect);
+	rect_draw_some_item(talk_gworld,from_rect,mainPtr,to_rect);
 }
 
 static void place_talk_face() {
@@ -835,7 +839,7 @@ void click_talk_rect(word_rect_t word) {
 
 	rectangle talkRect(talk_gworld), wordRect(word.rect);
 	mainPtr.setActive();
-	rect_draw_some_item(talk_gworld.getTexture(),talkRect,mainPtr,talk_area_rect);
+	rect_draw_some_item(talk_gworld,talkRect,mainPtr,talk_area_rect);
 	wordRect.offset(talk_area_rect.topLeft());
 	wordRect.width() += 10; // Arbitrary extra space fixes #481 and shouldn't cause any problems
 	TextStyle style;
@@ -847,7 +851,7 @@ void click_talk_rect(word_rect_t word) {
 	place_talk_face();
 	mainPtr.display();
 	play_sound(37, time_in_ticks(5));
-	rect_draw_some_item(talk_gworld.getTexture(),talkRect,mainPtr,talk_area_rect);
+	rect_draw_some_item(talk_gworld,talkRect,mainPtr,talk_area_rect);
 	place_talk_face();
 }
 
@@ -871,6 +875,7 @@ void place_talk_str(std::string str_to_place,std::string str_to_place2,short col
 	}
 	
 	area_rect = rectangle(talk_gworld);
+	clear_scale_aware_text(talk_gworld);
 	frame_rect(talk_gworld, area_rect, sf::Color::Black);
 	area_rect.inset(1,1);
 	tileImage(talk_gworld, area_rect,bg[12]);
@@ -938,14 +943,14 @@ void place_talk_str(std::string str_to_place,std::string str_to_place2,short col
 	
 	// Finally place processed graphics
 	mainPtr.setActive();
-	rect_draw_some_item(talk_gworld.getTexture(),oldRect,mainPtr,talk_area_rect);
+	rect_draw_some_item(talk_gworld,oldRect,mainPtr,talk_area_rect);
 	// I have no idea what this check is for; I'm jsut preserving it in case it was important
 	if(c_rect.right == 0) place_talk_face();
 }
 
 void refresh_talking() {
 	rectangle tempRect(talk_gworld);
-	rect_draw_some_item(talk_gworld.getTexture(),tempRect,mainPtr,talk_area_rect);
+	rect_draw_some_item(talk_gworld,tempRect,mainPtr,talk_area_rect);
 	place_talk_face();
 }
 
