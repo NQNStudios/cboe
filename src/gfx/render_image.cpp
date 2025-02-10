@@ -80,6 +80,7 @@ void rect_draw_some_item(const sf::Texture& src_gworld,rectangle src_rect,sf::Re
 // I added this because I tried using clip_rect to fix missiles/booms and it didn't work.
 void rect_draw_some_item(const sf::Texture& src_gworld,rectangle src_rect,sf::RenderTarget& targ_gworld,rectangle targ_rect,rectangle in_frame,sf::BlendMode mode){
 	rectangle targ_clipped = targ_rect & in_frame;
+	if(targ_clipped.empty()) return;
 	rectangle src_clipped = src_rect;
 	src_clipped.top += (targ_clipped.top - targ_rect.top);
 	src_clipped.left += (targ_clipped.left - targ_rect.left);
