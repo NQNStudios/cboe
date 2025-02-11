@@ -451,8 +451,8 @@ void do_missile_anim(short num_steps,location missile_origin,short sound_num) {
 				
 				missile_place_rect[i] = temp_rect;
 				
-				// When the missile we're tracking goes off-screen, re-position the camera
-				if(tracking_missile == i && (missile_place_rect[i] & ter_rects.to) != missile_place_rect[i] && !recentered){
+				// Halfway through the missile's arc, or when the missile we're tracking goes off-screen, re-position the camera
+				if(((t == num_steps / 2) || (tracking_missile == i && (missile_place_rect[i] & ter_rects.to) != missile_place_rect[i])) && !recentered){
 					location old_center = center;
 
 					center = camera_dest;
