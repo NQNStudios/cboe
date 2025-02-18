@@ -78,10 +78,10 @@ cScenario::cScenario() {
 		scenario_timers[i].node = -1;
 	}
 	scen_name = "Scen name";
-	who_wrote[0] = "Who wrote 1";
-	who_wrote[1] = "Who wrote 2";
-	contact_info[0] = "Name not given";
-	contact_info[1] = "Contact info";
+	who_wrote[0] = "By {author}. Contact: {contact}";
+	who_wrote[1] = "An exciting adventure!";
+	contact_info[0] = "";
+	contact_info[1] = "";
 }
 
 cScenario::cScenario(const cScenario& other)
