@@ -93,7 +93,10 @@ public:
 	std::vector<cItem> scen_items;
 	std::string scen_name;
 	std::string who_wrote[2];
+
+	// Deprecated: author and contact info, which were not shown in-game anyway
 	std::string contact_info[2];
+
 	std::array<std::string, 6> intro_strs;
 	std::vector<std::string> journal_strs;
 	std::vector<std::string> spec_strs;

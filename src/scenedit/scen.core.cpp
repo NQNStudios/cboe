@@ -2796,12 +2796,43 @@ static bool save_scen_details(cDialog& me, std::string, eKeyMod) {
 			case '4': scenario.rating = eContentRating::NC17; break;
 		}
 	}
-	scenario.adjust_diff = dynamic_cast<cLed&>(me["adjust"]).getState() != led_red;
+	scenario.scen_name = me["title"].getText();
 	for(short i = 0; i < 3; i++)
 		scenario.format.ver[i] = me["ver" + std::to_string(i + 1)].getTextAsNum();
 	scenario.who_wrote[0] = me["who1"].getText().substr(0, 100);
 	scenario.who_wrote[1] = me["who2"].getText().substr(0, 100);
+	scenario.contact_info[0] = me["author"].getText().substr(0, 256);
 	scenario.contact_info[1] = me["contact"].getText().substr(0, 256);
+	return true;
+}
+
+static void put_scen_details_in_dlog(cDialog& me) {
+	me["title"].setText(scenario.scen_name);
+	dynamic_cast<cLedGroup&>(me["difficulty"]).setSelected("lvl" + std::to_string(scenario.difficulty + 1));
+	dynamic_cast<cLedGroup&>(me["rating"]).setSelected("rate" + std::to_string(scenario.rating + 1));
+	for(int i = 0; i < 3; i++)
+		me["ver" + std::to_string(i + 1)].setTextToNum(scenario.format.ver[i]);
+	me["who1"].setText(scenario.who_wrote[0]);
+	me["who2"].setText(scenario.who_wrote[1]);
+	if(!scenario.contact_info[0].empty()){
+		me["author"].setText(scenario.contact_info[0]);
+	}else{
+		me["author"].hide();
+		me["author-text"].hide();
+	}
+	if(!scenario.contact_info[1].empty()){
+		me["contact"].setText(scenario.contact_info[1]);
+	}else{
+		me["contact"].hide();
+		me["contact-text"].hide();
+	}
+}
+
+static bool save_scen_adv_details(cDialog& me, std::string, eKeyMod) {
+	if(!me.toast(true)) return true;
+
+	scenario.adjust_diff = dynamic_cast<cLed&>(me["adjust"]).getState() != led_red;
+
 	scenario.campaign_id = me["cpnid"].getText();
 	scenario.bg_out = boost::lexical_cast<int>(me["bg-out"].getText().substr(10));
 	scenario.bg_town = boost::lexical_cast<int>(me["bg-town"].getText().substr(10));
@@ -2811,15 +2842,9 @@ static bool save_scen_details(cDialog& me, std::string, eKeyMod) {
 	return true;
 }
 
-static void put_scen_details_in_dlog(cDialog& me) {
-	dynamic_cast<cLedGroup&>(me["difficulty"]).setSelected("lvl" + std::to_string(scenario.difficulty + 1));
-	dynamic_cast<cLedGroup&>(me["rating"]).setSelected("rate" + std::to_string(scenario.rating + 1));
+
+static void put_scen_adv_details_in_dlog(cDialog& me) {
 	dynamic_cast<cLed&>(me["adjust"]).setState(scenario.adjust_diff ? led_red : led_off);
-	for(int i = 0; i < 3; i++)
-		me["ver" + std::to_string(i + 1)].setTextToNum(scenario.format.ver[i]);
-	me["who1"].setText(scenario.who_wrote[0]);
-	me["who2"].setText(scenario.who_wrote[1]);
-	me["contact"].setText(scenario.contact_info[1]);
 	me["cpnid"].setText(scenario.campaign_id);
 	me["bg-out"].setText("Outdoors: " + std::to_string(scenario.bg_out));
 	me["bg-town"].setText("In towns: " + std::to_string(scenario.bg_town));
@@ -2863,11 +2888,19 @@ static bool edit_scen_default_bgs(cDialog& me, std::string which, eKeyMod) {
 void edit_scen_details() {
 	cDialog info_dlg(*ResMgr::dialogs.get("edit-scenario-details"));
 	info_dlg["okay"].attachClickHandler(save_scen_details);
-	info_dlg.attachClickHandlers(edit_scen_default_bgs, {"bg-out", "bg-town", "bg-dungeon", "bg-fight"});
-	info_dlg["pickinit"].attachClickHandler(edit_scen_init_spec);
 	
 	put_scen_details_in_dlog(info_dlg);
 	
+	info_dlg.run();
+}
+
+void edit_scen_adv_details() {
+	cDialog info_dlg(*ResMgr::dialogs.get("edit-scenario-advanced"));
+	info_dlg["okay"].attachClickHandler(save_scen_adv_details);
+	info_dlg.attachClickHandlers(edit_scen_default_bgs, {"bg-out", "bg-town", "bg-dungeon", "bg-fight"});
+	info_dlg["pickinit"].attachClickHandler(edit_scen_init_spec);
+
+	put_scen_adv_details_in_dlog(info_dlg);
 	info_dlg.run();
 }
 
@@ -2961,7 +2994,7 @@ bool build_scenario() {
 	
 	scenario = cScenario();
 	scenario.scen_name = title;
-	scenario.contact_info[0] = author;
+	scenario.who_wrote[0] = "By " + author + ". Contact: {contact}";
 	scenario.default_ground = grass ? 2 : 0;
 	
 	scenario.feature_flags = default_feature_flags;
