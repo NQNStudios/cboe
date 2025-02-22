@@ -823,9 +823,8 @@ static void replay_action(Element& action) {
 	}else CHECK_REPLAY(cancel_item_target, true, did_something, need_redraw, need_reprint)
 	else if(t == "easter_egg"){
 		easter_egg(boost::lexical_cast<int>(action.GetText()));
-	}else if(t == "show_debug_panel"){
-		show_debug_help();
-	}else if(t == "debug_fight_encounter"){
+	}else CHECK_REPLAY(show_debug_help, false)
+	else if(t == "debug_fight_encounter"){
 		debug_fight_encounter(str_to_bool(action.GetText()));
 	}else CHECK_REPLAY(preview_every_dialog_xml, false)
 	else if(t == "advance_time"){
