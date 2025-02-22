@@ -117,7 +117,7 @@ void draw_line(sf::RenderTarget& target, location from, location to, int thickne
 	line[0].color = colour;
 	line[1].position = to;
 	line[1].color = colour;
-	setActiveRenderTarget(target);
+	target.setActive();
 	float saveThickness;
 	glGetFloatv(GL_LINE_WIDTH, &saveThickness);
 	glLineWidth(thickness);
@@ -128,9 +128,7 @@ void draw_line(sf::RenderTarget& target, location from, location to, int thickne
 static void fill_shape(sf::RenderTarget& target, sf::Shape& shape, int x, int y, sf::Color colour) {
 	shape.setPosition(x, y);
 	shape.setFillColor(colour);
-	setActiveRenderTarget(target);
 	target.draw(shape);
-	
 }
 
 static void frame_shape(sf::RenderTarget& target, sf::Shape& shape, int x, int y, sf::Color colour) {
@@ -254,8 +252,7 @@ void clip_rect(sf::RenderTarget& where, rectangle rect) {
 		store_clip_rects[p] = rect;
 	}
 
-	// TODO: Make sure this works for the scissor test...
-	setActiveRenderTarget(where);
+	where.setActive();
 	auto viewport = where.getView().getViewport();
 	rectangle winRect(where);
 	location pivot = rect.bottomLeft();
@@ -274,7 +271,7 @@ void undo_clip(sf::RenderTarget& where) {
 		store_clip_rects.erase(p);
 	}
 
-	setActiveRenderTarget(where);
+	where.setActive();
 	glDisable(GL_SCISSOR_TEST);
 	glDisable(GL_STENCIL_TEST);
 }

@@ -95,7 +95,6 @@ void rect_draw_some_item(const sf::Texture& src_gworld,rectangle src_rect,sf::Re
 	src_rect &= src_gworld_rect;
 	targ_rect &= targ_gworld_rect;
 	if(src_rect.empty() || targ_rect.empty()) return;
-	setActiveRenderTarget(targ_gworld);
 	sf::Sprite tile(src_gworld, src_rect);
 	tile.setPosition(targ_rect.left, targ_rect.top);
 	double xScale = targ_rect.width(), yScale = targ_rect.height();
@@ -162,13 +161,4 @@ void rect_draw_some_item(sf::RenderTexture& src_render_gworld,rectangle src_rect
 void rect_draw_some_item(sf::RenderTexture& src_render_gworld,rectangle src_rect,const sf::Texture& mask_gworld,sf::RenderTarget& targ_gworld,rectangle targ_rect) {
 	rect_draw_some_item(src_render_gworld.getTexture(), src_rect, mask_gworld, targ_gworld, targ_rect);
 	draw_stored_scale_aware_text(src_render_gworld, targ_gworld, targ_rect);
-}
-
-void setActiveRenderTarget(sf::RenderTarget& where) {
-	const std::type_info& type = typeid(where);
-	if(type == typeid(sf::RenderWindow&))
-		dynamic_cast<sf::RenderWindow&>(where).setActive();
-	else if(type == typeid(sf::RenderTexture&))
-		dynamic_cast<sf::RenderTexture&>(where).setActive();
-	else throw std::bad_cast();
 }
