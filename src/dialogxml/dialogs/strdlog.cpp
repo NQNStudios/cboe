@@ -14,6 +14,7 @@
 #include "fileio/resmgr/res_dialog.hpp"
 #include "mathutil.hpp"
 #include "utility.hpp"
+#include "replay.hpp"
 
 DialogDefn& cStrDlog::getDefn(short n_strs, ePicType type, bool hasTitle){
 	std::ostringstream sout;
@@ -120,6 +121,7 @@ void showFatalError(std::string str1, cDialog* parent) {
 }
 
 void showFatalError(std::string str1, std::string str2, cDialog* parent) {
+	if(replaying) replaying = false;
 	giveError(25, "Error!!!", str1, str2, parent);
 }
 
