@@ -545,43 +545,45 @@ void cDialog::handle_events() {
 	sf::Event currentEvent;
 	cFramerateLimiter fps_limiter;
 
-	while(dialogNotToast) {
-		if(replaying && fname != "confirm-interrupt-replay" && check_for_interrupt("confirm-interrupt-replay")){
-			replaying = false;
-			return;
-		}else if(replaying && has_next_action("click_control")){
-			Element& next_action = pop_next_action();
-			auto info = info_from_action(next_action);
-			if(info["id"].empty()) continue;
-			eKeyMod mods = static_cast<eKeyMod>(std::stoi(info["mods"]));
-			controls[info["id"]]->triggerClickHandler(*this, info["id"], mods);
-		}else if(replaying && has_next_action("field_input")){
-			Element& next_action = pop_next_action();
-			cKey key = key_from_action(next_action);
-			dynamic_cast<cTextField&>(getControl(currentFocus)).handleInput(key, true);
-		}else if(replaying && has_next_action("handleTab")){
-			Element& next_action = pop_next_action();
-			handleTab(str_to_bool(next_action.GetText()));
-		}else if(replaying && has_next_action("field_focus")) {
-			Element& next_action = pop_next_action();
-			setFocus(&(dynamic_cast<cTextField&>(getControl(next_action.GetText()))));
-		}else if(replaying && has_next_action("field_selection")) {
-			cTextField& text_field = dynamic_cast<cTextField&>(getControl(currentFocus));
-			text_field.replay_selection(pop_next_action());
-		}else if(replaying && has_next_action()){
-			throw std::string { "Replaying a dialog, have the wrong replay action: " + next_action_type() };
-		}else{
-			while(pollEvent(win, currentEvent)){
-				handle_one_event(currentEvent, fps_limiter);
+	try{
+		while(dialogNotToast) {
+			if(replaying && fname != "confirm-interrupt-replay" && check_for_interrupt("confirm-interrupt-replay")){
+				replaying = false;
+				return;
+			}else if(replaying && has_next_action("click_control")){
+				Element& next_action = pop_next_action();
+				auto info = info_from_action(next_action);
+				if(info["id"].empty()) continue;
+				eKeyMod mods = static_cast<eKeyMod>(std::stoi(info["mods"]));
+				controls[info["id"]]->triggerClickHandler(*this, info["id"], mods);
+			}else if(replaying && has_next_action("field_input")){
+				Element& next_action = pop_next_action();
+				cKey key = key_from_action(next_action);
+				dynamic_cast<cTextField&>(getControl(currentFocus)).handleInput(key, true);
+			}else if(replaying && has_next_action("handleTab")){
+				Element& next_action = pop_next_action();
+				handleTab(str_to_bool(next_action.GetText()));
+			}else if(replaying && has_next_action("field_focus")) {
+				Element& next_action = pop_next_action();
+				setFocus(&(dynamic_cast<cTextField&>(getControl(next_action.GetText()))));
+			}else if(replaying && has_next_action("field_selection")) {
+				cTextField& text_field = dynamic_cast<cTextField&>(getControl(currentFocus));
+				text_field.replay_selection(pop_next_action());
+			}else if(replaying && has_next_action()){
+				throw std::string { "Replaying a dialog, have the wrong replay action: " + next_action_type() };
+			}else{
+				while(pollEvent(win, currentEvent)){
+					handle_one_event(currentEvent, fps_limiter);
+				}
 			}
+
+			// Ideally, this should be the only draw call that is done in a cycle.
+			draw();
+
+			// Prevent the loop from executing too fast.
+			fps_limiter.frame_finished();
 		}
-
-		// Ideally, this should be the only draw call that is done in a cycle.
-		draw();
-
-		// Prevent the loop from executing too fast.
-		fps_limiter.frame_finished();
-	}
+	} CATCH_AND_SHOW_ERRORS(this, toastRecursive(false));
 }
 
 void cDialog::handleTab(bool reverse) {
@@ -780,6 +782,18 @@ bool cDialog::toast(bool triggerFocus){
 	}
 	dialogNotToast = false;
 	didAccept = triggerFocus;
+	return true;
+}
+
+bool cDialog::toastRecursive(bool triggerFocus) {
+	cDialog* next = this;
+	while(next != nullptr){
+		if(!next->toast(triggerFocus)){
+			return false;
+		}
+
+		next = next->parent;
+	}
 	return true;
 }
 

@@ -186,6 +186,8 @@ public:
 	///
 	/// Generally, you would pass true in a handler for an OK button and false in a handler for a Cancel button.
 	bool toast(bool triggerFocus);
+	/// Close the dialog and its entire parent tree.
+	bool toastRecursive(bool triggerFocus);
 	/// Reopen the dialog after closing it.
 	/// This is meant to be called from within an event handler to reverse a previous call to toast();
 	/// if you're already out of the dialog's event loop, you should instead call run() to reopen it.

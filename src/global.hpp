@@ -53,4 +53,18 @@ inline void LOG(std::string line) {
 
 #define LOG_VALUE(x) std::cout << #x << ": " << (x) << std::endl;
 
+class cDialog;
+extern void showFatalError(std::string str1, cDialog* parent);
+
+#define CATCH_AND_SHOW_ERRORS(dlg_parent, handle_specific) catch(std::exception& x) { \
+	showFatalError(x.what(), dlg_parent); \
+	handle_specific; \
+} catch(std::string& x) { \
+	showFatalError(x, dlg_parent); \
+	handle_specific; \
+} catch(...) { \
+	showFatalError("An unknown error occurred!", dlg_parent); \
+	handle_specific; \
+}
+
 #endif
