@@ -44,6 +44,10 @@ bool cScrollbar::isScrollable() const {
 void cScrollbar::setPosition(long newPos, bool record) {
 	if(record && recording){
 		std::map<std::string,std::string> info;
+		// Scrollbars in panes aren't part of the control hierarchy and don't have names.
+		if(name.empty()){
+			name = pane->getName();
+		}
 		info["name"] = name;
 		// Might as well record newPos before it gets clamped, so replays will verify that clamping
 		// still works.
