@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- NOTE: This file should be updated to use relative positioning the next time it changes. -->
+<?xml-stylesheet href="dialog.xsl" type="text/xsl"?>
+<dialog defbtn='cancel'>
+	<text size='large' top='9' left='130' width='126' height='17'>Load a party:</text>
+	<stack name='list'>
+		<page>
+			<!-- Manual saves -->
+			<text name='party1' framed='true' top='34' left='21' width='352' height='80'>
+				{File}
+			</text>
+			<pict name='pc1a' relative='pos-in pos-in' anchor='party1' type='pc' num='0' top='12' left='9'/>
+			<pict name='pc1b' relative='pos-in' rel-anchor='prev' type='pc' num='0' top='0' left='38'/>
+			<pict name='pc1c' type='pc' num='0' top='46' left='110'/>
+			<pict name='pc1d' type='pc' num='0' top='46' left='150'/>
+			<pict name='pc1e' type='pc' num='0' top='46' left='190'/>
+			<pict name='pc1f' type='pc' num='0' top='46' left='230'/>
+			<text name='lv1' framed='true' top='38' left='270' width='90' height='71'>Avg. Level: {Lv}</text>
+			<text name='loc1' top='50' left='270' width='100' height='81'>{Saved}<br/><br/>{Location}<br/><br/>{Scenario}</text>
+			<button name='load1' type='regular' top='86' left='30'>Load</button>
+			<button name='auto1' type='large' top='86' left='100'>Autosaves</button>
+		</page>
+		<page default='true' template='scenarios'>
+			<!-- Auto saves -->
+			<pict type='pc' num='0' top='10' left='10'/>
+			<pict name='pic1' type='scen' num='0' top='58' left='62'/>
+			<text name='desc1' framed='true' top='34' left='104' width='292' height='80'/>
+			<text outline='double' name='start1' top='32' left='59' width='342' height='84'/>
+		</page>
+	</stack>
+	<button name='find' type='large' def-key='f' top='294' left='200'>File Browser</button>
+	<button name='prev' type='left' def-key='left' top='294' left='62'/>
+	<button name='next' type='right' def-key='right' top='294' left='125'/>
+	<button name='cancel' type='regular' def-key='esc' top='294' left='337'>Cancel</button>
+</dialog>
