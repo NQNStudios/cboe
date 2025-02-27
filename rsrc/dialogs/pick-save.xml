@@ -10,13 +10,13 @@
 				{File}
 			</text>
 			<pict name='pc1a' relative='pos-in pos-in' anchor='party1' type='pc' num='0' top='12' left='9'/>
-			<pict name='pc1b' relative='pos-in' rel-anchor='prev' type='pc' num='0' top='0' left='38'/>
+			<pict name='pc1b' relative='pos-in' rel-anchor='prev' type='pc' num='0' top='0' left='40'/>
 			<pict name='pc1c' type='pc' num='0' top='46' left='110'/>
 			<pict name='pc1d' type='pc' num='0' top='46' left='150'/>
 			<pict name='pc1e' type='pc' num='0' top='46' left='190'/>
 			<pict name='pc1f' type='pc' num='0' top='46' left='230'/>
 			<text name='lv1' framed='true' top='38' left='270' width='90' height='71'>Avg. Level: {Lv}</text>
-			<text name='loc1' top='50' left='270' width='100' height='81'>{Saved}<br/><br/>{Location}<br/><br/>{Scenario}</text>
+			<text name='loc1' top='50' left='270' width='100' height='81'>{LastSaved}<br/><br/>{Scenario}<br/><br/>{Location}</text>
 			<button name='load1' type='regular' top='86' left='30'>Load</button>
 			<button name='auto1' type='large' top='86' left='100'>Autosaves</button>
 		</page>
