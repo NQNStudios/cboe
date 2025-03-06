@@ -201,6 +201,17 @@ eMenuChoice menuChoice=eMenuChoice::MENU_CHOICE_NONE;
 short menuChoiceId=-1;
 #endif
 
+static void handleFatalError(std::string what) {
+	showFatalError(what);
+	if(recording){
+		record_action("error", what);
+		extern fs::path log_file;
+		if(log_file.empty() && cChoiceDlog("ask-save-replay", {"yes", "no"}).show() == "yes") {
+			save_replay_log();
+		}
+	}
+}
+
 int main(int argc, char* argv[]) {
 #if 0
 	void debug_oldstructs();
@@ -233,13 +244,13 @@ int main(int argc, char* argv[]) {
 		close_program();
 		return 0;
 	} catch(std::exception& x) {
-		showFatalError(x.what());
+		handleFatalError(x.what());
 		throw;
 	} catch(std::string& x) {
-		showFatalError(x);
+		handleFatalError(x);
 		throw;
 	} catch(...) {
-		showFatalError("An unknown error occurred!");
+		handleFatalError("An unknown error occurred!");
 		throw;
 	}
 }
