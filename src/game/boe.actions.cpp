@@ -4068,6 +4068,18 @@ void save_replay_log(){
 	start_log_file(out_file.string());
 }
 
+void debug_crash() {
+	// If they don't confirm, the game can continue normally, and we'll need to replay
+	// that the confirmation opened and closed.
+	if(recording){
+		record_action("debug_crash", "");
+	}
+	std::string confirm = cChoiceDlog("debug-crash-confirm",{"yes","no"}).show();
+	if(confirm == "yes"){
+		throw std::string { "Be careful what you wish for!" };
+	}
+}
+
 void clear_trapped_monst() {
 	if(recording){
 		record_action("clear_trapped_monst", "");
