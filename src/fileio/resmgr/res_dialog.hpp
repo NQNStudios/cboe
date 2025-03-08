@@ -12,12 +12,16 @@
 #include <string>
 #include "ticpp.h"
 #include "resmgr.hpp"
+#include "location.hpp"
+
 
 struct DialogDefn {
 	/// The dialog's ID is the base filename without the extension
 	std::string id;
 	/// The XML definition of the dialog.
 	ticpp::Document defn;
+	/// Precalculated frames of controls.
+	std::vector<rectangle> frames;
 };
 /// Load a dialog definition from an XML file.
 DialogDefn* load_dialog_defn(const fs::path& fpath);

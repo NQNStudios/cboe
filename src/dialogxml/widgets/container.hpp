@@ -38,10 +38,14 @@ public:
 	/// @throw std::invalid_argument if the control does not exist.
 	/// @return a reference to the requested control.
 	virtual cControl& getChild(std::string id) = 0;
-	/// Executes a function for every control in this container.
+	/// Executes a function for every top-level control in this container.
 	/// @param callback A function taking a string as its first argument
 	/// and a control reference as its second argument.
 	virtual void forEach(std::function<void(std::string,cControl&)> callback) = 0;
+	/// Executes a function for every control in this container including nested children.
+	/// @param callback A function taking a string as its first argument
+	/// and a control reference as its second argument.
+	void forEachRecursive(std::function<void(std::string,cControl&)> callback);
 	/// Generate a unique ID for a child control. The explicitId is the ID specified in the XML, if any.
 	/// This may be called more than once, so it should not return the same value twice in a row,
 	/// unless it can guarantee the value is not already assigned to another control.

@@ -341,6 +341,9 @@ static void process_args(int argc, char* argv[]) {
 	cli |= clara::Opt(replay_strict)["--strict"]("Enforces strictly identical replay behavior, even where this is only cosmetic");
 	cli |= clara::Opt(replay_speed, "fps")["--replay-speed"]("Specifies how quickly actions are processed while replaying");
 
+	// Development options:
+	cli |= clara::Opt(cDialog::serializeLayouts)["--layout"]("Serialize calculated layouts for large, slow dialogs");
+
 	// Scenario options:
 	// Loading and entering a scenario has to happen after other initialization steps,
 	// so we just save these options for later.

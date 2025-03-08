@@ -143,11 +143,23 @@ public:
 	template<typename type> void setResult(const type& val){
 		result = val;
 	}
-	/// Iterate through all the controls in the dialog.
+	/// Iterate through all the top-level controls in the dialog.
 	/// @param callback A function taking a string as its first argument
 	/// and a control reference as its second argument.
 	template<typename Fcn> void forEach(Fcn callback) {
 		for(auto ctrl : controls) {
+			callback(ctrl.first, *ctrl.second);
+		}
+	}
+	/// Iterate through all the controls in the dialog, including children of nested containers
+	/// @param callback A function taking a string as its first argument
+	/// and a control reference as its second argument.
+	template<typename Fcn> void forEachRecursive(Fcn callback) {
+		for(auto ctrl : controls) {
+			cContainer* container = dynamic_cast<cContainer*>(ctrl.second);
+			if(container != nullptr){
+				container->forEachRecursive(callback);
+			}
 			callback(ctrl.first, *ctrl.second);
 		}
 	}
@@ -278,6 +290,8 @@ private:
 	sf::Clock animTimer, paintTimer;
 	friend class cControl;
 	friend class cContainer;
+public:
+	static bool serializeLayouts;
 };
 
 /// Thrown when an invalid node (element or text/cdata) is found while parsing an XML dialog definition.

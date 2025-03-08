@@ -106,3 +106,14 @@ void cContainer::validatePostParse(ticpp::Element& who, std::string fname, const
 	});
 	if(allResolved) postChildrenResolve();
 }
+
+// cContainer::forEach() is implemented by subclasses
+void cContainer::forEachRecursive(std::function<void(std::string,cControl&)> callback) {
+	forEach([callback](std::string id, cControl& child) {
+		cContainer* childContainer = dynamic_cast<cContainer*>(&child);
+		if(childContainer != nullptr){
+			childContainer->forEachRecursive(callback);
+		}
+		callback(id, child);
+	});
+}

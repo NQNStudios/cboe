@@ -239,8 +239,11 @@ void cDialog::loadFromFile(const DialogDefn& file){
 				}
 			}
 			prevCtrl = *inserted;
-			// Needed to correctly resolve relative positioning
-			inserted->second->recalcRect();
+
+			if(file.frames.empty()){
+				// Needed to correctly resolve relative positioning
+				inserted->second->recalcRect();
+			}
 		}
 		
 		// Resolve relative positioning
@@ -320,15 +323,21 @@ void cDialog::loadFromFile(const DialogDefn& file){
 				pane->postChildrenResolve();
 			}
 		};
+		if(file.frames.empty()){
+			do {
+				all_resolved = true;
+				for(auto& p : controls) {
+					auto ctrl = p.second;
 
-		do {
-			all_resolved = true;
-			for(auto& p : controls) {
-				auto ctrl = p.second;
-
-				process_ctrl(p.first, *ctrl);
-			}
-		} while(!all_resolved);
+					process_ctrl(p.first, *ctrl);
+				}
+			} while(!all_resolved);
+		}else{
+			int idx = 0;
+			forEachRecursive([&file, &idx](std::string, cControl& control) {
+				control.frame = file.frames[idx++];
+			});
+		}
 		
 		// Set the default button.
 		if(hasControl(defaultButton))
@@ -392,6 +401,19 @@ void cDialog::loadFromFile(const DialogDefn& file){
 	if(bg == BG_DARK) defTextClr = sf::Color::White;
 	// now calculate window rect
 	recalcRect();
+	// TODO check if this dialog NEEDS to be serialized
+	if(serializeLayouts){
+		ticpp::Document layout;
+		Element root("rects");
+		layout.InsertEndChild(root);
+		forEachRecursive([layout](std::string, cControl& control) {
+			Element next_rect("rect");
+			Text rect_text(boost::lexical_cast<std::string>(control.frame));
+			next_rect.InsertEndChild(rect_text);
+			layout.FirstChildElement()->InsertEndChild(next_rect);
+		});
+		layout.SaveFile(file.id + ".layout.xml");
+	}
 	currentFocus = "";
 	for(ctrlIter iter = controls.begin(); iter != controls.end(); iter++){
 		if(typeid(iter->second) == typeid(cTextField*)){
@@ -445,6 +467,7 @@ void cDialog::recalcRect(){
 }
 
 bool cDialog::initCalled = false;
+bool cDialog::serializeLayouts = false;
 
 void cDialog::init(){
 	cButton::init();
