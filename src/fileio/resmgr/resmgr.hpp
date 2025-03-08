@@ -11,8 +11,11 @@
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
+#include <thread>
+#include <mutex>
 #include <stack>
 #include <unordered_map>
+#include <map>
 #include <memory>
 #include <sstream>
 #include <vector>
@@ -85,6 +88,10 @@ namespace ResMgr {
 		size_t overflow;
 		std::unordered_map<std::string, cPointer<T>> resources;
 		std::unordered_map<std::string, fs::path> resolvedPaths;
+		std::map<std::string, std::thread> backgroundThreads;
+		std::mutex threadsMutex;
+		// TODO goddammit
+		std::mutex resourcesMutex;
 		std::stack<fs::path> paths;
 		cLoader<T>& load;
 		/// Converts a resource name to an absolute file path referencing the resource
@@ -128,10 +135,39 @@ namespace ResMgr {
 				}
 			}
 		}
+		void threadLoad(const std::string& resourceName, const fs::path& resourcePath){
+			T* ptr = load(resourcePath);
+
+			resourcesMutex.lock();
+			auto resIter = resources.emplace(resourceName, cPointer<T>(false)).first;
+			resIter->second.res_ptr.reset(new std::shared_ptr<T>(ptr));
+			resIter->second.path = resourcePath.string();
+			resourcesMutex.unlock();
+
+			// Threaded loading doesn't call gc() because that seems like a nightmare for
+			// thread safety.
+
+			threadsMutex.lock();
+			backgroundThreads.erase(resourceName);
+			threadsMutex.unlock();
+		}
 	public:
 		cPool(cLoader<T>& loader, size_t max, std::string dir = "")
 			: directory(dir), overflow(max), load(loader)
 		{}
+		/// Load this resource in a background thread, keeping the program responsive.
+		/// It might be ready when get() is called, but if not, the program will wait.
+		/// The point is to have the resource ready on-command, so purgeable is not an
+		/// option.
+		/// @param resourceName The name of the resource to fetch
+		void loadInBackground(const std::string& resourceName) {
+			fs::path resourcePath = find(resourceName);
+			std::thread loadingThread(std::bind(&cPool<T>::threadLoad, this, resourceName, resourcePath));
+			threadsMutex.lock();
+			backgroundThreads[resourceName] = std::move(loadingThread);
+			threadsMutex.unlock();
+		}
+
 		/// Gets a resource from the pool, loading it if it is not already cached.
 		/// @param resourceName The name of the resource to fetch
 		/// @param purgeable If true, this resource may be removed from the cache in order to
@@ -148,6 +184,14 @@ namespace ResMgr {
 				err << "  (The resource loader returned a null pointer.)\n";
 				throw xError(ERR_LOAD, err.str());
 			}
+
+			// If the resource is loading in the background, wait for it to finish
+			auto threadIter = backgroundThreads.find(resourceName);
+			if(threadIter != backgroundThreads.end()){
+				// The thread removes itself from backgroundThreads when done.
+				backgroundThreads[resourceName].join();
+			}
+
 			auto resIter = resources.find(resourceName);
 			if(resIter != resources.end()) {
 				auto pathIter = resolvedPaths.find(resourceName);

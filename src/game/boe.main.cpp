@@ -45,6 +45,7 @@
 #include "tools/enum_map.hpp"
 #include "tools/event_listener.hpp"
 #include "tools/drawable_manager.hpp"
+#include "fileio/resmgr/res_dialog.hpp"
 
 using clara::ParserResult;
 using clara::ParseResultType;
@@ -210,6 +211,10 @@ int main(int argc, char* argv[]) {
 		cDialog::redraw_everything = &redraw_everything;
 
 		init_boe(argc, argv);
+
+		// These dialogs are slow to load
+		ResMgr::dialogs.loadInBackground("about-boe");
+		ResMgr::dialogs.loadInBackground("welcome");
 		
 		if(!get_bool_pref("GameRunBefore"))
 			showWelcome();
