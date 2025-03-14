@@ -389,53 +389,55 @@ bool load_party_v2(fs::path file_to_load, cUniverse& real_univ, bool preview){
 			univ.scenario.readFrom(file);
 		}
 		
-		{ // Then the "setup" array
-			std::istream& fin = partyIn.getFile("save/setup.dat");
-			if(!fin) {
-				if(!preview) showError("Loading Blades of Exile save file failed.");
-				return false;
-			}
-			file.readFrom(fin);
-			auto& page = file[0];
-			for(size_t i = 0; i < univ.party.setup.size(); i++) {
-				page[std::to_string(i)].extract(univ.party.setup[i]);
-			}
-		}
-		
-		if(partyIn.hasFile("save/town.txt")) {
-			// Load town data
-			std::istream& fin = partyIn.getFile("save/town.txt");
-			if(!fin) {
-				if(!preview) showError("Loading Blades of Exile save file failed.");
-				return false;
-			}
-			file.readFrom(fin);
-			univ.town.readFrom(file);
-		} else univ.party.town_num = 200;
-
-		if (partyIn.hasFile("save/townmaps.dat")) {
-			// Read town maps
-			std::istream& fin2 = partyIn.getFile("save/townmaps.dat");
-			for(int i = 0; i < univ.scenario.towns.size(); i++) {
-				for(int j = 0; j < univ.scenario.towns[i]->max_dim; j++) {
-					fin2 >> univ.scenario.towns[i]->maps[j];
+		if(!preview){
+			{ // Then the "setup" array
+				std::istream& fin = partyIn.getFile("save/setup.dat");
+				if(!fin) {
+					if(!preview) showError("Loading Blades of Exile save file failed.");
+					return false;
+				}
+				file.readFrom(fin);
+				auto& page = file[0];
+				for(size_t i = 0; i < univ.party.setup.size(); i++) {
+					page[std::to_string(i)].extract(univ.party.setup[i]);
 				}
 			}
-		}
-		// Load outdoors data
-		std::istream& fin = partyIn.getFile("save/out.txt");
-		if(!fin) {
-			if(!preview) showError("Loading Blades of Exile save file failed.");
-			return false;
-		}
-		univ.out.readFrom(fin);
 		
-		// Read outdoor maps
-		std::istream& fin2 = partyIn.getFile("save/outmaps.dat");
-		for(int i = 0; i < univ.scenario.outdoors.height(); i++) {
-			for(int j = 0; j < 48; j++) {
-				for(int k = 0; k < univ.scenario.outdoors.width(); k++) {
-					fin2 >> univ.scenario.outdoors[k][i]->maps[j];
+			if(partyIn.hasFile("save/town.txt")) {
+				// Load town data
+				std::istream& fin = partyIn.getFile("save/town.txt");
+				if(!fin) {
+					if(!preview) showError("Loading Blades of Exile save file failed.");
+					return false;
+				}
+				file.readFrom(fin);
+				univ.town.readFrom(file);
+			} else univ.party.town_num = 200;
+
+			if (partyIn.hasFile("save/townmaps.dat")) {
+				// Read town maps
+				std::istream& fin2 = partyIn.getFile("save/townmaps.dat");
+				for(int i = 0; i < univ.scenario.towns.size(); i++) {
+					for(int j = 0; j < univ.scenario.towns[i]->max_dim; j++) {
+						fin2 >> univ.scenario.towns[i]->maps[j];
+					}
+				}
+			}
+			// Load outdoors data
+			std::istream& fin = partyIn.getFile("save/out.txt");
+			if(!fin) {
+				if(!preview) showError("Loading Blades of Exile save file failed.");
+				return false;
+			}
+			univ.out.readFrom(fin);
+		
+			// Read outdoor maps
+			std::istream& fin2 = partyIn.getFile("save/outmaps.dat");
+			for(int i = 0; i < univ.scenario.outdoors.height(); i++) {
+				for(int j = 0; j < 48; j++) {
+					for(int k = 0; k < univ.scenario.outdoors.width(); k++) {
+						fin2 >> univ.scenario.outdoors[k][i]->maps[j];
+					}
 				}
 			}
 		}
