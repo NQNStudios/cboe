@@ -14,6 +14,7 @@
 #include "gfx/render_shapes.hpp"
 #include <utility>
 #include "winutil.hpp"
+#include "tools/profile.hpp"
 
 void TextStyle::applyTo(sf::Text& text, double scale) const {
 	switch(font) {
@@ -54,6 +55,7 @@ struct text_params_t {
 };
 
 static void push_snippets(size_t start, size_t end, text_params_t& options, size_t& iHilite, const std::string& str, location loc) {
+	PROFILE_FUNC;
 	std::vector<hilite_t>& hilites = options.hilite_ranges;
 	std::vector<snippet_t>& snippets = options.snippets;
 	// Check if we have any hilites on this line.
@@ -93,6 +95,7 @@ static void push_snippets(size_t start, size_t end, text_params_t& options, size
 }
 
 break_info_t calculate_line_wrapping(rectangle dest_rect, std::string str, TextStyle style) {
+	PROFILE_FUNC;
 	break_info_t break_info;
 	if(str.empty()) return break_info; // Nothing to do!
 
@@ -323,6 +326,8 @@ std::vector<snippet_t> draw_string_sel(sf::RenderTarget& dest_window,rectangle d
 std::set<std::string> strings_to_cache = {" "};
 
 size_t string_length(std::string str, const TextStyle& style, short* height){
+	PROFILE_FUNC;
+
 	size_t total_width = 0;
 	if(style.measurementCache.find(str) != style.measurementCache.end()){
 		location measurement = style.measurementCache[str];
