@@ -249,12 +249,7 @@ void show_dialog_action(std::string xml_file) {
 		record_action("show_dialog_action", xml_file);
 	}
 	
-	extern std::map<std::string,cChoiceDlog*> preloaded_dialogs;
-	if(preloaded_dialogs.find(xml_file) != preloaded_dialogs.end()){
-		preloaded_dialogs[xml_file]->show();
-	}else{
-		cChoiceDlog(xml_file).show();
-	}
+	cChoiceDlog(xml_file).show();
 }
 
 bool prime_time() {
