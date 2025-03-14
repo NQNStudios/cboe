@@ -19,6 +19,6 @@ struct profiler {
 	std::string context;
 };
 
-#define PROFILE_FUNC profiler(BOOST_CURRENT_FUNCTION)
+#define PROFILE_FUNC profiler __profiler__(BOOST_CURRENT_FUNCTION)
 
 #endif
