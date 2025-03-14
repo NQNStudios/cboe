@@ -17,8 +17,6 @@
 #include <sstream>
 #include <vector>
 
-#include "tools/profile.hpp"
-
 namespace ResMgr {
 	namespace fs = boost::filesystem;
 	
@@ -143,7 +141,6 @@ namespace ResMgr {
 		/// @return A handle to the resource. This handle is dynamically updated - in the event that the
 		/// resource needs to be reloaded, it will be changed to point to the up-to-date version.
 		const cPointer<T>& get(const std::string& resourceName, bool purgeable = false) {
-			PROFILE_FUNC;
 			if(false) {
 			ERROR_THROW:
 				std::ostringstream err;

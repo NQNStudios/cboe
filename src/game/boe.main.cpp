@@ -46,7 +46,6 @@
 #include "tools/enum_map.hpp"
 #include "tools/event_listener.hpp"
 #include "tools/drawable_manager.hpp"
-#include "tools/profile.hpp"
 
 using clara::ParserResult;
 using clara::ParseResultType;
@@ -1026,9 +1025,7 @@ void init_boe(int argc, char* argv[]) {
 	adjust_window_mode();
 	init_ui();
 
-	// std::thread preload_thread(do_preload);
-	do_preload();
-	print_profile_info();
+	std::thread preload_thread(do_preload);
 
 	// If we don't do this now it'll flash white to start with
 	mainPtr().clear(sf::Color::Black);
@@ -1070,7 +1067,7 @@ void init_boe(int argc, char* argv[]) {
 		plop_fancy_startup(fps_limiter);
 	
 	set_cursor(watch_curs);
-	// preload_thread.join();
+	preload_thread.join();
 	restore_cursor();
 
 	cUniverse::print_result = iLiving::print_result = add_string_to_buf;

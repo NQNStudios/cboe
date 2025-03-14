@@ -150,7 +150,6 @@ cDialog::cDialog(const DialogDefn& file, cDialog* p) : parent(p), doAnimations(d
 
 extern fs::path progDir;
 void cDialog::loadFromFile(const DialogDefn& file){
-	PROFILE_FUNC;
 	bg = defaultBackground;
 	fname = file.id;
 	try{
