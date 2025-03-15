@@ -112,6 +112,7 @@ break_info_t calculate_line_wrapping(rectangle dest_rect, std::string str, TextS
 
 	// getGlyph() requires Uint32 input, which I don't think char is guaranteed to be
 	const sf::String& sf_str = str_to_draw.getString();
+	// if i > 0, this lambda must be called with i-1 before calling it with i for the first time
 	auto text_len = [&sf_str, &font, &style, &len, &lengths](size_t i) -> int {
 		if(i < lengths.size()){
 			return lengths[i];
