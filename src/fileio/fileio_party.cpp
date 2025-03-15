@@ -401,17 +401,19 @@ bool load_party_v2(fs::path file_to_load, cUniverse& real_univ, bool preview){
 			univ.scenario.readFrom(file);
 		}
 		
-		// We have all we need for the file picker preview
+		// We have all we need for the file picker preview.
 		if(preview){
 			univ.file = file_to_load;
 			real_univ = std::move(univ);
 			return true;
 		}
 
+		// Below here, if(!preview) does not need to be checked before showing errors and warnings.
+
 		{ // Then the "setup" array
 			std::istream& fin = partyIn.getFile("save/setup.dat");
 			if(!fin) {
-				if(!preview) showError("Loading Blades of Exile save file failed.");
+				showError("Loading Blades of Exile save file failed.");
 				return false;
 			}
 			file.readFrom(fin);
@@ -425,7 +427,7 @@ bool load_party_v2(fs::path file_to_load, cUniverse& real_univ, bool preview){
 			// Load town data
 			std::istream& fin = partyIn.getFile("save/town.txt");
 			if(!fin) {
-				if(!preview) showError("Loading Blades of Exile save file failed.");
+				showError("Loading Blades of Exile save file failed.");
 				return false;
 			}
 			file.readFrom(fin);
@@ -444,7 +446,7 @@ bool load_party_v2(fs::path file_to_load, cUniverse& real_univ, bool preview){
 		// Load outdoors data
 		std::istream& fin = partyIn.getFile("save/out.txt");
 		if(!fin) {
-			if(!preview) showError("Loading Blades of Exile save file failed.");
+			showError("Loading Blades of Exile save file failed.");
 			return false;
 		}
 		univ.out.readFrom(fin);
