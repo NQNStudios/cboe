@@ -958,7 +958,7 @@ short select_pc(eSelectPC mode, std::string title, bool allow_choose_all) {
 						disabled_reason = "item too heavy";
 						if(false) // skip first line of fallthrough
 					case eBuyStatus::NO_SPACE:
-						disabled_reason = "no inventory space";
+						disabled_reason = "no item slot";
 						can_pick = false;
 						break;
 					default:
@@ -968,7 +968,7 @@ short select_pc(eSelectPC mode, std::string title, bool allow_choose_all) {
 			case eSelectPC::ONLY_LIVING_WITH_ITEM_SLOT:
 				if(!univ.party[i].has_space()){
 					can_pick = false;
-					disabled_reason = "no inventory space";
+					disabled_reason = "no item slot";
 				}
 				BOOST_FALLTHROUGH;
 			case eSelectPC::ONLY_LIVING:
@@ -983,6 +983,7 @@ short select_pc(eSelectPC mode, std::string title, bool allow_choose_all) {
 			default:
 				break;
 		}
+		selectPc["pc" + n].setText(univ.party[i].name);
 		if(!can_pick) {
 			selectPc["pick" + n].hide();
 			if(disabled_reason.empty())
@@ -991,7 +992,6 @@ short select_pc(eSelectPC mode, std::string title, bool allow_choose_all) {
 				selectPc["pc" + n].appendText(": " + disabled_reason);
 		} else {
 			any_options = true;
-			selectPc["pc" + n].setText(univ.party[i].name);
 		}
 	}
 
