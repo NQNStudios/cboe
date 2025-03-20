@@ -47,6 +47,10 @@ void cLedGroup::recalcRect(){
 }
 
 void cLedGroup::addChoice(cLed* ctrl, std::string key) {
+	// normal ledgroups add their children through parseChildControl, but mapgroups still
+	// need to do it this way
+	if(!hasChild(key))
+		choices[key] = ctrl;
 	if(ctrl->getState() != led_off)
 		setSelected(key);
 }
