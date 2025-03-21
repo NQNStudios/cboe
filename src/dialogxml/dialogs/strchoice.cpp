@@ -20,7 +20,6 @@
 #include "gfx/render_shapes.hpp"
 
 const sf::Color HILITE_COLOUR = Colours::LIGHT_GREEN;
-const sf::Color NORMAL_COLOUR = Colours::WHITE;
 
 cStringChoice::cStringChoice(cDialog* parent, bool editable)
 	: editable(editable)
@@ -168,8 +167,8 @@ bool cStringChoice::onSearch(cDialog& me){
 	size_t page_delta = reversed ? -1 : 1;
 	size_t loop_from_page = reversed ? 0 : lastPage();
 	size_t loop_to_page = !reversed ? 0 : lastPage();
-	std::string loop_from_str = reversed ? "beginning" : "end";
-	std::string loop_to_str = !reversed ? "beginning" : "end";
+	std::string loop_from_str = reversed ? "Reached the beginning." : "Reached the end";
+	std::string loop_to_str = !reversed ? "Starting from the beginning" : "Starting from the end";
 	size_t start_page = page;
 	bool looped_once = false;
 	std::string new_search = me["search-field"].getText();
@@ -197,7 +196,7 @@ bool cStringChoice::onSearch(cDialog& me){
 			if(looped_once){
 				break;
 			}
-			output.setText("Reached the " + loop_from_str + ". Starting from the " + loop_to_str);
+			output.setText(loop_from_str + " " + loop_to_str);
 			looped_once = true;
 			page = loop_to_page;
 		}else{
@@ -219,8 +218,8 @@ bool cStringChoice::onSearch(cDialog& me){
 }
 
 void cStringChoice::clearHighlights() {
-	leds->forEach([](std::string, cControl& led) {
-		led.setColour(NORMAL_COLOUR);
+	leds->forEach([this](std::string, cControl& led) {
+		led.setColour(dlg.getDefTextClr());
 	});
 }
 
