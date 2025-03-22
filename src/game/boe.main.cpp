@@ -132,6 +132,8 @@ std::map<std::string,std::vector<std::string>> feature_flags = {
 	// Game balance
 	{"magic-resistance", {"fixed"}}, // Resist Magic used to not help with magic damage!
 	{"door-town-difficulty", {"fixed"}},
+	// Tutorial
+	{"tutorial", {"V1"}}
 };
 
 struct cParseEntrance {
