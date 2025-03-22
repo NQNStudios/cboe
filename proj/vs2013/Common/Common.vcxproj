@@ -507,7 +507,11 @@
     <Exec Command="$(SolutionDir)..\..\pkg\win\build-scen.bat $(SolutionDir)..\..\rsrc\scenarios\valleydy $(SolutionDir)..\..\rsrc\scenarios\valleydy.boes" />
     <Exec Command="$(SolutionDir)..\..\pkg\win\build-scen.bat $(SolutionDir)..\..\rsrc\scenarios\stealth $(SolutionDir)..\..\rsrc\scenarios\stealth.boes" />
     <Exec Command="$(SolutionDir)..\..\pkg\win\build-scen.bat $(SolutionDir)..\..\rsrc\scenarios\zakhazi $(SolutionDir)..\..\rsrc\scenarios\zakhazi.boes" />
+<<<<<<< HEAD
     <Exec Command='xcopy $(SolutionDir)..\..\rsrc\scenarios\custom "$(TargetDir)\Blades of Exile Scenarios\custom\" /S /Y' />
+=======
+    <Exec Command="$(SolutionDir)..\..\pkg\win\build-scen.bat $(SolutionDir)..\..\rsrc\scenarios\tutorial $(SolutionDir)..\..\rsrc\scenarios\tutorial.boes" />
+>>>>>>> 25c8de44 (Visual studio package tutorial)
   </Target>
   <!--COPY FILES TO OUTPUT DIRECTORY-->
   <Target Name="CopyFiles" AfterTargets="BuildScenarios">
