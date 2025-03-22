@@ -55,6 +55,7 @@ scen_env.BuildScenario('#build/rsrc/scenarios/busywork.boes', 'scenarios/busywor
 scen_env.BuildScenario('#build/rsrc/scenarios/valleydy.boes', 'scenarios/valleydy/header.exs')
 scen_env.BuildScenario('#build/rsrc/scenarios/stealth.boes', 'scenarios/stealth/header.exs')
 scen_env.BuildScenario('#build/rsrc/scenarios/zakhazi.boes', 'scenarios/zakhazi/header.exs')
+scen_env.BuildScenario('#build/rsrc/scenarios/tutorial.boes', 'scenarios/tutorial/header.exs')
 
 env.Install(path.join(install_dir, "Blades of Exile Scenarios"), Glob("#build/rsrc/scenarios/*.boes"))
 env.Install(path.join(install_dir, "Blades of Exile Scenarios"), "scenarios/custom")
