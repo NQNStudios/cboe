@@ -47,6 +47,7 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string item_hit, cSpecial& s
 			once_dialog(univ, special, cur_type);
 			break;
 		default:
+			break;
 	}
 	return true;
 }
