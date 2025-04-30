@@ -53,12 +53,6 @@ bool cButton::isScrollable() const {
 const int TINY_TEXT_OFFSET = 18;
 
 void cButton::draw(){
-	// (Lazy fix) Stop buttons from staying depressed when mouse release events get lost somehow:
-	if(!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)){
-		depressed = false;
-	}
-
-
 	rectangle from_rect, to_rect;
 	
 	getWindow().setActive(false);
