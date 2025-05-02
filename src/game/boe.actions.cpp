@@ -4263,7 +4263,7 @@ void debug_crash() {
 }
 
 void debug_fix_fonts() {
-	extern std::map<sf::RenderTexture*,std::vector<ScaleAwareText>> store_scale_aware_text;
+	extern std::map<sf::RenderTexture*,sf::RenderTexture*> store_scale_aware_text;
 	store_scale_aware_text.clear();
 
 	ResMgr::fonts.drain();

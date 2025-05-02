@@ -13,6 +13,7 @@
 #include <boost/math/constants/constants.hpp>
 #include <SFML/OpenGL.hpp>
 #include "render_image.hpp"
+#include "winutil.hpp"
 
 using boost::math::constants::pi;
 using pt_idx_t = decltype(((sf::Shape*)nullptr)->getPointCount());
@@ -242,7 +243,7 @@ void Region::setStencil(sf::RenderWindow& where) {
 	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 }
 
-extern std::map<sf::RenderTexture*,rectangle> store_clip_rects;
+extern std::map<sf::RenderTexture*, sf::RenderTexture*> store_scale_aware_text;
 
 void clip_rect(sf::RenderTarget& where, rectangle rect) {
 	rect &= rectangle(where); // Make sure we don't draw out of bounds
@@ -251,7 +252,12 @@ void clip_rect(sf::RenderTarget& where, rectangle rect) {
 	// needs to be stored externally to be applied to text later
 	if(dynamic_cast<sf::RenderTexture*>(&where) != nullptr){
 		sf::RenderTexture* p = dynamic_cast<sf::RenderTexture*>(&where);
-		store_clip_rects[p] = rect;
+		rectangle scaled = rect;
+		scaled.top *= get_ui_scale();
+		scaled.left *= get_ui_scale();
+		scaled.bottom *= get_ui_scale();
+		scaled.right *= get_ui_scale();
+		clip_rect(*store_scale_aware_text[p], scaled);
 	}
 
 	setActiveRenderTarget(where);
@@ -272,7 +278,7 @@ void clip_region(sf::RenderWindow& where, Region& region) {
 void undo_clip(sf::RenderTarget& where) {
 	if(dynamic_cast<sf::RenderTexture*>(&where) != nullptr){
 		sf::RenderTexture* p = dynamic_cast<sf::RenderTexture*>(&where);
-		store_clip_rects.erase(p);
+		undo_clip(*store_scale_aware_text[p]);
 	}
 
 	setActiveRenderTarget(where);
