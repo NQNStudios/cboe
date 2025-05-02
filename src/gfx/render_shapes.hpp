@@ -30,7 +30,7 @@ public:
 };
 
 struct ScaleAwareText {
-	sf::Text text;
+	sf::Sprite text;
 	rectangle clip_rect;
 };
 

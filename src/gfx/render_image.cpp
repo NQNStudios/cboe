@@ -135,7 +135,7 @@ static void draw_stored_scale_aware_text(sf::RenderTexture& texture, sf::RenderT
 	dest_window.setView(dest_window.getDefaultView());
 	std::vector<ScaleAwareText> stored_text = store_scale_aware_text[&texture];
 	for(ScaleAwareText text : stored_text){
-		sf::Text str_to_draw = text.text;
+		sf::Sprite str_to_draw = text.text;
 		if(!text.clip_rect.empty()){
 			rectangle rect = text.clip_rect;
 			rect.offset(targ_rect.left, targ_rect.top);

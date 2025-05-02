@@ -197,7 +197,19 @@ void draw_scale_aware_text(sf::RenderTarget& dest_window, sf::Text str_to_draw) 
 		if(store_scale_aware_text.find(p) == store_scale_aware_text.end()){
 			store_scale_aware_text[p] = std::vector<ScaleAwareText> {};
 		}
-		ScaleAwareText text = { str_to_draw, {}};
+
+		// The text needs to be turned into a sprite so it won't get messed up when the font unpredictably breaks its own glyphs
+		// in between now and the actual rendering:
+		sf::Sprite sprite;
+		sprite.setPosition(str_to_draw.getPosition());
+		str_to_draw.setPosition({0, 0});
+		sf::RenderTexture* texture = new sf::RenderTexture();
+		texture->create(str_to_draw.getLocalBounds().width * 2 + 100, str_to_draw.getLocalBounds().height + 100);
+		texture->draw(str_to_draw);
+		texture->display();
+		sprite.setTexture(texture->getTexture());
+
+		ScaleAwareText text = { sprite, {}};
 		if(store_clip_rects.find(p) != store_clip_rects.end()){
 			text.clip_rect = store_clip_rects[p];
 		}
