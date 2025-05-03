@@ -1969,9 +1969,6 @@ static bool finish_pick_spell(cDialog& me, bool spell_toast, const short store_s
 	return true;
 }
 
-// Spell dialog is slow to open on Windows, so keep it prepared and reuse it.
-cDialog castSpell;
-
 //short pc_num; // if 6, anyone
 //short type; // 0 - mage   1 - priest
 //short situation; // 0 - out  1 - town  2 - combat

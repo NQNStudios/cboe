@@ -352,6 +352,7 @@ static void init_buttons() {
 	init_btn(help_btn, BTN_HELP, {273,12});
 }
 
+// Spell dialog is slow to open on Windows, so keep it prepared and reuse it.
 std::unique_ptr<cDialog> storeCastSpell;
 
 // NOTE: this should possibly be moved to boe.ui.cpp at some point
