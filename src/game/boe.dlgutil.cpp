@@ -258,6 +258,7 @@ void end_shop_mode() {
 			univ.party.store_limited_stock[active_shop_num][i] = left;
 		}
 	}
+	init_inven_rects();
 }
 
 bool handle_shop_event(location p, cFramerateLimiter& fps_limiter) {
@@ -733,6 +734,7 @@ void end_talk_mode() {
 	put_pc_screen();
 	// TODO: I suspect REFRESH_NONE will suffice here
 	redraw_screen(REFRESH_TERRAIN | REFRESH_BAR);
+	init_inven_rects();
 }
 
 static void fill_job_bank(cDialog& me, job_bank_t& bank, std::string) {
