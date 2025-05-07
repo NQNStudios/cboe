@@ -848,6 +848,8 @@ void handle_target_space(location destination, bool& did_something, bool& need_r
 		info["num_targets_left"] = boost::lexical_cast<std::string>(num_targets_left);
 		record_action("handle_target_space", info);
 	}
+	extern bool targeting_line_visible;
+	targeting_line_visible = false;
 	if(overall_mode == MODE_SPELL_TARGET)
 		do_combat_cast(destination);
 	else if(overall_mode == MODE_THROWING || overall_mode == MODE_FIRING)
