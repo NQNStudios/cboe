@@ -1467,11 +1467,11 @@ short damage_monst(cCreature& victim, short who_hit, short how_much, eDamageType
 	// but -1 is the new value for "use default"
 	sound_type = get_sound_type(dam_type, sound_type);
 	
-	int boom_type = boom_gr[damage_type];
+	int boom_type = boom_gr[dam_type];
 
 	// Acid doesn't actually have its own damage type in classic BoE
-	if(damage_type == eDamageType::ACID)
-		damage_type = eDamageType::MAGIC;
+	if(dam_type == eDamageType::ACID)
+		dam_type = eDamageType::MAGIC;
 
 	if(dam_type < eDamageType::SPECIAL) {
 		how_much = percent(how_much, victim.resist[dam_type]);
