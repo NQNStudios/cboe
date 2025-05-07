@@ -1226,18 +1226,18 @@ void handle_talk_node(int which_talk_entry, bool is_redo) {
 	}
 
 	if(false){
-		RECORD_WHICH_NODE:
-			if(!is_redo) dialog_history.push_back({false, true, which_talk_entry, {"", ""}});
-			place_talk_str(save_talk_str1,save_talk_str2,0,dummy_rect);
-			reset_talk_words();
-			return;
-	}
-
-	FINISH_TALK_NODE:
-		dialog_history.push_back({can_save_talk, false, -1, {save_talk_str1, save_talk_str2}});
+	RECORD_WHICH_NODE:
+		if(!is_redo) dialog_history.push_back({false, true, which_talk_entry, {"", ""}});
 		place_talk_str(save_talk_str1,save_talk_str2,0,dummy_rect);
 		reset_talk_words();
 		return;
+	}
+
+FINISH_TALK_NODE:
+	dialog_history.push_back({can_save_talk, false, -1, {save_talk_str1, save_talk_str2}});
+	place_talk_str(save_talk_str1,save_talk_str2,0,dummy_rect);
+	reset_talk_words();
+	return;
 }
 
 bool handle_talk_event(location p, cFramerateLimiter& fps_limiter) {
