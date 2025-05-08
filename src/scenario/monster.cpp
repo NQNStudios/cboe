@@ -560,6 +560,7 @@ std::string uAbility::to_string(eMonstAbil key) const {
 						case eDamageType::FIRE: sout << "Fiery"; break;
 						case eDamageType::COLD: sout << "Icy"; break;
 						case eDamageType::MAGIC: sout << "Shock"; break;
+						case eDamageType::ACID: sout << "Acid"; break;
 						case eDamageType::SPECIAL:
 						case eDamageType::UNBLOCKABLE: sout << "Wounding"; break;
 						case eDamageType::POISON: sout << "Pain"; break;

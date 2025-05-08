@@ -2449,6 +2449,7 @@ short damage_pc(cPlayer& which_pc,short how_much,eDamageType damage_type,eRace t
 	
 	// Mag. res helps w. fire and cold
 	static std::set<eDamageType> magic_resist_damage = { eDamageType::FIRE, eDamageType::COLD };
+	// Now it also helps with MAGIC:
 	if(has_feature_flag("magic-resistance", "fixed")){
 		magic_resist_damage.insert(eDamageType::MAGIC);
 		magic_resist_damage.insert(eDamageType::ACID);

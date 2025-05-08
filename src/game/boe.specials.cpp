@@ -1488,7 +1488,7 @@ short damage_monst(cCreature& victim, short who_hit, short how_much, eDamageType
 	// Saving throw
 	if((dam_type == eDamageType::FIRE || dam_type == eDamageType::COLD) && get_ran(1,0,20) <= victim.level)
 		how_much /= 2;
-	if(dam_type == eDamageType::MAGIC && (get_ran(1,0,24) <= victim.level))
+	if((dam_type == eDamageType::MAGIC || dam_type == eDamageType::ACID) && (get_ran(1,0,24) <= victim.level))
 		how_much /= 2;
 	
 	// Invulnerable?
@@ -1498,8 +1498,13 @@ short damage_monst(cCreature& victim, short who_hit, short how_much, eDamageType
 		how_much /= 10;
 	
 	// Mag. res helps w. fire and cold
-	// TODO: Why doesn't this help with magic damage!?
-	if(dam_type == eDamageType::FIRE || dam_type == eDamageType::COLD) {
+	static std::set<eDamageType> magic_resist_damage = { eDamageType::FIRE, eDamageType::COLD };
+	// Now it also helps with MAGIC:
+	if(has_feature_flag("magic-resistance", "fixed")){
+		magic_resist_damage.insert(eDamageType::MAGIC);
+		magic_resist_damage.insert(eDamageType::ACID);
+	}
+	if(magic_resist_damage.count(dam_type)) {
 		int magic_res = victim.status[eStatus::MAGIC_RESISTANCE];
 		if(magic_res > 0)
 			how_much /= 2;
