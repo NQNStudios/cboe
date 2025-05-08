@@ -1472,16 +1472,13 @@ short damage_monst(cCreature& victim, short who_hit, short how_much, eDamageType
 	
 	int boom_type = boom_gr[dam_type];
 
-	// Acid doesn't actually have its own damage type in classic BoE
-	if(dam_type == eDamageType::ACID)
-		dam_type = eDamageType::MAGIC;
-
 	if(dam_type < eDamageType::SPECIAL) {
 		how_much = percent(how_much, victim.resist[dam_type]);
 	}
 	
 	// Absorb damage?
-	if((dam_type == eDamageType::FIRE || dam_type == eDamageType::MAGIC || dam_type == eDamageType::COLD)
+	std::set<eDamageType> absorbable_damage = { eDamageType::FIRE, eDamageType::MAGIC, eDamageType::COLD, eDamageType::ACID };
+	if(absorbable_damage.count(dam_type)
 		&& victim.abil[eMonstAbil::ABSORB_SPELLS].active && get_ran(1,1,1000) <= victim.abil[eMonstAbil::ABSORB_SPELLS].special.extra1) {
 		add_check_overflow(victim.health, how_much);
 		ASB("  Magic absorbed.");
