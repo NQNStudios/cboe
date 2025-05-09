@@ -338,7 +338,7 @@ bool check_special_terrain(location where_check,eSpecCtx mode,cPlayer& which_pc,
 				break;
 			if(mode == eSpecCtx::OUT_MOVE && out_boat_there(where_check))
 				break;
-			if(ter_flag3 > 0 && ter_flag3 < 8)
+			if(ter_flag3 > 0 && ter_flag3 < int(eDamageType::SPECIAL))
 				dam_type = (eDamageType) ter_flag3;
 			else dam_type = eDamageType::WEAPON;
 			r1 = get_ran(ter_flag2,1,ter_flag1);
@@ -355,6 +355,10 @@ bool check_special_terrain(location where_check,eSpecCtx mode,cPlayer& which_pc,
 				case eDamageType::COLD:
 					add_string_to_buf("  You feel cold!");
 					pic_type = 4;
+					break;
+				case eDamageType::ACID:
+					add_string_to_buf("  It's acid!"); // Maybe?
+					pic_type = 6;
 					break;
 				case eDamageType::SPECIAL:
 					dam_type = eDamageType::UNBLOCKABLE;
