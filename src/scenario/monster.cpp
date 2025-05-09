@@ -395,7 +395,7 @@ std::map<eMonstAbil,uAbility>::iterator cMonster::addAbil(eMonstAbilTemplate wha
 }
 
 cMonster::cMonster(){
-	for(int i = 0; i <= 8; i++) {
+	for(int i = 0; i <= int(eDamageType::SPECIAL); i++) {
 		eDamageType dmg = eDamageType(i);
 		resist[dmg] = 100;
 	}
