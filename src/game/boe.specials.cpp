@@ -357,7 +357,7 @@ bool check_special_terrain(location where_check,eSpecCtx mode,cPlayer& which_pc,
 					pic_type = 4;
 					break;
 				case eDamageType::ACID:
-					add_string_to_buf("  It's acid!"); // Maybe?
+					add_string_to_buf("  It burns!");
 					pic_type = 6;
 					break;
 				case eDamageType::SPECIAL:
