@@ -4156,7 +4156,7 @@ void townmode_spec(const runtime_state& ctx) {
 				showError("Invalid attitude (0-Friendly Docile, 1-Hostile A, 2-Friendly Will Fight, 3-Hostile B).");
 				break;
 			}
-			univ.town.monst[spec.ex1a].attitude = eAttitude(spec.ex1b);
+			univ.town.monst.at(spec.ex1a).attitude = eAttitude(spec.ex1b);
 			break;
 		case eSpecType::TOWN_RUN_MISSILE:
 			if(ctx.which_mode != eSpecCtx::TALK) {
