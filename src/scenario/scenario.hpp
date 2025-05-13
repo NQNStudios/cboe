@@ -69,6 +69,9 @@ struct editor_state_t {
 	// When simply shifting over by 1 section we won't want to
 	// use this stored state, we want seamless transition.
 	std::map<location, terrain_view_t, loc_compare> out_view_state;
+
+	// If last editing something on the main screen, remember what it was
+	short main_screen_mode;
 };
 
 class cScenario {

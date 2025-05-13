@@ -128,7 +128,12 @@ void init_screen_locs() {
 
 static cursor_type get_edit_cursor() {
 	switch(overall_mode) {
-		case MODE_INTRO_SCREEN: case MODE_MAIN_SCREEN: case MODE_EDIT_TYPES:
+		case MODE_INTRO_SCREEN: case MODE_MAIN_SCREEN: case MODE_EDIT_TERRAINS:
+		case MODE_EDIT_MONSTERS: case MODE_EDIT_ITEMS: case MODE_EDIT_SPEC_ITEMS:
+		case MODE_EDIT_QUESTS: case MODE_EDIT_SHOPS: case MODE_EDIT_SCEN_TEXT:
+		case MODE_EDIT_OUT_TEXT: case MODE_EDIT_TOWN_TEXT: case MODE_EDIT_SCEN_SPECIALS:
+		case MODE_EDIT_OUT_SPECIALS: case MODE_EDIT_TOWN_SPECIALS: case MODE_EDIT_OUT_SIGNS:
+		case MODE_EDIT_TOWN_SIGNS:
 			
 		case MODE_PLACE_CREATURE: case MODE_PLACE_ITEM: case MODE_PLACE_SPECIAL:
 			
@@ -235,7 +240,7 @@ static bool handle_lb_action(location the_point) {
 			sf::sleep(time_in_ticks(10));
 			draw_lb_slot(i,0);
 			mainPtr().display();
-			if(overall_mode == MODE_INTRO_SCREEN || overall_mode == MODE_MAIN_SCREEN || overall_mode == MODE_EDIT_TYPES) {
+			if(overall_mode >= MODE_MAIN_SCREEN) {
 				switch(left_button_status[i].action) {
 					case LB_NO_ACTION:
 						break;
@@ -1164,10 +1169,6 @@ static bool handle_terrain_action(location the_point, bool ctrl_hit) {
 				overall_mode = MODE_DRAWING;
 				break;
 			}
-			case MODE_INTRO_SCREEN:
-			case MODE_EDIT_TYPES:
-			case MODE_MAIN_SCREEN:
-				break; // Nothing to do here, of course.
 			case MODE_COPY_CREATURE:
 				for(short x = 0; x < town->creatures.size(); x++)
 					if(monst_on_space(spot_hit,x)) {
@@ -1184,6 +1185,8 @@ static bool handle_terrain_action(location the_point, bool ctrl_hit) {
 					}
 				overall_mode = MODE_DRAWING;
 				break;
+			default: // mode >= MODE_MAIN_SCREEN
+				break; // Nothing to do here, of course.
 		}
 		if((overall_mode == MODE_DRAWING) && (old_mode != MODE_DRAWING))
 			set_string("Drawing mode",scenario.ter_types[current_terrain_type].name);
@@ -1637,7 +1640,7 @@ void handle_action(location the_point,sf::Event /*event*/) {
 	if(overall_mode < MODE_MAIN_SCREEN && handle_terrain_action(the_point, ctrl_hit))
 		return;
 	
-	if(!mouse_button_held && ((overall_mode < MODE_MAIN_SCREEN) || (overall_mode == MODE_EDIT_TYPES))) {
+	if(!mouse_button_held && ((overall_mode < MODE_MAIN_SCREEN) || (overall_mode == MODE_EDIT_TERRAINS))) {
 		cur_point = the_point;
 		cur_point.x -= RIGHT_AREA_UL_X;
 		cur_point.y -= RIGHT_AREA_UL_Y;
@@ -2602,7 +2605,7 @@ void start_out_edit() {
 void start_terrain_editing() {
 	right_sbar->hide();
 	pal_sbar->show();
-	overall_mode = MODE_EDIT_TYPES;
+	handle_close_terrain_view(MODE_EDIT_TERRAINS);
 	draw_mode = DRAW_TERRAIN;
 	set_up_terrain_buttons(true);
 	place_location();

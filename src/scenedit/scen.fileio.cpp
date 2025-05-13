@@ -129,6 +129,9 @@ void writeEditorStateToXml(ticpp::Printer&& data, cScenario& scenario) {
 	data.PushAttribute("boes", scenario.format_ed_version());
 	data.PushElement("drawing", editor_state.drawing);
 	data.PushElement("editing-town", editor_state.editing_town);
+	if(overall_mode >= MODE_EDIT_TERRAINS && overall_mode <= MODE_EDIT_TOWN_SIGNS){
+		data.PushElement("mode", static_cast<short>(overall_mode));
+	}
 
 	data.PushElement("last-town", cur_town);
 	for(auto pair : scenario.editor_state.town_view_state){

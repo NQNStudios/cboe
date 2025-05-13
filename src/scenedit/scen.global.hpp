@@ -76,7 +76,20 @@ enum eScenMode {
 	// Modes below this do not have the terrain area visible.
 	MODE_MAIN_SCREEN = 60,
 	MODE_INTRO_SCREEN = 61,
-	MODE_EDIT_TYPES = 62, // currently only used for editing terrain, but I'd like to use it for editing monsters and items too.
+	MODE_EDIT_TERRAINS = 62,
+	MODE_EDIT_MONSTERS = 63,
+	MODE_EDIT_ITEMS = 64,
+	MODE_EDIT_SPEC_ITEMS = 65,
+	MODE_EDIT_QUESTS = 66,
+	MODE_EDIT_SHOPS = 67,
+	MODE_EDIT_SCEN_TEXT = 68,
+	MODE_EDIT_OUT_TEXT = 69,
+	MODE_EDIT_TOWN_TEXT = 70,
+	MODE_EDIT_SCEN_SPECIALS = 71,
+	MODE_EDIT_OUT_SPECIALS = 72,
+	MODE_EDIT_TOWN_SPECIALS = 73,
+	MODE_EDIT_OUT_SIGNS = 74,
+	MODE_EDIT_TOWN_SIGNS = 75,
 };
 
 enum eDrawMode {
