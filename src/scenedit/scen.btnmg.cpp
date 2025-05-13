@@ -86,7 +86,7 @@ void set_rb(short slot, eRBAction action, int n, std::string label, bool do_draw
 	right_button_status[slot].action = action;
 	right_button_status[slot].i = n;
 	static TextStyle style;
-	right_button_status[slot].label = truncate_with_ellipsis(label, style, right_buttons[slot].width());
+	right_button_status[slot].label = truncate_with_ellipsis(label, style, right_buttons[0].width());
 	for(char& c : right_button_status[slot].label) {
 		if(c == '|')
 			c = ' ';
