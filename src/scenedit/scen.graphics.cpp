@@ -512,7 +512,7 @@ void draw_rb_slot (short which,short mode)  {
 	TextStyle style;
 	if(mode > 0)
 		style.colour = Colours::RED;
-	else if(right_button_hovered == which)
+	else if(right_button_hovered == which - pos)
 		style.colour = Colours::GREEN;
 
 	style.lineHeight = 12;
