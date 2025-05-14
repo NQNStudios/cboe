@@ -601,7 +601,7 @@ void redraw_screen(int refresh) {
 		default:
 			redraw_terrain();
 			if(refresh & REFRESH_BAR){
-				draw_text_bar(std::make_pair("", ""));
+				draw_text_bar({"", "", 6});
 				draw_text_bar();
 			}
 			refresh_text_bar();
@@ -660,9 +660,34 @@ void put_background() {
 	tileImage(mainPtr(), rectangle(mainPtr()), bg_pict);
 }
 
-std::pair<std::string, std::string> text_bar_text() {
+void draw_pc_small(const cPlayer& pc, sf::RenderTarget& targ, rectangle to_rect) {
+	pic_num_t pic = pc.which_graphic;
+	std::shared_ptr<const sf::Texture> from_gw;
+	rectangle pc_from_rect = {0,0,36,28};
+	if(pic >= 1000) {
+		bool isParty = pic >= 10000;
+		pic_num_t need_pic = pic % 1000;
+		graf_pos_ref(from_gw, pc_from_rect) = spec_scen_g.find_graphic(need_pic, isParty);
+	} else if(pic >= 100) {
+		// Note that we assume it's a 1x1 graphic.
+		// PCs can't be larger than that, but we leave it to the scenario designer to avoid assigning larger graphics.
+		pic_num_t need_pic = pic - 100;
+		int mode = 0;
+		pc_from_rect = get_monster_template_rect(need_pic, mode, 0);
+		int which_sheet = m_pic_index[need_pic].i / 20;
+		from_gw = &ResMgr::graphics.get("monst" + std::to_string(1 + which_sheet));
+	} else {
+		pc_from_rect = calc_rect(2 * (pic / 8), pic % 8);
+		from_gw = &ResMgr::graphics.get("pcs");
+	}
+	to_rect.inset(2,2);
+	rect_draw_some_item(*from_gw, pc_from_rect, targ, to_rect, sf::BlendAlpha);
+}
+
+text_bar_content_t text_bar_text() {
 	std::string text = "";
 	std::string right_text = "";
+	short pc_graphic = 6;
 
 	text = get_location();
 
@@ -695,6 +720,7 @@ std::pair<std::string, std::string> text_bar_text() {
 				const cSpell& spell = (*current_pc.last_cast[type]);
 				if(pc_can_cast_spell(current_pc,type) && spell.cost <= current_pc.get_magic()) {
 					hint_out << "Recast " << spell.name();
+					pc_graphic = current_pc.last_target[type];
 				}else{
 					hint_out << "Cannot recast";
 				}
@@ -714,15 +740,15 @@ std::pair<std::string, std::string> text_bar_text() {
 				i = 400;
 			}
 
-	return std::make_pair(text, right_text);
+	return {text, right_text, pc_graphic};
 }
 
 void draw_text_bar() {
 	draw_text_bar(text_bar_text());
 }
 
-void draw_text_bar(std::pair<std::string,std::string> text) {
-	static std::pair<std::string,std::string> store_text = std::make_pair("", "");
+void draw_text_bar(text_bar_content_t text) {
+	static text_bar_content_t store_text = {"", "", 6};
 	static bool had_statuses = false;
 	bool has_statuses = false;
 	for(auto next : univ.party.status) {
@@ -731,15 +757,15 @@ void draw_text_bar(std::pair<std::string,std::string> text) {
 			has_statuses = true;
 		}
 	}
-	if(text.first != store_text.first || text.second != store_text.second || had_statuses != has_statuses){
+	if(text.left != store_text.left || text.right != store_text.right || text.pc_graphic != store_text.pc_graphic ||  had_statuses != has_statuses){
 		store_text = text;
 		had_statuses = has_statuses;
-		put_text_bar(text.first, text.second);
+		put_text_bar(text);
 		refresh_text_bar();
 	}
 }
 
-void put_text_bar(std::string str, std::string right_str) {
+void put_text_bar(text_bar_content_t text) {
 	text_bar_gworld().setActive(false);
 	auto& bar_gw = *ResMgr::graphics.get("textbar");
 	rect_draw_some_item(bar_gw, rectangle(bar_gw), text_bar_gworld(), rectangle(bar_gw));
@@ -757,10 +783,23 @@ void put_text_bar(std::string str, std::string right_str) {
 	size_t filled_on_right = 0;
 
 	// the recast hint will replace status icons:
-	if(!right_str.empty()){
-		filled_on_right = string_length(" " + right_str, style);
+	if(!text.right.empty()){
+		filled_on_right = string_length(" " + text.right, style);
+		rectangle but_from_rect = {30,60,46,78};
+		// The recast hint can show which PC is the stored target
+		if(text.pc_graphic != 6){
+			sf::Texture& invenbtn_gworld = *ResMgr::graphics.get("invenbtns");
+			rectangle pc_rect = to_rect;
+			pc_rect.left = pc_rect.right - 18;
+			rect_draw_some_item(invenbtn_gworld, but_from_rect, text_bar_gworld(), pc_rect, sf::BlendAlpha);
+			draw_pc_small(univ.party[text.pc_graphic], text_bar_gworld(), pc_rect);
+
+			to_rect.right -= 16;
+			filled_on_right += 16;
+		}
+
 		// Style has to be wrap to get right-alignment
-		win_draw_string(text_bar_gworld(), to_rect, right_str, eTextMode::WRAP, style, true);
+		win_draw_string(text_bar_gworld(), to_rect, text.right, eTextMode::WRAP, style, true);
 	}else if(!monsters_going){
 		sf::Texture& status_gworld = *ResMgr::graphics.get("staticons");
 		rectangle icon_rect = to_rect;
@@ -780,7 +819,7 @@ void put_text_bar(std::string str, std::string right_str) {
 	
 	// The recast hint and status icons will never take more than half the text bar. Give the name/AP/location string the rest.
 	to_rect.right -= filled_on_right;
-	win_draw_string(text_bar_gworld(), to_rect, str, eTextMode::ELLIPSIS, style);
+	win_draw_string(text_bar_gworld(), to_rect, text.left, eTextMode::ELLIPSIS, style);
 
 	text_bar_gworld().setActive();
 	text_bar_gworld().display();

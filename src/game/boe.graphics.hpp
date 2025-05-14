@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "location.hpp"
 #include "tools/framerate_limiter.hpp"
+#include "pc.hpp"
 
 enum {
 	REFRESH_NONE = 0,
@@ -39,11 +40,19 @@ void end_startup();
 void load_main_screen();
 void redraw_screen(int refresh);
 void put_background();
-std::pair<std::string, std::string> text_bar_text();
+void draw_pc_small(const cPlayer& pc, sf::RenderTarget& targ, rectangle to_rect);
+
+struct text_bar_content_t {
+	std::string left;
+	std::string right;
+	short pc_graphic;
+};
+text_bar_content_t text_bar_text();
 void draw_text_bar();
-void draw_text_bar(std::pair<std::string,std::string>);
+void draw_text_bar(text_bar_content_t text);
 void refresh_text_bar();
-void put_text_bar(std::string str, std::string right_str = "");
+void put_text_bar(text_bar_content_t text);
+
 void draw_terrain(short	mode = 0);
 void place_trim(short q,short r,location where,ter_num_t ter_type);
 void draw_trim(short q,short r,short which_trim,short which_mode);
