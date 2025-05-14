@@ -156,7 +156,7 @@ void draw_monsters() {
 	if(is_town() || is_combat()) {
 		for(short i = 0; i < univ.town.monst.size(); i++) {
 			const cCreature& monst = univ.town.monst[i];
-			if(monst.is_alive() && !monst.invisible && monst.status[eStatus::INVISIBLE] <= 0)
+			if(monst.is_alive() && !monst.invisible && monst.status[eStatus::INVISIBLE] <= 0){
 				std::tie(width, height) = get_monst_dims(monst.number);
 				bool on_screen = false;
 				for(int x = monst.cur_loc.x; x < monst.cur_loc.x + width; ++x){
@@ -201,6 +201,7 @@ void draw_monsters() {
 						}
 					}
 				}
+			}
 		}
 	}
 }
