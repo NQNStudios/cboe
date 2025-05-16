@@ -4509,10 +4509,15 @@ bool combat_cast_mage_spell() {
 		take_ap(6);
 		give_help(40,0);
 		return true;
-	}
-	else {
-		
-		
+	}else if(!pc_can_cast_spell(univ.current_pc(),eSkill::MAGE_SPELLS)){
+		// Dumbfounding is the only way I know of that we can end up here.
+		if(univ.current_pc().status[eStatus::DUMB] < 0){
+			add_string_to_buf("Cast: Too dumbfounded.");
+		}else{
+			// If there are other ways, the player will get a frustratingly vague message...
+			add_string_to_buf("Cast: You can't.");
+		}
+	}else{
 		if(!spell_forced)
 			spell_num = pick_spell(univ.cur_pc,eSkill::MAGE_SPELLS);
 		else {

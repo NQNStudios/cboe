@@ -27,7 +27,20 @@ void do_mindduel(short pc_num,cCreature *monst);
 void dispel_fields(short i,short j,short mode);
 bool pc_can_cast_spell(const cPlayer& pc,eSpell spell_num);
 bool pc_can_cast_spell(const cPlayer& pc,eSkill spell_num);
+
+enum eCastStatus {
+	CAST_OK,
+	NO_CAST_SP,
+	NO_CAST_ANTIMAGIC,
+	NO_CAST_ANAMA,
+	NO_CAST_SKILL,
+	NO_CAST_ENCUMBERED,
+	NO_CAST_DUMBFOUNDED,
+	NO_CAST_PACIFIST,
+}
+eCastStatus check_can_cast()
 eSpell pick_spell(short pc_num,eSkill type);
+
 void start_town_targeting(eSpell s_num,short who_c,bool freebie,eSpellPat pat = PAT_SINGLE);
 void do_alchemy();
 eAlchemy alch_choice(short pc_num);
