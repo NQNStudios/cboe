@@ -15,6 +15,7 @@
 #include <list>
 #include <memory>
 #include <string>
+#include "location.hpp"
 
 class cAction {
 	std::string actname;
@@ -94,5 +95,14 @@ public:
 };
 
 // As a special convention, I will prefix action classes with 'a' instead of 'c'
+
+class aEraseSpecial : public cAction {
+public:
+	aEraseSpecial(spec_loc_t special) : cAction("Erase Special Encounter"), for_redo(special) {}
+	bool undo_me() override;
+	bool redo_me() override;
+private:
+	spec_loc_t for_redo;
+};
 
 #endif
