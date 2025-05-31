@@ -1,7 +1,7 @@
 #include "scen.undo.hpp"
 
-#include "scenario.hpp"
-#include "area.hpp"
+#include "scenario/scenario.hpp"
+#include "scenario/area.hpp"
 
 extern bool editing_town;
 extern short cur_town;
