@@ -94,12 +94,3 @@ void cUndoList::add(action_ptr what){
 	}
 	cur = theList.begin();
 }
-
-// Undo/Redo implementations for actions:
-
-bool aEraseSpecial::undo_me() {
-	return true;
-}
-bool aEraseSpecial::redo_me() {
-	return true;
-}

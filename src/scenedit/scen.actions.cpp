@@ -20,6 +20,7 @@
 #include "scen.keydlgs.hpp"
 #include "scen.townout.hpp"
 #include "scen.menus.hpp"
+#include "scen.undo.hpp"
 #include "mathutil.hpp"
 #include "fileio/fileio.hpp"
 #include "tools/keymods.hpp"
