@@ -14,3 +14,6 @@
 [submodule "deps/fmtlib"]
 	path = deps/fmtlib
 	url = http://github.com/fmtlib/fmt
+[submodule "rsrc/scenarios/custom"]
+	path = rsrc/scenarios/custom
+	url = https://github.com/NQNStudios/cboe-scenarios
