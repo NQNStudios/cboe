@@ -833,6 +833,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\deps\fmtlib\src\format.cc" />
     <ClCompile Include="..\..\..\deps\fmtlib\src\os.cc" />
+    <ClCompile Include="..\..\..\src\dialogxml\dialogs\btnpanel.cpp">
+      <Filter>DialogXML\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\view_dialogs.hpp" />
@@ -1094,6 +1097,9 @@
     <ClInclude Include="..\..\..\src\tools\replay.hpp" />
     <ClInclude Include="..\..\..\src\tools\profile.hpp">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\dialogxml\dialogs\btnpanel.hpp">
+      <Filter>DialogXML\Dialogs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
