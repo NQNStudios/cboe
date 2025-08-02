@@ -1850,7 +1850,8 @@ class cChooseScenario {
 								std::cout << "Failed to load save file: " << file << std::endl;
 							}else{
 								finish_load_party();
-								post_load();
+								if(overall_mode != MODE_STARTUP)
+									post_load();
 							}
 						});
 					}else{
