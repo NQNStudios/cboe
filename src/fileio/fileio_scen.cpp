@@ -45,11 +45,11 @@ extern std::string last_load_file;
 
 void load_spec_graphics_v1(fs::path scen_file);
 void load_spec_graphics_v2(int num_sheets);
-std::string decode_temp_str(std::string temp_str, std::string encoding);
+std::string decode_temp_str(std::string temp_str, std::string& encoding);
 // Load old scenarios (town talk is handled by the town loading function)
 static bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario load_type);
-static bool load_outdoors_v1(fs::path scen_file, location which_out,cOutdoors& the_out, legacy::scenario_data_type& scenario, std::string encoding);
-static bool load_town_v1(fs::path scen_file,short which_town,cTown& the_town,legacy::scenario_data_type& scenario,std::vector<shop_info_t>& shops, std::string encoding);
+static bool load_outdoors_v1(fs::path scen_file, location which_out,cOutdoors& the_out, legacy::scenario_data_type& scenario, std::string& encoding);
+static bool load_town_v1(fs::path scen_file,short which_town,cTown& the_town,legacy::scenario_data_type& scenario,std::vector<shop_info_t>& shops, std::string& encoding);
 // Load new scenarios
 static bool load_scenario_v2(fs::path file_to_load, cScenario& scenario, eLoadScenario load_type);
 // Some of these are non-static so that the test cases can access them.
@@ -309,7 +309,6 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 	scenario.journal_strs.resize(50);
 	scenario.spec_strs.resize(100);
 	
-	static std::vector<std::string> encodings_to_try = {"Latin1", "Windows-1252", "MacRoman"};
 	fs::path meta = file_to_load.parent_path() / "meta.xml";
 	using namespace ticpp;
 	ticpp::Document meta_doc;
@@ -329,36 +328,10 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 		temp_str[len] = 0;
 		
 		std::string decoded;
-		std::vector<std::string> options;
 		if(info.find("encoding") != info.end()){
 			encoding = info["encoding"];
-			decoded = decode_temp_str(temp_str, encoding);
-		}else{
-			bool different = false;
-			for(std::string encoding : encodings_to_try){
-				std::string enc = decode_temp_str(temp_str, encoding);
-				if(!options.empty() && enc != options.back()) different = true;
-				options.push_back(enc);
-			}
-			if(different){
-				LOG_VALUE(file_to_load);
-				for(std::string enc : options){
-					LOG_VALUE(enc);
-				}
-				int which = -1;
-				// Comment this out if you're not messing with the metadata:
-				// which = cStringChoice(options, "Which is best?").show(-1);
-				if(which != -1){
-					encoding = info["encoding"] = encodings_to_try[which];
-					decoded = options[which];
-				}
-				else{
-					decoded = options[0]; // temp!
-				}
-			}else{
-				decoded = options.back();
-			}
 		}
+		decoded = decode_temp_str(temp_str, encoding);
 		
 		if(i == 0) scenario.scen_name = decoded;
 		else if(i == 1 || i == 2)
@@ -375,22 +348,12 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 		} else if(i >= 260) continue; // These were never ever used, for some reason.
 		else scenario.spec_strs[i-160] = decoded;
 	}
-	Element new_root("meta");
-	ticpp::Document new_doc;
-	for(auto& p : info){
-		Element next_child(p.first);
-		Text child_text(p.second);
-		next_child.InsertEndChild(child_text);
-		new_root.InsertEndChild(next_child);
-	}
-	new_doc.InsertEndChild(new_root);
-	new_doc.SaveFile(meta.string());
-
 	fclose(file_id);
 	
 	scenario.scen_file = file_to_load;
-	if(load_type == eLoadScenario::ONLY_HEADER) return true;
-	load_spec_graphics_v1(scenario.scen_file);
+	// if(load_type == eLoadScenario::ONLY_HEADER) return true;
+	// load_spec_graphics_v1(scenario.scen_file);
+	
 	
 	// Now load all the outdoor sectors
 	scenario.outdoors.resize(temp_scenario.out_width, temp_scenario.out_height);
@@ -479,6 +442,18 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 		scenario.shops.push_back(shop);
 	}
 	
+	Element new_root("meta");
+	ticpp::Document new_doc;
+	info["encoding"] = encoding;
+	for(auto& p : info){
+		Element next_child(p.first);
+		Text child_text(p.second);
+		next_child.InsertEndChild(child_text);
+		new_root.InsertEndChild(next_child);
+	}
+	new_doc.InsertEndChild(new_root);
+	new_doc.SaveFile(meta.string());
+
 	return true;
 }
 
@@ -2533,7 +2508,7 @@ static long get_town_offset(short which_town, legacy::scenario_data_type& scenar
 	return len_to_jump;
 }
 
-bool load_town_v1(fs::path scen_file, short which_town, cTown& the_town, legacy::scenario_data_type& scenario, std::vector<shop_info_t>& shops, std::string encoding) {
+bool load_town_v1(fs::path scen_file, short which_town, cTown& the_town, legacy::scenario_data_type& scenario, std::vector<shop_info_t>& shops, std::string& encoding) {
 	long len,len_to_jump = 0;
 	char temp_str[256];
 	legacy::town_record_type store_town;
@@ -2598,9 +2573,7 @@ bool load_town_v1(fs::path scen_file, short which_town, cTown& the_town, legacy:
 		fread(temp_str, len, 1, file_id);
 		temp_str[len] = 0;
 		std::string temp_str_trimmed = temp_str;
-		if(!encoding.empty()){
 			temp_str_trimmed = decode_temp_str(temp_str, encoding);
-		}
 		// Trim whitespace off of strings, which are fixed-width in legacy scenarios
 		boost::algorithm::trim_right(temp_str_trimmed); // Whitespace in front of a string would be weird, but possibly intentional
 		if(i == 0) the_town.name = temp_str_trimmed;
@@ -2628,9 +2601,7 @@ bool load_town_v1(fs::path scen_file, short which_town, cTown& the_town, legacy:
 		fread(temp_str, len, 1, file_id);
 		temp_str[len] = 0;
 		std::string temp_str_trimmed = temp_str;
-		if(!encoding.empty()){
 			temp_str_trimmed = decode_temp_str(temp_str, encoding);
-		}
 		// Trim whitespace off of strings, which are fixed-width in legacy scenarios
 		boost::algorithm::trim_right(temp_str_trimmed); // Whitespace in front of a string would be weird, but possibly intentional
 		if(i >= 0 && i < 10)
@@ -2683,7 +2654,7 @@ static long get_outdoors_offset(location& which_out, legacy::scenario_data_type&
 }
 
 //mode -> 0 - primary load  1 - add to top  2 - right  3 - bottom  4 - left
-bool load_outdoors_v1(fs::path scen_file, location which_out,cOutdoors& the_out, legacy::scenario_data_type& scenario, std::string encoding){
+bool load_outdoors_v1(fs::path scen_file, location which_out,cOutdoors& the_out, legacy::scenario_data_type& scenario, std::string& encoding){
 	long len,len_to_jump;
 	char temp_str[256];
 	legacy::outdoor_record_type store_out;
@@ -2720,9 +2691,7 @@ bool load_outdoors_v1(fs::path scen_file, location which_out,cOutdoors& the_out,
 		fread(temp_str, len, 1, file_id);
 		temp_str[len] = 0;
 		std::string temp_str_trimmed = temp_str;
-		if(!encoding.empty()){
 			temp_str_trimmed = decode_temp_str(temp_str, encoding);
-		}
 		// Trim whitespace off of strings, which are fixed-width in legacy scenarios
 		boost::algorithm::trim_right(temp_str_trimmed); // Whitespace in front of a string would be weird, but possibly intentional
 		if(i == 0) the_out.name = temp_str_trimmed;
@@ -2803,7 +2772,37 @@ void load_spec_graphics_v2(int num_sheets) {
 	}
 }
 
-std::string decode_temp_str(std::string temp_str, std::string encoding) {
+std::string decode_temp_str(std::string temp_str, std::string& encoding) {
+	static std::vector<std::string> encodings_to_try = {"Latin1", "MacRoman"};
+
+	if(encoding.empty()){
+		std::vector<std::string> options;
+		bool different = false;
+		for(std::string test_encoding : encodings_to_try){
+			std::string enc = decode_temp_str(temp_str, test_encoding);
+			if(!options.empty() && enc != options.back()) different = true;
+			options.push_back(enc);
+		}
+		if(different){
+			for(std::string enc : options){
+				LOG_VALUE(enc);
+			}
+			int which = -1;
+			// Comment this out if you're not messing with the metadata:
+			which = cStringChoice(options, "Which is best?").show(-1);
+			if(which != -1){
+				encoding = encodings_to_try[which];
+				return options[which];
+			}
+			else{
+				return options[0]; // No choice made, but a discrepency later in the scenario
+									// may reveal the correct choice 
+			}
+		}else{
+			// All variants were the same
+			return options.back();
+		}
+	}
 	if(encoding == "MacRoman"){
 		std::basic_string<uint16_t> utf16;
 		std::basic_string<char> utf8;
