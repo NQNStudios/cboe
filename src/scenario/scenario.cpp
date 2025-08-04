@@ -268,7 +268,7 @@ void cScenario::import_legacy(legacy::scenario_data_type& old, bool header_only)
 	// TODO: Is this used anywhere?
 	uses_custom_graphics = old.uses_custom_graphics;
 
-	if(header_only) return;
+	// if(header_only) return;
 
 	boats.resize(30);
 	horses.resize(30);
