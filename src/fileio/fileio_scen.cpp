@@ -307,7 +307,7 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 	scenario.journal_strs.resize(50);
 	scenario.spec_strs.resize(100);
 	
-	std::vector<std::string> encodings_to_try = {"Latin1", "MacRoman"};
+	static std::vector<std::string> encodings_to_try = {"Latin1", "Windows-1252", "MacRoman"};
 	fs::path meta = file_to_load.parent_path() / "meta.xml";
 	using namespace ticpp;
 	ticpp::Document meta_doc;
@@ -326,12 +326,10 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 		temp_str[len] = 0;
 		
 		std::string decoded;
-		static std::vector<std::string> encodings_to_try = {"Latin1", "MacRoman"};
 		std::vector<std::string> options;
 		if(info.find("encoding") != info.end()){
 			std::string encoding = info["encoding"];
 			decoded = boost::locale::conv::to_utf<char>(temp_str, encoding);
-			LOG_VALUE(decoded);
 		}else{
 			bool different = false;
 			for(std::string encoding : encodings_to_try){
@@ -345,7 +343,8 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 					LOG_VALUE(enc);
 				}
 				int which = -1;
-				// int which = cStringChoice(options, "Which is best?").show(-1);
+				// Comment this out if you're not messing with the metadata:
+				// which = cStringChoice(options, "Which is best?").show(-1);
 				if(which != -1){
 					info["encoding"] = encodings_to_try[which];
 					decoded = options[which];
