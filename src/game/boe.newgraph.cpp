@@ -1027,7 +1027,7 @@ void place_talk_str(std::string str_to_place,std::string str_to_place2,short col
 	short lines = break_info.size();
 	short height = lines * (style.lineHeight+1);
 	if(height >= word_place_rect.height()){
-		short overflow = height - preset_word_locs[0].y;
+		short overflow = height - preset_word_locs.back().y;
 		style.lineHeight -= ceil(overflow / (float) lines);
 	}
 
