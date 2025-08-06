@@ -63,6 +63,7 @@ location town_force_loc;
 bool shop_button_active[12];
 rectangle map_title_rect = {3,50,15,300};
 rectangle map_bar_rect = {15,50,27,300};
+rectangle map_tooltip_rect = {270,50,307,350};
 
 void force_town_enter(short which_town,location where_start) {
 	town_force = which_town;
@@ -1313,7 +1314,7 @@ rectangle minimap_view_rect() {
 	return view_rect;
 }
 
-void draw_map(bool need_refresh) {
+void draw_map(bool need_refresh, std::string tooltip_text) {
 	if(!map_visible) return;
 	pic_num_t pic;
 	rectangle the_rect;
@@ -1543,6 +1544,8 @@ void draw_map(bool need_refresh) {
 		}
 	}
 	
+	win_draw_string(mini_map(), map_tooltip_rect,tooltip_text,eTextMode::WRAP,style);
+
 	mini_map().setActive(false);
 	mini_map().display();
 	
