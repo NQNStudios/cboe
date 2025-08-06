@@ -2891,6 +2891,7 @@ void place_edit_special(location loc) {
 		bool is_new = false;
 		if(i == specials.size()){
 			specials.emplace_back(-1,-1,-1);
+			get_current_area()->specials.emplace_back();
 			is_new = true;
 		}
 		if(specials[i].spec < 0) {
