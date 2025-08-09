@@ -3346,6 +3346,8 @@ bool build_scenario() {
 	scenario.feature_flags = {
 		{"scenario-meta-format", "V2"},
 		{"resurrection-balm", "required"},
+		// Town difficulty, due to a bug, used to not be added to door difficulty
+		{"door-town-difficulty", "fixed"}
 	};
 
 	fs::path basePath = progDir/"Blades of Exile Base"/(grass ? "bladbase.boes" : "cavebase.boes");
