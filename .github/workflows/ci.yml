@@ -3,7 +3,7 @@
 
 	on: {
 		push: {
-			branches: [ master, ci ]
+			branches: [ master, ci, test ]
 		},
 		pull_request: {
 			branches: [ master ]
