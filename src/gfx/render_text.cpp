@@ -17,6 +17,10 @@
 #include "winutil.hpp"
 
 static sf::Font& get_font_rsrc(eFont font) {
+	if(get_bool_pref("ReadableFont", false)){
+		if(font == FONT_BOLD) return *ResMgr::fonts.get("AtkinsonHyperlegibleNext-Bold");
+		else return *ResMgr::fonts.get("AtkinsonHyperlegibleNext-Regular");
+	}
 	switch(font) {
 		case FONT_PLAIN:
 			return *ResMgr::fonts.get("plain");

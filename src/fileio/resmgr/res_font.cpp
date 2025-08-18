@@ -9,7 +9,7 @@
 #include "res_font.hpp"
 
 class FontLoader : public ResMgr::cLoader<sf::Font> {
-	/// Load a font from a TTF or BDF file.
+	/// Load a font from a TTF, OTF, or BDF file.
 	sf::Font* operator() (const fs::path& fpath) const override {
 		sf::Font* theFont = new sf::Font;
 		if(theFont->loadFromFile(fpath.string())) return theFont;
@@ -18,7 +18,7 @@ class FontLoader : public ResMgr::cLoader<sf::Font> {
 	}
 
 	ResourceList expand(const std::string& name) const override {
-		return {name + ".ttf", name + ".bdf"};
+		return {name + ".ttf", name + ".otf", name + ".bdf"};
 	}
 
 	std::string typeName() const override {

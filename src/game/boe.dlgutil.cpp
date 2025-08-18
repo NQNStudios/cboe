@@ -1394,6 +1394,7 @@ static bool prefs_event_filter (cDialog& me, std::string id, eKeyMod) {
 		else if(cur_display_mode == "bl") set_pref("DisplayMode", 3);
 		else if(cur_display_mode == "br") set_pref("DisplayMode", 4);
 		else if(cur_display_mode == "win") set_pref("DisplayMode", 5);
+		set_pref("ReadableFont", dynamic_cast<cLed&>(me["font"]).getState() == led_red);
 		set_pref("PlaySounds", dynamic_cast<cLed&>(me["nosound"]).getState() == led_off);
 
 		set_pref("DirectionalKeyScrolling", dynamic_cast<cLed&>(me["screen-shift"]).getState() != led_off);
@@ -1493,6 +1494,7 @@ void pick_preferences(bool record) {
 			break;
 	}
 	
+	dynamic_cast<cLed&>(prefsDlog["font"]).setState(get_bool_pref("ReadableFont", false) ? led_red : led_off);
 	dynamic_cast<cLed&>(prefsDlog["nosound"]).setState(get_bool_pref("PlaySounds", true) ? led_off : led_red);
 	dynamic_cast<cLed&>(prefsDlog["fancypicker"]).setState(get_bool_pref("FancyFilePicker", true) ? led_red : led_off);
 	bool autosave_on = get_bool_pref("Autosave", true);
