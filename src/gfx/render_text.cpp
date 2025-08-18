@@ -256,9 +256,6 @@ static void win_draw_string(sf::RenderTarget& dest_window,rectangle dest_rect,st
 	// TODO: Why the heck are we drawing a whole line higher than requested!?
 	adjust_y -= str_to_draw.getLocalBounds().height;
 	
-	for(auto it : substitutions){
-		boost::replace_all(str, it.first, it.second);
-	}
 	str_to_draw.setString(sf::String::fromUtf8(str.begin(), str.end()));
 	short total_width = str_to_draw.getLocalBounds().width;
 
