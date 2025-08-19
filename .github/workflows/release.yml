@@ -21,7 +21,7 @@ jobs:
       PROD_MACOS_NOTARIZATION_TEAM_ID: '${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}'
       PROD_MACOS_NOTARIZATION_PWD: '${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}'
       VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
-      DEBUG_FLAG: ${{ matrix.configuration == 'Debug' && 'true' || 'false' }}
+      RELEASE_FLAG: ${{ matrix.configuration == 'Release' && 'true' || 'false' }}
       BUILD_OS: ${{ matrix.os.name }}
     strategy:
       fail-fast: false
@@ -81,7 +81,7 @@ jobs:
         run: 'sudo ./.github/workflows/scripts/linux/install-tgui.sh'
         if: ${{ matrix.os.name == 'ubuntu' }}
       - name: Build
-        run: '${{ matrix.os.scons-script }} test=false debug=$DEBUG_FLAG'
+        run: '${{ matrix.os.scons-script }} test=false release=$RELEASE_FLAG'
         shell: bash
 
       - name: Download fix-rpaths.py script
