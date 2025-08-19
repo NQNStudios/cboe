@@ -3776,6 +3776,10 @@ void start_new_game(bool force) {
 void start_tutorial() {
 	std::string version_flag = get_feature_version("tutorial");
 	if(!version_flag.empty()){
+		#ifdef SHOWCASE
+		clear_pref("ReceivedHelp");
+		#endif
+
 		if(party_in_memory){
 			cChoiceDlog confirm("restart-game",{"okay","cancel"});
 			confirm->getControl("warning").replaceText("{{action}}", "Starting the tutorial");
