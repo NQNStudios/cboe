@@ -1,6 +1,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#define SHOWCASE 1
+
 #ifdef __APPLE__
 extern eMenuChoice menuChoice;
 extern short menuChoiceId;
