@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <scenario boes="2.0.0">
     <title>Tutorial</title>
-    <icon>0</icon>
+    <icon>13</icon>
     <id></id>
     <version>1.0.0</version>
     <language>en-US</language>
@@ -17,6 +17,8 @@
     <text>
         <teaser>An exciting adventure!</teaser>
         <teaser></teaser>
+        <icon>0</icon>
+        <first-time-help-extra>To move through the tutorial, click in any direction (starting with north, out of this hallway).</first-time-help-extra>
     </text>
     <ratings>
         <content>G</content>
@@ -32,11 +34,11 @@
         <version>2.0.0</version>
     </creator>
     <game>
-        <num-towns>1</num-towns>
+        <num-towns>2</num-towns>
         <out-width>1</out-width>
         <out-height>1</out-height>
-        <start-town>0</start-town>
-        <town-start x="32" y="32" />
+        <start-town>1</start-town>
+        <town-start x="12" y="14" />
         <outdoor-start x="0" y="0" />
         <sector-start x="24" y="24" />
         <shop>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<town boes="2.0.0">
+    <size>24</size>
+    <name>Part 1: Lore</name>
+    <comment>Comment 1</comment>
+    <comment>Comment 2</comment>
+    <comment>Comment 3</comment>
+    <bounds top="3" left="3" bottom="20" right="20" />
+    <difficulty>0</difficulty>
+    <lighting>lit</lighting>
+    <flags>
+        <chop kills="30000" />
+    </flags>
+    <string id="0">
+        <![CDATA[This room contains multiple books explaining the almost 30-year history of Blades of Exile! To read one, you must be standing next to it. Then, either right-click its space, or click the eye button in your hotbar (hotkey: 'l' for look) before selecting its space.]]>
+    </string>
+    <string id="1">
+        <![CDATA[Try glancing at at least one of them before you rush off through the portal to the north.]]>
+    </string>
+</town>
