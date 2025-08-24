@@ -1,4 +1,4 @@
-Welcome to Blades of Exile. These windows will pop up occasionally to explain what is going on. If they annoy you, they can be turned off in the Preferences screen (access from Options menu).
+Welcome to Blades of Exile. These windows will pop up occasionally to explain what is going on. If they annoy you, they can be turned off in the Preferences screen (access from the {which-menu} menu).
 In general, you can get help by clicking on the '?' buttons or typing '?'. {scen-extra}
 
 
