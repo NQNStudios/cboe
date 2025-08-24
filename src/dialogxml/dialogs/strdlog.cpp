@@ -14,6 +14,7 @@
 #include "fileio/resmgr/res_dialog.hpp"
 #include "mathutil.hpp"
 #include "utility.hpp"
+#include "scenario/scenario.hpp"
 
 // Pick a layout variant depending on number of strings, picture size, and whether a title is given
 DialogDefn& cStrDlog::getDefn(short n_strs, ePicType type, bool hasTitle){
@@ -125,8 +126,11 @@ void showFatalError(std::string str1, std::string str2, cDialog* parent) {
 	giveError(25, "Error!!!", str1, str2, parent);
 }
 
+// Help message 2 can contain an addendum specified by whichever scenario the player chooses first
+const int FIRST_TIME_HELP_EXTRA = 2;
+
 // Call this anywhere, but don't forget parent!!!
-static void give_help(short help1,short help2,cDialog* parent,bool help_forced) {
+static void give_help(short help1,short help2,cDialog* parent,bool help_forced,cScenario* scenario) {
 	std::string str1,str2;
 	
 	if(help_text_rsrc.empty()){
@@ -144,15 +148,26 @@ static void give_help(short help1,short help2,cDialog* parent,bool help_forced) 
 	str1 = get_str(help_text_rsrc,help1);
 	if(help2 > 0)
 		str2 = get_str("help",help2);
+
 	cStrDlog display_strings(str1,str2,"Instant Help",24,PIC_DLOG, parent);
+
+	// Interpolate scenario's special addendum into the first set of help messages.
+	if(help2 == FIRST_TIME_HELP_EXTRA){
+		std::string first_time_help_extra;
+		if(scenario != nullptr){
+			first_time_help_extra = scenario->first_time_help_extra;
+		}
+		display_strings->getControl("str2").replaceText("{scen-extra}", first_time_help_extra);
+	}
+
 	display_strings.setSound(57);
 	display_strings.show();
 }
 
-void give_help(short help1, short help2, bool help_forced) {
-	give_help(help1, help2, nullptr, help_forced);
+void give_help(short help1, short help2, bool help_forced, cScenario* scenario) {
+	give_help(help1, help2, nullptr, help_forced, scenario);
 }
 
-void give_help(short help1, short help2, cDialog& parent, bool help_forced) {
-	give_help(help1, help2, &parent, help_forced);
+void give_help(short help1, short help2, cDialog& parent, bool help_forced, cScenario* scenario) {
+	give_help(help1, help2, &parent, help_forced, scenario);
 }

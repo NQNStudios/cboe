@@ -192,6 +192,9 @@ void writeScenarioToXml(ticpp::Printer&& data, cScenario& scenario) {
 		for(int i = 0; i <= last; i++)
 			data.PushElement("intro-msg", scenario.intro_strs[i], true);
 	}
+	if(!scenario.first_time_help_extra.empty()){
+		data.PushElement("first-time-help-extra", scenario.first_time_help_extra, true);
+	}
 	data.CloseElement("text");
 	data.OpenElement("ratings");
 	data.PushElement("content", scenario.rating);

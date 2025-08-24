@@ -30,6 +30,9 @@
         <intro-msg>
             <![CDATA[After months of scraping out a living, you start to get excited. At last, you can go out, have adventures, and fight evil!]]>
         </intro-msg>
+        <first-time-help-extra>
+            <![CDATA[For now, you should find Vonnegut and get your orders. Press the mouth button (or type 't') to talk to nearby people or creatures.]]>
+        </first-time-help-extra>
     </text>
     <ratings>
         <content>PG</content>
