@@ -126,6 +126,8 @@ void showFatalError(std::string str1, std::string str2, cDialog* parent) {
 	giveError(25, "Error!!!", str1, str2, parent);
 }
 
+// Help message 1 points to a different menu item on Mac than other platforms
+const int FIRST_TIME_HELP_PREFS = 1;
 // Help message 2 can contain an addendum specified by whichever scenario the player chooses first
 const int FIRST_TIME_HELP_EXTRA = 2;
 
@@ -150,6 +152,16 @@ static void give_help(short help1,short help2,cDialog* parent,bool help_forced,c
 		str2 = get_str("help",help2);
 
 	cStrDlog display_strings(str1,str2,"Instant Help",24,PIC_DLOG, parent);
+
+	// Interpolate the correct menu item for accessing preferences
+	if(help1 == FIRST_TIME_HELP_PREFS){
+		#ifdef SFML_SYSTEM_MACOS
+		std::string which_menu = "Blades of Exile";
+		#else
+		std::string which_menu = "Options";
+		#endif
+		display_strings->getControl("str1").replaceText("{which-menu}", which_menu);
+	}
 
 	// Interpolate scenario's special addendum into the first set of help messages.
 	if(help2 == FIRST_TIME_HELP_EXTRA){
