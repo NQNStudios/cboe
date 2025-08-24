@@ -1834,10 +1834,10 @@ class cChooseScenario {
 		if(page == 0) {
 			scen_header_type prefab;
 			switch(which) {
-				case 0: prefab.file = "valleydy.boes"; break;
-				case 1: prefab.file = "stealth.boes"; break;
-				case 2: prefab.file = "zakhazi.boes"; break;
-				case 3: prefab.file = "busywork.boes"; break;
+				case 0: prefab.file = "valleydy.boes"; prefab.intro_pic = 5; break;
+				case 1: prefab.file = "stealth.boes"; prefab.intro_pic = 28; break;
+				case 2: prefab.file = "zakhazi.boes"; prefab.intro_pic = 17; break;
+				case 3: prefab.file = "busywork.boes"; prefab.intro_pic = 4; break;
 			}
 			// Assume prefabs have the right version, I guess
 			prefab.prog_make_ver[0] = 2;
