@@ -11,8 +11,19 @@
 #include "location.hpp"
 #include "fileio/resmgr/res_image.hpp"
 #include "gfx/render_image.hpp"
+#include "scenario/scenario.hpp"
 
 bool use_win_graphics = false;
+
+extern fs::path tempDir;
+extern std::string scenario_temp_dir_name;
+fs::path cCustomGraphics::pic_dir() {
+	if(scenario != nullptr && !scenario->scen_file.has_extension()){
+		// It's an unpacked scenario
+		return scenario->scen_file/"graphics";
+	}
+	return tempDir/scenario_temp_dir_name/"graphics";
+}
 
 rectangle calc_rect(short i, short j){
 	rectangle base_rect = {0,0,36,28};
@@ -117,7 +128,6 @@ void cCustomGraphics::copy_graphic(pic_num_t dest, pic_num_t src, size_t numSlot
 	// debug_show_texture(*party_sheet);
 }
 
-extern std::string scenario_temp_dir_name;
 void cCustomGraphics::convert_sheets() {
 	if(!is_old) return;
 	int num_graphics = count();
@@ -127,8 +137,6 @@ void cCustomGraphics::convert_sheets() {
 	numSheets = num_graphics / 100;
 	if(num_graphics % 100) numSheets++;
 	sheets.resize(numSheets);
-	extern fs::path tempDir;
-	fs::path pic_dir = tempDir/scenario_temp_dir_name/"graphics";
 	for(size_t i = 0; i < numSheets; i++) {
 		sf::IntRect subrect;
 		subrect.top = i * 280;
@@ -144,10 +152,10 @@ void cCustomGraphics::convert_sheets() {
 		sheet_tex.update(sheet);
 		sheets[i].reset(new sf::Texture(sheet_tex));
 		
-		fs::path sheetPath = pic_dir/("sheet" + std::to_string(i) + ".png");
-		sheets[i]->copyToImage().saveToFile(sheetPath.string().c_str());
+		fs::path sheetPath = pic_dir()/("sheet" + std::to_string(i) + ".png");
+		sheets[i]->copyToImage().saveToFile(sheetPath.string());
 	}
-	ResMgr::graphics.pushPath(pic_dir);
+	ResMgr::graphics.pushPath(pic_dir());
 }
 
 void cCustomGraphics::replace_sheet(size_t num, sf::Image& newSheet) {
@@ -156,10 +164,9 @@ void cCustomGraphics::replace_sheet(size_t num, sf::Image& newSheet) {
 	replacement.loadFromImage(newSheet);
 	sheets[num].reset(new sf::Texture(replacement));
 	// Then we need to do some extra stuff to ensure the dialog engine also sees the change
-	extern fs::path tempDir;
 	std::string sheetname = "sheet" + std::to_string(num);
-	fs::path tmpPath = tempDir/scenario_temp_dir_name/"graphics"/(sheetname + ".png");
-	newSheet.saveToFile(tmpPath.string().c_str());
+	fs::path tmpPath = pic_dir()/(sheetname + ".png");
+	newSheet.saveToFile(tmpPath.string());
 	ResMgr::graphics.free(sheetname);
 }
 

@@ -4212,6 +4212,8 @@ public:
 		// Iterating through the graphics folder is not deterministic
 		std::sort(all_pics.begin(), all_pics.end());
 
+		spec_scen_g.scenario = &scenario;
+
 		// First, make sure we even have custom graphics! Also make sure they're not legacy format.
 		bool must_init_spec_g = false;
 		if(spec_scen_g.is_old) {

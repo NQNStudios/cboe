@@ -12,8 +12,11 @@
 #include <utility>
 #include <vector>
 #include <memory>
+#include <boost/filesystem/path.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "location.hpp"
+
+class cScenario;
 
 static const pic_num_t NO_PIC = -1;
 using graf_pos = std::pair<std::shared_ptr<const sf::Texture>,rectangle>;
@@ -44,6 +47,8 @@ struct cCustomGraphics {
 	size_t count(bool party = false);
 	void replace_sheet(size_t num, sf::Image& newSheet);
 	void init_sheet(size_t num);
+	fs::path pic_dir();
+	cScenario* scenario;
 };
 
 rectangle calc_rect(short i, short j);
