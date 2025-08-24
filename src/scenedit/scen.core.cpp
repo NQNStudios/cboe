@@ -3735,7 +3735,7 @@ private:
 	int icon_min = 0;
 	int icon_max = 0;
 	// Buttons for working with icons
-	std::vector<std::string> icon_buttons = {"icon-terr", "strip-terr", "add-terr"};
+	std::vector<std::string> icon_buttons = {"icon-terr", "icon-terr-anim", "strip-terr", "add-terr"};
 
 	// Keep a single RenderTexture for splicing together custom graphics on a sheet
 	static sf::RenderTexture& canvas() {
@@ -4115,6 +4115,25 @@ private:
 		return replace_from_image("Import Terrain Icon", img);
 	}
 
+	bool import_teranim_icon() {
+		int sheet_start = 1000 + 100 * all_pics[cur];
+		set_up_canvas(all_pics[cur]);
+		pic_num_t icon = choose_graphic(0, PIC_TER_ANIM, &dlg);
+		for(int i = 0; i < 4; ++i){
+			int sheet_icon = icon_min + i - sheet_start;
+			int x = sheet_icon % 10;
+			int y = sheet_icon / 10;
+			rectangle dest {y * 36, x * 28, y * 36 + 36, x * 28 + 28};
+			// Force a specific frame to draw
+			cPict::resetAnim(i);
+			cPict::drawAt(mainPtr(),canvas(),dest,icon,PIC_TER_ANIM,false);
+		}
+		cPict::resetAnim();
+		canvas().display();
+		sf::Image img = canvas().getTexture().copyToImage();
+		return replace_from_image("Import Animated Terrain Icon", img);
+	}
+
 	bool strip_ter_floor() {
 		int sheet_start = 1000 + 100 * all_pics[cur];
 		static sf::BlendMode blend_replace(sf::BlendMode::Factor::One, sf::BlendMode::Factor::Zero, sf::BlendMode::Equation::Add);
@@ -4284,6 +4303,7 @@ public:
 		dlg["sheet"].attachClickHandler(std::bind(&cCustomGraphicsDialog::click_on_sheet, this));
 
 		dlg["icon-terr"].attachClickHandler(std::bind(&cCustomGraphicsDialog::import_ter_icon,this));
+		dlg["icon-terr-anim"].attachClickHandler(std::bind(&cCustomGraphicsDialog::import_teranim_icon,this));
 		dlg["strip-terr"].attachClickHandler(std::bind(&cCustomGraphicsDialog::strip_ter_floor,this));
 		dlg["add-terr"].attachClickHandler(std::bind(&cCustomGraphicsDialog::add_ter_floor,this));
 
