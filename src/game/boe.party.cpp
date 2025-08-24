@@ -215,7 +215,8 @@ void put_party_in_scen(std::string scen_name, bool force, bool allow_unpacked) {
 				j = 6;
 			}
 		run_special(eSpecCtx::STARTUP, eSpecCtxType::SCEN, univ.scenario.init_spec, loc(0,0));
-		give_help(1,2);
+		// Welcome to Blades of Exile help message, possibly including extra text specified by scenario
+		give_help(1,2,false,&univ.scenario);
 	}
 	
 	// Compatibility flags

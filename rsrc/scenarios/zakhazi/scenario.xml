@@ -33,6 +33,9 @@
         <intro-msg>
             <![CDATA[She will tell you what your mission is, should you choose to accept it. All you know is that the stakes are incredibly high, and time is of the essence ...]]>
         </intro-msg>
+        <first-time-help-extra>
+            <![CDATA[For now, you should explore this fort, and get your orders.]]>
+        </first-time-help-extra>
     </text>
     <ratings>
         <content>G</content>
