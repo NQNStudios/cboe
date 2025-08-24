@@ -27,6 +27,9 @@
         <intro-msg>
             <![CDATA[You've just stayed the night in your room at the fort, and have had a good night's sleep and a good meal. Time to go out and be heroes!]]>
         </intro-msg>
+        <first-time-help-extra>
+            <![CDATA[For now, you should get equipment, explore this fort, and get your orders. Press the hand button (or type 'g') to pick up the nearby items.]]>
+        </first-time-help-extra>
     </text>
     <ratings>
         <content>G</content>

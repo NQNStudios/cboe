@@ -50,6 +50,7 @@
 			<xs:element name="teaser" minOccurs="0" maxOccurs="2" type="xs:string"/>
 			<xs:element name="icon" type="scenIcon" minOccurs="0"/>
 			<xs:element name="intro-msg" minOccurs="0" maxOccurs="6" type="xs:string"/>
+			<xs:element name="first-time-help-extra" minOccurs="0" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ratings">

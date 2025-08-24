@@ -131,6 +131,7 @@ public:
 	std::string contact_info[2];
 
 	std::array<std::string, 6> intro_strs;
+	std::string first_time_help_extra;
 	std::vector<std::string> journal_strs;
 	std::vector<std::string> spec_strs;
 	std::vector<std::string> snd_names;

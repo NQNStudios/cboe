@@ -35,6 +35,7 @@
 #include "tools/framerate_limiter.hpp"
 #include "replay.hpp"
 #include <boost/lexical_cast.hpp>
+#include "scenario/scenario.hpp"
 
 using namespace std;
 using namespace ticpp;
@@ -567,8 +568,8 @@ void cDialog::run(std::function<void(cDialog&)> onopen){
 
 void cDialog::runWithHelp(short help1, short help2, bool help_forced) {
 	using namespace std::placeholders;
-	extern void give_help(short help1, short help2, cDialog& parent, bool help_forced);
-	run(std::bind(&give_help,help1, help2, _1, help_forced));
+	extern void give_help(short help1, short help2, cDialog& parent, bool help_forced, cScenario* scenario);
+	run(std::bind(&give_help,help1, help2, _1, help_forced, nullptr));
 }
 
 // This method is a main event event loop of the dialog.

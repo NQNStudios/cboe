@@ -892,6 +892,8 @@ void readScenarioFromXml(ticpp::Document&& data, cScenario& scenario) {
 						throw xBadNode(type,info->Row(),info->Column(),fname);
 					info->GetText(&scenario.intro_strs[found_intro], false);
 					found_intro++;
+				} else if(type == "first-time-help-extra") {
+					info->GetText(&scenario.first_time_help_extra);
 				}
 			}
 		} else if(type == "ratings") {

@@ -18,6 +18,8 @@
 /// The signature of a record handler for cStrDlog.
 typedef std::function<void(cDialog&)> record_callback_t;
 
+class cScenario;
+
 /// A simple dialog with one or two long strings, an optional title, and an optional record button.
 class cStrDlog {
 	static struct DialogDefn& getDefn(short n_strs, ePicType type, bool hasTitle);
@@ -90,7 +92,7 @@ void showWarning(std::string str1, cDialog* parent = nullptr);
 extern std::string help_text_rsrc;
 
 // Show a help window with the given messages from rsrc/strings/help.txt:
-void give_help(short help1, short help2, bool help_forced = false);
-void give_help(short help1, short help2, cDialog& parent, bool help_forced = false);
+void give_help(short help1, short help2, bool help_forced = false, cScenario* scenario = nullptr);
+void give_help(short help1, short help2, cDialog& parent, bool help_forced = false, cScenario* scenario = nullptr);
 
 #endif
