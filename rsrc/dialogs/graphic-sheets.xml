@@ -33,6 +33,7 @@
 	<text name='icon-max' relative='pos pos-in' rel-anchor='prev' top='0' left='0' width='30' framed='true'>0</text>
 
 	<button name='icon-terr' type='tiny' text-size='9' relative='pos-in pos' anchor='icon-min' top='2' left='0'>Import Terrain</button>
+	<button name='icon-terr-anim' type='tiny' text-size='9' relative='pos-in pos' rel-anchor='prev' top='2' left='0'>Import Animated Terrain</button>
 	<button name='strip-terr' type='tiny' text-size='9' relative='pos-in pos' rel-anchor='prev' top='2' left='0'>Strip Terrain Background</button>
 	<field name='diff-threshold' relative='pos-in pos' rel-anchor='prev' top='2' left='0' width='40' height='12' type='uint'>0</field>
 	<button name='add-terr' type='tiny' text-size='9' relative='pos-in pos' rel-anchor='prev' top='2' left='0'>Add Terrain Background</button>

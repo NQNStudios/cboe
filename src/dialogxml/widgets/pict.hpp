@@ -86,7 +86,7 @@ public:
 	}
 	cPict& operator=(cPict& other) = delete;
 	cPict(cPict& other) = delete;
-	inline static void resetAnim() { animFrame = 0; }
+	inline static void resetAnim(int frame = 0) { animFrame = frame; }
 	void setAnimLoops(short value);
 private:
 	static std::shared_ptr<const sf::Texture> getSheetInternal(eSheetType type, size_t n);
