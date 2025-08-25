@@ -14,6 +14,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/case_conv.hpp>
 
+#include <fmt/format.h>
+
 #include "dialogxml/widgets/field.hpp"
 #include "dialogxml/dialogs/strdlog.hpp"
 #include "fileio/resmgr/res_dialog.hpp"
@@ -23,14 +25,20 @@
 
 const sf::Color HILITE_COLOUR = Colours::LIGHT_GREEN;
 
-cStringChoice::cStringChoice(cDialog* parent, bool editable)
+cStringChoice::cStringChoice(cDialog* parent, bool editable, bool force_single_column)
 	: editable(editable)
-	, per_page(editable ? 20 : 40)
+	, per_page((editable || force_single_column) ? 20 : 40)
 	, dlg(*ResMgr::dialogs.get(editable ? "choose-edit-string" : "choose-string"), parent)
-{}
+{
+	if(force_single_column){
+		for(int i = per_page + 1; i <= per_page * 2; ++i){
+			dlg[fmt::format("led{}", i)].hide();
+		}
+	}
+}
 
-cStringChoice::cStringChoice(const std::vector<std::string>& strs, std::string title, cDialog* parent, bool editable)
-	: cStringChoice(parent, editable)
+cStringChoice::cStringChoice(const std::vector<std::string>& strs, std::string title, cDialog* parent, bool editable, bool force_single_column)
+	: cStringChoice(parent, editable, force_single_column)
 {
 	setTitle(title);
 	strings = strs;

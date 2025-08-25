@@ -41,13 +41,13 @@ class cStringChoice {
 	bool search_open = false;
 	cLedGroup* leds;
 	std::function<void(cStringChoice&,int)> select_handler;
-	cStringChoice(cDialog* parent, bool editable = false);
+	cStringChoice(cDialog* parent, bool editable = false, bool force_single_column = false);
 public:
 	/// Initializes a dialog from a list of strings.
 	/// @param strs A list of all strings in the dialog.
 	/// @param title The title to show in the dialog.
 	/// @param parent Optionally, a parent dialog.
-	explicit cStringChoice(const std::vector<std::string>& strs, std::string title, cDialog* parent = nullptr, bool editable = false);
+	explicit cStringChoice(const std::vector<std::string>& strs, std::string title, cDialog* parent = nullptr, bool editable = false, bool force_single_column = false);
 	/// Initializes a dialog from an iterator pair.
 	/// @param begin An iterator to the first string in the dialog.
 	/// @param end An iterator to one past the last string in the dialog.
