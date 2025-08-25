@@ -797,8 +797,8 @@ class aCreateDeleteSpecial : public cAction {
 	bool undo_me() override;
 	bool redo_me() override;
 public:
-	aCreateDeleteSpecial(bool create, short mode, cSpecial spec) :
-		cAction(create ? "Create Special Node" : "Delete Special Node", !create), mode(mode), spec(spec), which_town(cur_town), which_out(cur_out) {}
+	aCreateDeleteSpecial(bool create, short mode, cSpecial spec, bool duplicate = false) :
+		cAction(create ? ((duplicate ? "Duplicate" : "Create") + std::string{" Special Node"}) : "Delete Special Node", !create), mode(mode), spec(spec), which_town(cur_town), which_out(cur_out) {}
 };
 
 class aEditSpecial : public cAction {
