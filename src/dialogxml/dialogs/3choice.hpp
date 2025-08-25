@@ -91,6 +91,7 @@ public:
 };
 
 short custom_choice_dialog(std::array<std::string, 6>& strs,short pic_num,ePicType pic_type,std::array<short, 3>& buttons, bool anim_pict = false, short anim_loops = -1, int anim_fps = -1, cUniverse* univ = nullptr, cDialog* parent = nullptr);
+short once_dialog(cUniverse& univ, cSpecial& spec, eSpecCtxType cur_type, std::array<short, 3> buttons, cDialog* parent = nullptr);
 short once_dialog(cUniverse& univ, cSpecial& spec, eSpecCtxType cur_type, cDialog* parent = nullptr);
 
 #endif
