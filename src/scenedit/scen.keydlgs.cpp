@@ -858,13 +858,8 @@ static void save_spec_enc(cDialog& me, node_stack_t& edit_stack) {
 static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, short mode) {
 	eSpecCtxType cur_type = static_cast<eSpecCtxType>(mode);
 
-	// Not pretty, but works:
-	cUniverse univ;
-	univ.scenario = scenario;
-	univ.party.town_num = cur_town;
-	univ.party.outdoor_corner = cur_out;
-	univ.party.i_w_c = {0, 0};
-
+	extern cUniverse temp_universe();
+	cUniverse univ = temp_universe();
 	std::string title = "";
 	ePicType pic_type = PIC_SCEN;
 	pic_num_t pic = scenario.intro_pic;

@@ -20,6 +20,7 @@
 #include <boost/variant.hpp>
 #include <boost/algorithm/string.hpp>
 #include "dialogxml/widgets/field.hpp"
+#include "universe/universe.hpp"
 
 #include "dialogxml/dialogs/dialog.hpp"
 
@@ -531,19 +532,21 @@ static void apply_mode_buttons() {
 				case 2: num_specs = town->specials.size(); break;
 			}
 
+			extern cUniverse temp_universe();
+			cUniverse univ = temp_universe();
 			for(size_t i = 0; i < num_specs; i++) {
 				std::ostringstream strb;
 				switch(mode) {
 					case 0:
-						strb << i << " - " << scenario.scen_specials[i].editor_hint(scenario);
+						strb << i << " - " << scenario.scen_specials[i].editor_hint(univ);
 						set_rb(i,RB_SCEN_SPEC, i, strb.str());
 						break;
 					case 1:
-						strb << i << " - " << current_terrain->specials[i].editor_hint(scenario);
+						strb << i << " - " << current_terrain->specials[i].editor_hint(univ);
 						set_rb(i,RB_OUT_SPEC, i, strb.str());
 						break;
 					case 2:
-						strb << i << " - " << town->specials[i].editor_hint(scenario);
+						strb << i << " - " << town->specials[i].editor_hint(univ);
 						set_rb(i,RB_TOWN_SPEC, i, strb.str());
 						break;
 				}
