@@ -535,6 +535,12 @@ std::string cSpecial::editor_hint(const cScenario& scenario) const {
 	std::string hint = (*type).name();
 
 	switch(type){
+		case eSpecType::SET_SDF:{
+			std::string name = scenario.get_sdf_name(sd1, sd2);
+			if(name.empty()) name = "(" + std::to_string(sd1) + ", " + std::to_string(sd2) + ")";
+			else name = "'" + name + "'";
+			hint += " " + name + " to " + std::to_string(ex1a);
+		}break;
 		case eSpecType::TOWN_STAIR:
 		case eSpecType::TOWN_GENERIC_STAIR:
 			hint += " to ";
