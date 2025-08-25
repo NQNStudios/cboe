@@ -165,7 +165,7 @@ namespace {
 		.ex1c(eSpecPicker::NODE)
 		.no_preview();
 	node_properties_t S_QUEST = node_builder_t(eSpecType::IF_QUEST)
-		.ex1a(STRT_QUEST)
+		.ex1a(eSpecPicker::QUEST)
 		.ex1b(STRT_QUEST_STATUS)
 		.ex1c(eSpecPicker::NODE)
 		.no_preview();

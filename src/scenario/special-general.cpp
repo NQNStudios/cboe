@@ -196,7 +196,7 @@ namespace{
 		.no_preview();
 	node_properties_t S_QUEST = node_builder_t(eSpecType::UPDATE_QUEST)
 		.msg()
-		.ex1a(STRT_QUEST)
+		.ex1a(eSpecPicker::QUEST)
 		.ex1b(STRT_QUEST_STATUS)
 		.when(eSpecField::EX1B == 1, 1)
 			.ex2a(eSpecPicker::JOB_BOARD)
