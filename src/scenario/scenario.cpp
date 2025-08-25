@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include <fmt/format.h>
 
 #include "oldstructs.hpp"
 #include "mathutil.hpp"
@@ -652,6 +653,18 @@ std::string cScenario::get_sdf_name(int row, int col) const {
 	if(sdf_names.at(row).find(col) == sdf_names.at(row).end())
 		return "";
 	return sdf_names.at(row).at(col);
+}
+
+std::string cScenario::sdf_display_name(int row, int col, bool always_coords) const {
+	std::string name = get_sdf_name(row, col);
+	if(!name.empty()){
+		name = fmt::format("'{}'", name);
+		if(always_coords) name += " ";
+	}
+	if(name.empty() || always_coords){
+		name += fmt::format("({}, {})", row, col);
+	}
+	return name;
 }
 
 bool cScenario::cItemStorage::operator==(const cScenario::cItemStorage& other) const {
