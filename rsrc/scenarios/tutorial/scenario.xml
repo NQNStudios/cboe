@@ -18,7 +18,9 @@
         <teaser>An exciting adventure!</teaser>
         <teaser></teaser>
         <icon>0</icon>
-        <first-time-help-extra>To move through the tutorial, click in any direction (starting with north, out of this hallway).</first-time-help-extra>
+        <first-time-help-extra>
+            <![CDATA[To move through the tutorial, click in any direction (starting with north, out of this hallway).]]>
+        </first-time-help-extra>
     </text>
     <ratings>
         <content>G</content>
