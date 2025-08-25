@@ -1324,12 +1324,17 @@ void story_dialog(cUniverse& univ, std::string title, str_num_t first, str_num_t
 	story_dlg.attachClickHandlers([&cur,&univ,first,last,which_str_type](cDialog& me, std::string clicked, eKeyMod) -> bool {
 		if(clicked == "left") {
 			if(cur > first) cur--;
-		} else if(clicked == "done" || cur == last) {
+		} else if(clicked == "done") {
 			me.toast(false);
 			return true;
 		} else if(clicked == "right") {
 			cur++;
 		}
+		if(cur == first) me["left"].hide();
+		else me["left"].show();
+		if(cur == last) me["right"].hide();
+		else me["right"].show();
+
 		std::string text;
 		univ.get_str(text, which_str_type, cur);
 		me["str"].setText(text);
