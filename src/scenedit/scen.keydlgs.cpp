@@ -764,14 +764,20 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 	me[field].setTextToNum(value);
 	bool is_sdf = field.substr(0,3) == "sdf";
 	std::string button = field + "-edit";
+	std::string button2 = field + "-edit2";
 	std::string toggle = field + "-toggle";
 	switch(fcn.button) {
 		case eSpecPicker::NONE:
 			me[button].hide();
 			me[toggle].hide();
+			me[button2].hide();
 			break;
+		case eSpecPicker::NODE:
+			// TODO the other types below this could also have pickers in addition to Create/Edit
+			me[button2].show();
+			BOOST_FALLTHROUGH;
 		case eSpecPicker::MSG_PAIR: case eSpecPicker::MSG_SINGLE:
-		case eSpecPicker::MSG_SEQUENCE: case eSpecPicker::NODE:
+		case eSpecPicker::MSG_SEQUENCE:
 		case eSpecPicker::QUEST:
 			me[button].show();
 			me[toggle].hide();
@@ -781,11 +787,13 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 			break;
 		case eSpecPicker::TOGGLE:
 			me[button].hide();
+			me[button2].hide();
 			me[toggle].show();
 			dynamic_cast<cLed&>(me[toggle]).setState(value > 0 ? eLedState::led_red : eLedState::led_off);
 			break;
 		default:
 			me[button].show();
+			me[button2].hide();
 			me[toggle].hide();
 			if(is_sdf) break;
 			me[button].setText("Choose");
@@ -1174,6 +1182,7 @@ static std::string get_control_for_field(eSpecField field) {
 
 static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t& edit_stack) {
 	std::string field = item_hit.substr(0, item_hit.find_first_of('-'));
+	bool alt_button = item_hit.substr(item_hit.find_first_of('-') + 1) == "edit2";
 	const cSpecial& spec = edit_stack.back().node;
 	node_function_t fcn = get_field_function(spec, field);
 	short val = me[field].getTextAsNum(), store;
@@ -1228,25 +1237,55 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 			}
 		} break;
 		case eSpecPicker::NODE: {
-			short mode = fcn.force_global ? 0 : edit_stack.back().mode;
-			bool is_new = false;
-			store = val < 0 ? get_fresh_spec(mode,is_new) : val;
-			me[field].setTextToNum(store);
-			save_spec_enc(me, edit_stack);
-			cSpecial* node_to_change_to = nullptr;
-			if(mode == 0)
-				node_to_change_to = &scenario.scen_specials[store];
-			else if(mode == 1)
-				node_to_change_to = &current_terrain->specials[store];
-			else if(mode == 2)
-				node_to_change_to = &town->specials[store];
-			if (node_to_change_to) {
-				if(node_to_change_to->pic < 0)
-					node_to_change_to->pic = 0;
-				edit_stack.push_back({store,mode,*node_to_change_to,is_new});
+			// Picker:
+			if(alt_button){
+				std::vector<std::string> node_hints;
+				extern cUniverse temp_universe();
+				cUniverse univ = temp_universe();
+				short mode = fcn.force_global ? 0 : edit_stack.back().mode;
+				std::vector<cSpecial>* current_specials;
+				switch(mode){
+					case 0:
+						current_specials = &scenario.scen_specials;
+						break;
+					case 1:
+						current_specials = &current_terrain->specials;
+						break;
+					case 2:
+						current_specials = &town->specials;
+						break;
+				}
+				int i = 0;
+				for(cSpecial& spec : *current_specials){
+					node_hints.push_back(fmt::format("{}. {}", i, spec.editor_hint(univ)));
+					i++;
+				}
+
+				int which = cStringChoice(node_hints, "Pick a special node:", nullptr, false, true).show(me[field].getTextAsNum());
+				me[field].setTextToNum(which);
 			}
-			put_spec_enc_in_dlog(me, edit_stack);
-			me["back"].show();
+			// Create/edit:
+			else{
+				short mode = fcn.force_global ? 0 : edit_stack.back().mode;
+				bool is_new = false;
+				store = val < 0 ? get_fresh_spec(mode,is_new) : val;
+				me[field].setTextToNum(store);
+				save_spec_enc(me, edit_stack);
+				cSpecial* node_to_change_to = nullptr;
+				if(mode == 0)
+					node_to_change_to = &scenario.scen_specials[store];
+				else if(mode == 1)
+					node_to_change_to = &current_terrain->specials[store];
+				else if(mode == 2)
+					node_to_change_to = &town->specials[store];
+				if (node_to_change_to) {
+					if(node_to_change_to->pic < 0)
+						node_to_change_to->pic = 0;
+					edit_stack.push_back({store,mode,*node_to_change_to,is_new});
+				}
+				put_spec_enc_in_dlog(me, edit_stack);
+				me["back"].show();
+			}
 			return true;
 		}
 		case eSpecPicker::STRING: {
@@ -1505,6 +1544,9 @@ bool edit_spec_enc(short which_node,short mode,cDialog* parent,bool is_new) {
 		"msg1-edit", "msg2-edit", "msg3-edit", "pict-edit", "pictype-edit", "jump-edit",
 		"x1a-edit", "x1b-edit", "x1c-edit", "x2a-edit", "x2b-edit", "x2c-edit",
 		"sdf1-edit", "sdf2-edit",
+		"msg1-edit2", "msg2-edit2", "msg3-edit2", "pict-edit2", "pictype-edit2", "jump-edit2",
+		"x1a-edit2", "x1b-edit2", "x1c-edit2", "x2a-edit2", "x2b-edit2", "x2c-edit2",
+		"sdf1-edit2", "sdf2-edit2",
 		"msg1-toggle", "msg2-toggle", "msg3-toggle", "pict-toggle", "pictype-toggle", "jump-toggle",
 		"x1a-toggle", "x1b-toggle", "x1c-toggle", "x2a-toggle", "x2b-toggle", "x2c-toggle",
 		"sdf1-toggle", "sdf2-toggle",
