@@ -1035,3 +1035,13 @@ void Mouse_Pressed(const sf::Event & event) {
 
 void close_program() {
 }
+
+cUniverse temp_universe() {
+	// Not pretty, but works:
+	cUniverse univ;
+	univ.scenario = scenario;
+	univ.party.town_num = cur_town;
+	univ.party.outdoor_corner = cur_out;
+	univ.party.i_w_c = {0, 0};
+	return univ;
+}

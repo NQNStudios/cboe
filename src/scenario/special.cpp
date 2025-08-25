@@ -12,6 +12,7 @@
 #include <map>
 #include <sstream>
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string/trim.hpp>
 
 #include "dialogxml/dialogs/strdlog.hpp"
 #include "oldstructs.hpp"
@@ -21,6 +22,7 @@
 #include "skills_traits.hpp"
 #include "damage.hpp"
 #include "fields.hpp"
+#include "universe.hpp"
 #include "scenario.hpp"
 
 bool cTimer::is_valid() const {
@@ -530,28 +532,40 @@ void cSpecial::import_legacy(legacy::special_node_type& old){
 	}
 }
 
-static std::string format_sdf_name(int row, int col, std::string name) {
-
-}
-
 // In the editor node list, be as helpful as possible about what the specific node instance does
-std::string cSpecial::editor_hint(const cScenario& scenario) const {
+std::string cSpecial::editor_hint(cUniverse& univ) const {
 	std::string hint = (*type).name();
 
+	eSpecCtxType cur_type = static_cast<eSpecCtxType>(univ.scenario.editor_state.special_editing_mode);
 	std::string preposition = "to";
 
+	auto first_of_six_str = [&univ, cur_type](int start) {
+		std::array<std::string, 6> strs;
+		univ.get_strs(strs, cur_type, start);
+		for(std::string s : strs){
+			boost::algorithm::trim(s);
+			if(!s.empty()){
+				return s;
+			}
+		}
+		return std::string{""};
+	};
+
 	switch(type){
+		case eSpecType::ONCE_DIALOG:
+			hint += fmt::format(": '{}'", first_of_six_str(m1));
+			break;
 		case eSpecType::INC_SDF:
 			preposition = ex1b == 1 ? "decrease by" : "increase by";
 			BOOST_FALLTHROUGH;
 		case eSpecType::SET_SDF:{
-			std::string name = scenario.sdf_display_name(sd1, sd2);
+			std::string name = univ.scenario.sdf_display_name(sd1, sd2);
 			hint += fmt::format(" {} {} {}", name, preposition, ex1a);
 		}break;
 		case eSpecType::TOWN_STAIR:
 		case eSpecType::TOWN_GENERIC_STAIR:
 			hint += " to ";
-			if(ex2a < scenario.towns.size()) hint += scenario.towns[ex2a]->loc_str(loc(ex1a, ex1b));
+			if(ex2a < univ.scenario.towns.size()) hint += univ.scenario.towns[ex2a]->loc_str(loc(ex1a, ex1b));
 			else hint += "INVALID TOWN";
 			break;
 		default: break;
