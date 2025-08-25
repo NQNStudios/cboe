@@ -40,22 +40,19 @@ namespace {
 		.ex2a(STRT_BUTTON)
 		.ex1b(eSpecPicker::NODE)
 		.ex2b(eSpecPicker::NODE);
-	// TODO implement preview
 	node_properties_t S_ITEM_DIALOG = node_builder_t(eSpecType::ONCE_GIVE_ITEM_DIALOG)
 		.sdf()
 		.msg1(eSpecPicker::MSG_SEQUENCE)
 		.msg3(STRT_SPEC_ITEM)
 		.pic()
 		.ex1a(STRT_ITEM)
-		.ex2b(eSpecPicker::NODE)
-		.no_preview();
+		.ex2b(eSpecPicker::NODE);
 	node_properties_t S_OUTENC = node_builder_t(eSpecType::ONCE_OUT_ENCOUNTER)
 		.sdf()
 		.msg();
 	node_properties_t S_TOWNENV = node_builder_t(eSpecType::ONCE_TOWN_ENCOUNTER)
 		.sdf()
 		.msg();
-	// TODO implement preview
 	node_properties_t S_TRAP = node_builder_t(eSpecType::ONCE_TRAP)
 		.sdf()
 		.msg()

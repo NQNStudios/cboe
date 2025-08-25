@@ -881,6 +881,16 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 			story_dialog(univ, str1, special.m2, special.m3, cur_type, special.pic, ePicType(special.pictype), special.ex1c, special.ex2c);
 			cDialog::defaultBackground = defaultBackground;
 		}break;
+		case eSpecType::ONCE_GIVE_ITEM_DIALOG:{
+			std::array<short, 3> buttons = {9, 19, -1};
+			once_dialog(univ, special, cur_type, buttons, &me);
+		}break;
+		case eSpecType::ONCE_TRAP:{
+			std::array<short, 3> buttons = {3, 2, -1};
+			std::array<std::string,6> strs;
+			univ.get_strs(strs[0], strs[1], cur_type, special.m1, special.m2);
+			custom_choice_dialog(strs,special.pic,ePicType(special.pictype),buttons, true, special.ex1c, special.ex2c, &univ);
+		}break;
 		case eSpecType::ONCE_DIALOG:
 			once_dialog(univ, special, cur_type, &me);
 			break;

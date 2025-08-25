@@ -224,14 +224,18 @@ short custom_choice_dialog(std::array<std::string, 6>& strs,short pic_num,ePicTy
 	return -1;
 }
 
-short once_dialog(cUniverse& univ, cSpecial& spec, eSpecCtxType cur_type, cDialog* parent) {
+short once_dialog(cUniverse& univ, cSpecial& spec, eSpecCtxType cur_type, std::array<short, 3> buttons, cDialog* parent) {
 	std::array<std::string, 6> strs;
-	std::array<short, 3> buttons = {-1,-1,-1};
 
 	if(spec.m1 < 0)
 		return -1;
 
 	univ.get_strs(strs, cur_type, spec.m1);
+	return custom_choice_dialog(strs, spec.pic, ePicType(spec.pictype), buttons, true, spec.ex1c, spec.ex2c, &univ, parent);
+}
+
+short once_dialog(cUniverse& univ, cSpecial& spec, eSpecCtxType cur_type, cDialog* parent) {
+	std::array<short, 3> buttons = {-1,-1,-1};
 	if(spec.m3 > 0) {
 		// The first button defaults to OK if toggle is on
 		buttons[0] = 1;
@@ -249,7 +253,7 @@ short once_dialog(cUniverse& univ, cSpecial& spec, eSpecCtxType cur_type, cDialo
 		showError("Dialog box ended up with no buttons.");
 		return -1;
 	}
-	return custom_choice_dialog(strs, spec.pic, ePicType(spec.pictype), buttons, true, spec.ex1c, spec.ex2c, &univ, parent);
+	return once_dialog(univ, spec, cur_type, buttons, parent);
 }
 
 cThreeChoice& cThreeChoice::setRecordHandler(record_callback_t rec){
