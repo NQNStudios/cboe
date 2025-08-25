@@ -772,13 +772,12 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 			me[toggle].hide();
 			me[button2].hide();
 			break;
-		case eSpecPicker::NODE:
+		case eSpecPicker::QUEST: case eSpecPicker::NODE:
 			// TODO the other types below this could also have pickers in addition to Create/Edit
 			me[button2].show();
 			BOOST_FALLTHROUGH;
 		case eSpecPicker::MSG_PAIR: case eSpecPicker::MSG_SINGLE:
 		case eSpecPicker::MSG_SEQUENCE:
-		case eSpecPicker::QUEST:
 			me[button].show();
 			me[toggle].hide();
 			if(is_sdf) break;
@@ -1477,11 +1476,19 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 			me[otherField].setTextToNum(sdf.x);
 		} break;
 		case eSpecPicker::QUEST: {
-			if(val < 0 || val >= scenario.quests.size()){
-				val = scenario.quests.size();
+			// Picker:
+			if(alt_button){
+				std::vector<std::string> strings;
+				for(cQuest& quest : scenario.quests) {
+					strings.push_back(quest.name);
+				}
+				store = cStringChoice(strings, "Select a quest:", &me).show(me[field].getTextAsNum());
+			}else{
+				if(val < 0 || val >= scenario.quests.size()){
+					val = scenario.quests.size();
+				}
+				if(edit_quest(val)) store = val;
 			}
-			edit_quest(val);
-			store = val;
 		} break;
 		case eSpecPicker::SPELL_PATTERN: store = choose_pattern(val, &me, fcn.augmented); break;
 		case eSpecPicker::FIELD: store = choose_field_type(val, &me, fcn.augmented); break;
