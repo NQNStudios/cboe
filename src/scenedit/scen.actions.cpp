@@ -1461,7 +1461,7 @@ static bool handle_terrain_action(location the_point, bool ctrl_hit) {
 	return false;
 }
 
-static bool handle_terpal_action(location cur_point, bool option_hit) {
+static bool handle_terpal_action(location cur_point, bool option_hit, bool ctrl_hit) {
 	int rows = TYPE_ROWS_DRAWING;
 	if(overall_mode == MODE_EDIT_TYPES) rows = TYPE_ROWS_EDITING;
 	for(int i = 0; i < 16 * rows; i++)
@@ -1603,6 +1603,30 @@ static bool handle_terpal_action(location cur_point, bool option_hit) {
 									update_edit_menu();
 								}
 								break;
+						}
+					}
+				} else if(ctrl_hit){
+					// Control-click a type: Duplicate it
+					if(i != size_before){
+						switch(draw_mode){
+							case DRAW_TERRAIN:{
+								cTerrain orig = scenario.ter_types[i];
+								scenario.ter_types.push_back(orig);
+								undo_list.add(action_ptr(new aCreateDeleteTerrain(true, orig, true)));
+								update_edit_menu();
+							}break;
+							case DRAW_MONST:{
+								cMonster orig = scenario.scen_monsters[i];
+								scenario.scen_monsters.push_back(orig);
+								undo_list.add(action_ptr(new aCreateDeleteMonster(true, orig, true)));
+								update_edit_menu();
+							}break;
+							case DRAW_ITEM:{
+								cItem orig = scenario.scen_items[i];
+								scenario.scen_items.push_back(orig);
+								undo_list.add(action_ptr(new aCreateDeleteItem(true, orig, true)));
+								update_edit_menu();
+							}break;
 						}
 					}
 				} else {
@@ -2015,7 +2039,7 @@ void handle_action(location the_point,sf::Event /*event*/) {
 		cur_point = the_point;
 		cur_point.x -= RIGHT_AREA_UL_X;
 		cur_point.y -= RIGHT_AREA_UL_Y;
-		if(handle_terpal_action(cur_point, option_hit))
+		if(handle_terpal_action(cur_point, option_hit, ctrl_hit))
 			return;
 
 		cur_point2 = the_point;

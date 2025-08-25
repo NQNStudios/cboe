@@ -223,8 +223,8 @@ class aCreateDeleteTerrain : public cAction {
 	bool undo_me() override;
 	bool redo_me() override;
 public:
-	aCreateDeleteTerrain(bool create, cTerrain terrain) :
-		cAction(create ? "Create Terrain Type" : "Delete Terrain Type", !create),
+	aCreateDeleteTerrain(bool create, cTerrain terrain, bool duplicate = false) :
+		cAction(create ? ((duplicate ? "Duplicate":"Create") + std::string{" Terrain Type"}) : "Delete Terrain Type", !create),
 		terrains({terrain}) {}
 	aCreateDeleteTerrain(terrain_type_changes_t terrains) :
 		cAction("Create Terrain Types", false),
@@ -237,8 +237,8 @@ class aCreateDeleteMonster : public cAction {
 	bool undo_me() override;
 	bool redo_me() override;
 public:
-	aCreateDeleteMonster(bool create, cMonster monst) :
-		cAction(create ? "Create Monster Type" : "Delete Monster Type", !create),
+	aCreateDeleteMonster(bool create, cMonster monst, bool duplicate = false) :
+		cAction(create ? ((duplicate ? "Duplicate":"Create") + std::string{" Monster Type"}) : "Delete Monster Type", !create),
 		monsters({monst}) {}
 	aCreateDeleteMonster(monst_type_changes_t monsts) :
 		cAction("Create Monster Types", false),
@@ -251,8 +251,8 @@ class aCreateDeleteItem : public cAction {
 	bool undo_me() override;
 	bool redo_me() override;
 public:
-	aCreateDeleteItem(bool create, class cItem item) :
-		cAction(create ? "Create Item Type" : "Delete Item Type", !create),
+	aCreateDeleteItem(bool create, class cItem item, bool duplicate = false) :
+		cAction(create ? ((duplicate ? "Duplicate":"Create") + std::string{" Item Type"}) : "Delete Item Type", !create),
 		items({item}) {}
 	aCreateDeleteItem(item_type_changes_t items) :
 		cAction("Create Item Types", false),
