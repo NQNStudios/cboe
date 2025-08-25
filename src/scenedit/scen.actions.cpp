@@ -397,7 +397,7 @@ static void edit_loc_string(eStrMode mode, size_t which) {
 	edit_text_str(which,mode,is_new);
 }
 
-static bool handle_rb_action(location the_point, bool option_hit) {
+static bool handle_rb_action(location the_point, bool option_hit, bool ctrl_hit) {
 	long right_top = right_sbar->getPosition();
 	for(int i = 0; i < NRSONPAGE && i + right_top < NRS; i++)
 		if(!mouse_button_held && (the_point.in(right_buttons[i]) )
@@ -433,6 +433,13 @@ static bool handle_rb_action(location the_point, bool option_hit) {
 							update_edit_menu();
 							scenario.scen_specials[j] = cSpecial();
 						}
+					} else if(ctrl_hit){
+						// Duplicate special node
+						if(j != size_before){
+							scenario.scen_specials.push_back(scenario.scen_specials[j]);
+							undo_list.add(action_ptr(new aCreateDeleteSpecial(true, 0, scenario.scen_specials.back(), true)));
+							update_edit_menu();
+						}
 					} else {
 						bool is_new = false;
 						if(j == size_before){
@@ -461,6 +468,13 @@ static bool handle_rb_action(location the_point, bool option_hit) {
 							update_edit_menu();
 							current_terrain->specials[j] = cSpecial();
 						}
+					} else if(ctrl_hit){
+						// Duplicate special node
+						if(j != size_before){
+							current_terrain->specials.push_back(current_terrain->specials[j]);
+							undo_list.add(action_ptr(new aCreateDeleteSpecial(true, 0, current_terrain->specials.back(), true)));
+							update_edit_menu();
+						}
 					} else {
 						bool is_new = false;
 						if(j == size_before){
@@ -488,6 +502,13 @@ static bool handle_rb_action(location the_point, bool option_hit) {
 							undo_list.add(action_ptr(new aEditSpecial(2, j, town->specials[j])));
 							update_edit_menu();
 							town->specials[j] = cSpecial();
+						}
+					}  else if(ctrl_hit){
+						// Duplicate special node
+						if(j != size_before){
+							town->specials.push_back(town->specials[j]);
+							undo_list.add(action_ptr(new aCreateDeleteSpecial(true, 0, town->specials.back(), true)));
+							update_edit_menu();
 						}
 					} else {
 						bool is_new = false;
@@ -2028,7 +2049,7 @@ void handle_action(location the_point,sf::Event /*event*/) {
 	if(handle_lb_click(the_point))
 		return;
 	
-	if(overall_mode >= MODE_MAIN_SCREEN && overall_mode != MODE_EDIT_TYPES && handle_rb_action(the_point, option_hit))
+	if(overall_mode >= MODE_MAIN_SCREEN && overall_mode != MODE_EDIT_TYPES && handle_rb_action(the_point, option_hit, ctrl_hit))
 		return;
 		
 	update_mouse_spot(the_point);
