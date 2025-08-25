@@ -539,6 +539,11 @@ std::string cSpecial::editor_hint(cUniverse& univ) const {
 	eSpecCtxType cur_type = static_cast<eSpecCtxType>(univ.scenario.editor_state.special_editing_mode);
 	std::string preposition = "to";
 
+	auto str = [&univ, cur_type](int which) {
+		std::string s;
+		univ.get_str(s, cur_type, which);
+		return s;
+	};
 	auto first_of_six_str = [&univ, cur_type](int start) {
 		std::array<std::string, 6> strs;
 		univ.get_strs(strs, cur_type, start);
@@ -550,8 +555,26 @@ std::string cSpecial::editor_hint(cUniverse& univ) const {
 		}
 		return std::string{""};
 	};
+	auto first_of_many_str = [&univ, cur_type](int title, int start, int end) {
+		std::string s;
+		univ.get_str(s, cur_type, title);
+		boost::algorithm::trim(s);
+		if(!s.empty()) return s;
+		for(int i = 0; i <= end; ++i){
+			univ.get_str(s, cur_type, i);
+			boost::algorithm::trim(s);
+			if(!s.empty()) return s;
+		}
+		return std::string{""};
+	};
 
 	switch(type){
+		case eSpecType::ONCE_DISPLAY_MSG:
+			hint += fmt::format(": '{}'", str(m1));
+			break;
+		case eSpecType::STORY_DIALOG:
+			hint += fmt::format(": '{}'", first_of_many_str(m1, m2, m3));
+			break;
 		case eSpecType::ONCE_DIALOG:
 			hint += fmt::format(": '{}'", first_of_six_str(m1));
 			break;
