@@ -530,16 +530,23 @@ void cSpecial::import_legacy(legacy::special_node_type& old){
 	}
 }
 
+static std::string format_sdf_name(int row, int col, std::string name) {
+
+}
+
 // In the editor node list, be as helpful as possible about what the specific node instance does
 std::string cSpecial::editor_hint(const cScenario& scenario) const {
 	std::string hint = (*type).name();
 
+	std::string preposition = "to";
+
 	switch(type){
+		case eSpecType::INC_SDF:
+			preposition = ex1b == 1 ? "decrease by" : "increase by";
+			BOOST_FALLTHROUGH;
 		case eSpecType::SET_SDF:{
-			std::string name = scenario.get_sdf_name(sd1, sd2);
-			if(name.empty()) name = "(" + std::to_string(sd1) + ", " + std::to_string(sd2) + ")";
-			else name = "'" + name + "'";
-			hint += " " + name + " to " + std::to_string(ex1a);
+			std::string name = scenario.sdf_display_name(sd1, sd2);
+			hint += fmt::format(" {} {} {}", name, preposition, ex1a);
 		}break;
 		case eSpecType::TOWN_STAIR:
 		case eSpecType::TOWN_GENERIC_STAIR:
