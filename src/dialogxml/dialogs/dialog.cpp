@@ -36,6 +36,7 @@
 #include "replay.hpp"
 #include <boost/lexical_cast.hpp>
 #include "scenario/scenario.hpp"
+#include "universe/universe.hpp"
 
 using namespace std;
 using namespace ticpp;
@@ -1313,4 +1314,28 @@ void setup_dialog_pict_anim(cDialog& dialog, std::string pict_id, short anim_loo
 	pict.setAnimLoops(anim_loops);
 	dialog.setAnimPictFPS(anim_fps);
 	dialog.setDoAnimations(true);
+}
+
+void story_dialog(cUniverse& univ, std::string title, str_num_t first, str_num_t last, eSpecCtxType which_str_type, pic_num_t pic, ePicType pt, short anim_loops, int anim_fps) {
+	cDialog story_dlg(*ResMgr::dialogs.get("many-str"));
+	dynamic_cast<cPict&>(story_dlg["pict"]).setPict(pic, pt);
+	setup_dialog_pict_anim(story_dlg, "pict", anim_loops, anim_fps);
+	str_num_t cur = first;
+	story_dlg.attachClickHandlers([&cur,&univ,first,last,which_str_type](cDialog& me, std::string clicked, eKeyMod) -> bool {
+		if(clicked == "left") {
+			if(cur > first) cur--;
+		} else if(clicked == "done" || cur == last) {
+			me.toast(false);
+			return true;
+		} else if(clicked == "right") {
+			cur++;
+		}
+		std::string text;
+		univ.get_str(text, which_str_type, cur);
+		me["str"].setText(text);
+		return true;
+	}, {"left", "right", "done"});
+	story_dlg["left"].triggerClickHandler(story_dlg, "left", eKeyMod());
+	story_dlg["title"].setText(title);
+	story_dlg.run();
 }

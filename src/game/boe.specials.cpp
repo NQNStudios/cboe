@@ -2464,7 +2464,7 @@ void general_spec(const runtime_state& ctx) {
 			break;
 		case eSpecType::STORY_DIALOG:
 			univ.get_str(str1,ctx.cur_spec_type,spec.m1);
-			story_dialog(str1, spec.m2, spec.m3, ctx.cur_spec_type, spec.pic, ePicType(spec.pictype), spec.ex1c, spec.ex2c);
+			story_dialog(univ, str1, spec.m2, spec.m3, ctx.cur_spec_type, spec.pic, ePicType(spec.pictype), spec.ex1c, spec.ex2c);
 			break;
 		case eSpecType::CLEAR_BUF:
 			univ.get_buf().clear();

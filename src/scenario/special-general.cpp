@@ -47,12 +47,10 @@ namespace{
 		.sdf(eSpecField::EX1A, eSpecField::EX1B)
 		.sdf(eSpecField::EX2A, eSpecField::EX2B)
 		.msg();
-	// TODO implement preview
 	node_properties_t S_STORY = node_builder_t(eSpecType::STORY_DIALOG)
 		.msg1(eSpecPicker::MSG_SINGLE)
 		.field_pair(eSpecField::MSG2, eSpecField::MSG3, eSpecPicker::MSG_SEQUENCE_VAR)
-		.pic()
-		.no_preview();
+		.pic();
 	node_properties_t S_PREVENT = node_builder_t(eSpecType::CANT_ENTER)
 		.msg()
 		.ex1a(eSpecPicker::TOGGLE)
