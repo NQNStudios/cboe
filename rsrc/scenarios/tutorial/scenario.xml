@@ -63,5 +63,8 @@
     </game>
     <editor>
         <default-ground>2</default-ground>
+        <sdf row="1" col="0">looked at book</sdf>
+        <sdf row="1" col="1">book node</sdf>
+        <sdf row="1" col="2">entry message</sdf>
     </editor>
 </scenario>
