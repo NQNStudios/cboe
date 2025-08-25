@@ -43,7 +43,7 @@ namespace {
 	// TODO implement preview
 	node_properties_t S_ITEM_DIALOG = node_builder_t(eSpecType::ONCE_GIVE_ITEM_DIALOG)
 		.sdf()
-		.msg()
+		.msg1(eSpecPicker::MSG_SEQUENCE)
 		.msg3(STRT_SPEC_ITEM)
 		.pic()
 		.ex1a(STRT_ITEM)
