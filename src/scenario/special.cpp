@@ -560,7 +560,7 @@ std::string cSpecial::editor_hint(cUniverse& univ) const {
 		univ.get_str(s, cur_type, title);
 		boost::algorithm::trim(s);
 		if(!s.empty()) return s;
-		for(int i = 0; i <= end; ++i){
+		for(int i = start; i <= end; ++i){
 			univ.get_str(s, cur_type, i);
 			boost::algorithm::trim(s);
 			if(!s.empty()) return s;
