@@ -1260,7 +1260,7 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 					i++;
 				}
 
-				int which = cStringChoice(node_hints, "Pick a special node:", nullptr, false, true).show(me[field].getTextAsNum());
+				int which = cStringChoice(node_hints, "Pick a special node:", &me, false, true).show(me[field].getTextAsNum());
 				me[field].setTextToNum(which);
 			}
 			// Create/edit:
