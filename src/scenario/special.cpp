@@ -569,6 +569,14 @@ std::string cSpecial::editor_hint(cUniverse& univ) const {
 	};
 
 	switch(type){
+		case eSpecType::IF_LOOKING:
+			hint += fmt::format(" call {}, else {}", ex1c, jumpto);
+			break;
+
+		case eSpecType::SET_POINTER:
+			hint += fmt::format(" -{} to {}", ex1a, univ.scenario.sdf_display_name(sd1, sd2));
+			break;
+
 		case eSpecType::ONCE_DISPLAY_MSG:
 			hint += fmt::format(": '{}'", str(m1));
 			break;
@@ -578,6 +586,7 @@ std::string cSpecial::editor_hint(cUniverse& univ) const {
 		case eSpecType::ONCE_DIALOG:
 			hint += fmt::format(": '{}'", first_of_six_str(m1));
 			break;
+
 		case eSpecType::INC_SDF:
 			preposition = ex1b == 1 ? "decrease by" : "increase by";
 			BOOST_FALLTHROUGH;
@@ -585,6 +594,7 @@ std::string cSpecial::editor_hint(cUniverse& univ) const {
 			std::string name = univ.scenario.sdf_display_name(sd1, sd2);
 			hint += fmt::format(" {} {} {}", name, preposition, ex1a);
 		}break;
+
 		case eSpecType::TOWN_STAIR:
 		case eSpecType::TOWN_GENERIC_STAIR:
 			hint += " to ";
