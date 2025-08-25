@@ -25,7 +25,6 @@ void set_town_attitude(short lo,short hi,eAttitude att);
 bool show_get_items(std::string titleText, std::vector<cItem*>& itemRefs, short pc_getting, bool overload = false);
 bool display_item(location from_loc,short pc_num,short mode, bool check_container);
 void custom_pic_dialog(std::string title, pic_num_t bigpic);
-void story_dialog(std::string title, str_num_t first, str_num_t last, eSpecCtxType which_str_type, pic_num_t pic, ePicType pt, short anim_loops, int anim_fps);
 short get_num_of_items(short max_num);
 void init_mini_map();
 void draw_help_dialog_item_buttons(cDialog& dialog,short item);

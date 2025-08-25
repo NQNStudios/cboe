@@ -31,11 +31,13 @@
 #include <boost/filesystem/path.hpp>
 #include "tools/prefs.hpp"
 #include "tools/framerate_limiter.hpp"
+#include "special.hpp"
 
 class cControl;
 class cContainer;
 class cTextField;
 struct DialogDefn;
+class cUniverse;
 
 /// Specifies the relative position of a control's labelling text.
 enum eLabelPos {
@@ -392,6 +394,8 @@ public:
 };
 
 void setup_dialog_pict_anim(cDialog& dialog, std::string pict_id, short anim_loops, short anim_fps);
+
+void story_dialog(cUniverse& univ, std::string title, str_num_t first, str_num_t last, eSpecCtxType which_str_type, pic_num_t pic, ePicType pt, short anim_loops, int anim_fps);
 
 // For development/debugging only.
 void preview_dialog_xml(fs::path dialog_xml);

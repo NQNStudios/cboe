@@ -631,30 +631,6 @@ void custom_pic_dialog(std::string title, pic_num_t bigpic) {
 	pic_dlg.run();
 }
 
-void story_dialog(std::string title, str_num_t first, str_num_t last, eSpecCtxType which_str_type, pic_num_t pic, ePicType pt, short anim_loops, int anim_fps) {
-	cDialog story_dlg(*ResMgr::dialogs.get("many-str"));
-	dynamic_cast<cPict&>(story_dlg["pict"]).setPict(pic, pt);
-	setup_dialog_pict_anim(story_dlg, "pict", anim_loops, anim_fps);
-	str_num_t cur = first;
-	story_dlg.attachClickHandlers([&cur,first,last,which_str_type](cDialog& me, std::string clicked, eKeyMod) -> bool {
-		if(clicked == "left") {
-			if(cur > first) cur--;
-		} else if(clicked == "done" || cur == last) {
-			me.toast(false);
-			return true;
-		} else if(clicked == "right") {
-			cur++;
-		}
-		std::string text;
-		univ.get_str(text, which_str_type, cur);
-		me["str"].setText(text);
-		return true;
-	}, {"left", "right", "done"});
-	story_dlg["left"].triggerClickHandler(story_dlg, "left", eKeyMod());
-	story_dlg["title"].setText(title);
-	story_dlg.run();
-}
-
 static bool get_num_of_items_event_filter(cDialog& me, std::string item_hit, eKeyMod) {
 	if(item_hit == "cancel"){
 		me.setResult<int>(0);
