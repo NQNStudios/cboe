@@ -322,12 +322,15 @@ pic_num_t choose_graphic(short cur_choice,ePicType g_type,cDialog* parent, bool 
 		case PIC_STATUS: total_pics = 27; break;
 		case PIC_SCEN_LG: total_pics = 4; break;
 		case PIC_TER_MAP: total_pics = 990; break;
-		case PIC_FULL:
-			if(!fs::is_directory(tempDir/scenario_temp_dir_name/"graphics")) {
+		case PIC_FULL:{
+			fs::path pic_dir = tempDir/scenario_temp_dir_name/"graphics";
+			if(!scenario.scen_file.has_extension()) // It's an unpacked scenario
+				pic_dir = scenario.scen_file/"graphics";
+			if(!fs::is_directory(pic_dir)) {
 				showError("You have no custom graphics, so it's not possible to select this kind of picture!",parent);
 				return NO_PIC;
 			}
-			for(fs::directory_iterator iter(tempDir/scenario_temp_dir_name/"graphics"); iter != fs::directory_iterator(); iter++) {
+			for(fs::directory_iterator iter(pic_dir); iter != fs::directory_iterator(); iter++) {
 				std::string fname = iter->path().filename().string().c_str();
 				size_t dot = fname.find_last_of('.');
 				if(dot == std::string::npos) continue;
@@ -340,7 +343,7 @@ pic_num_t choose_graphic(short cur_choice,ePicType g_type,cDialog* parent, bool 
 			}
 			std::sort(all_pics.begin(), all_pics.end());
 			pic_dlg = new cPictChoice(all_pics, g_type, parent); // To suppress adding custom pics
-			break;
+		}break;
 		default:
 			std::cerr << "Picture type " << (g_type + PIC_PRESET) << " is missing case in choose_graphic." << std::endl;
 			return NO_PIC;
