@@ -120,14 +120,12 @@ namespace {
 		.ex2a(STRT_SKILL_CHECK)
 		.ex2b(STRT_ACCUM)
 		.no_preview();
-	// TODO implement preview
 	node_properties_t S_TEXT = node_builder_t(eSpecType::IF_TEXT_RESPONSE)
 		.msg1(+eSpecPicker::MSG_SINGLE)
 		.ex1a(+eSpecPicker::MSG_SINGLE)
 		.ex1b(eSpecPicker::NODE)
 		.ex2a(+eSpecPicker::MSG_SINGLE)
-		.ex2b(eSpecPicker::NODE)
-		.no_preview();
+		.ex2b(eSpecPicker::NODE);
 	node_properties_t S_SDFEQ = node_builder_t(eSpecType::IF_SDF_EQ)
 		.sdf()
 		.ex1b(eSpecPicker::NODE)
