@@ -880,6 +880,19 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 	cDialog::defaultBackground = cDialog::BG_DARK;
 
 	switch(special.type){
+		case eSpecType::TOWN_GENERIC_STAIR:
+			if(special.ex2b < 8)
+				cChoiceDlog(stairDlogs[max(0,special.ex2b)],{"climb","leave"}).show();
+			break;
+		case eSpecType::TOWN_GENERIC_BUTTON:
+			cChoiceDlog("basic-button",{"yes","no"}).show();
+			break;
+		case eSpecType::TOWN_GENERIC_PORTAL:
+			cChoiceDlog("basic-portal",{"yes","no"}).show();
+			break;
+		case eSpecType::TOWN_GENERIC_LEVER:
+			cChoiceDlog("basic-lever",{"pull", "leave"}).show();
+			break;
 		case eSpecType::IF_NUM_RESPONSE:{
 			int min = special.m2;
 			int max = special.m3;

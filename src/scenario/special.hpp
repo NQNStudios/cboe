@@ -172,6 +172,13 @@ enum eStrType {
 	STRT_LABEL_ALIGN, STRT_HORSE, STRT_BOAT,
 };
 
+const char*const stairDlogs[8] = {
+	"basic-stair-up", "basic-stair-down",
+	"basic-slope-up", "basic-slope-down",
+	"slimy-stair-up", "slimy-stair-down",
+	"dark-slope-up", "dark-slope-down"
+};
+
 enum class eSpecPicker {
 	NONE,
 	MSG_SINGLE, MSG_PAIR, MSG_SEQUENCE, MSG_SEQUENCE_VAR,
