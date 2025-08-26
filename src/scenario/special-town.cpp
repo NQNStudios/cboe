@@ -87,7 +87,6 @@ namespace {
 		.msg1(eSpecPicker::MSG_SEQUENCE)
 		.pic()
 		.loc(eSpecField::EX1A, eSpecField::EX1B, eLocType::ACTIVE_TOWN);
-	// TODO implement preview
 	node_properties_t S_STAIR = node_builder_t(eSpecType::TOWN_STAIR)
 		.msg1(eSpecPicker::MSG_SEQUENCE)
 		.pic()
@@ -95,8 +94,7 @@ namespace {
 		.ex2a(STRT_TOWN)
 		.ex2b(eSpecPicker::TOGGLE)
 		.ex2c(STRT_STAIR_MODE)
-		.jump(eSpecPicker::NONE)
-		.no_preview();
+		.jump(eSpecPicker::NONE);
 	node_properties_t S_OUTDOOR = node_builder_t(eSpecType::TOWN_RELOCATE)
 		.msg()
 		.field_pair(eSpecField::EX1A, eSpecField::EX1B, STRT_SECTOR)

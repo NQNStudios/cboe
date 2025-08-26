@@ -883,6 +883,13 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 	cDialog::defaultBackground = cDialog::BG_DARK;
 
 	switch(special.type){
+		case eSpecType::TOWN_STAIR:
+			// No message, or skip dialog and force:
+			if((special.m1 < 0) || (special.ex2b == 1)) break;
+			univ.get_strs(strs, cur_type, special.m1);
+			buttons = {20, 24, -1};
+			custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, false, -1, -1, &univ);
+			break;
 		case eSpecType::TOWN_PORTAL:
 			if(special.m1 < 0) break;
 			univ.get_strs(strs, cur_type,special.m1);
