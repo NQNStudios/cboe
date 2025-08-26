@@ -140,7 +140,6 @@ namespace {
 			.ex1b(STRT_ANY_SPELL)
 		.end()
 		.no_preview();
-	// TODO implement preview
 	node_properties_t S_NUM = node_builder_t(eSpecType::IF_NUM_RESPONSE)
 		.msg1(+eSpecPicker::MSG_SINGLE)
 		.pict(STRT_CMP_MODE)
@@ -152,8 +151,7 @@ namespace {
 			.ex1b(STRT_CMP)
 			.ex2a()
 			.ex2b(STRT_CMP)
-		.end()
-		.no_preview();
+		.end();
 	node_properties_t S_BOAT = node_builder_t(eSpecType::IF_IN_BOAT)
 		.ex1b(STRT_BOAT)
 		.ex1c(eSpecPicker::NODE)
