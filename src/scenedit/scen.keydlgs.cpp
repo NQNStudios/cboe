@@ -872,6 +872,9 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 	extern cUniverse temp_universe();
 	cUniverse univ = temp_universe();
 	std::string title = "";
+	std::array<std::string,6> strs;
+	std::array<short, 3> buttons;
+
 	ePicType pic_type = PIC_SCEN;
 	pic_num_t pic = scenario.intro_pic;
 
@@ -880,6 +883,13 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 	cDialog::defaultBackground = cDialog::BG_DARK;
 
 	switch(special.type){
+		case eSpecType::TOWN_LEVER:
+				if(special.m1 < 0) break;
+				univ.get_strs(strs,cur_type, special.m1);
+				buttons = {9, 35, -1};
+				if(custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, true, special.ex1c, special.ex2c, &univ) == 1)
+				break;
+			break;
 		case eSpecType::TOWN_GENERIC_STAIR:
 			if(special.ex2b < 8)
 				cChoiceDlog(stairDlogs[max(0,special.ex2b)],{"climb","leave"}).show();
@@ -908,21 +918,19 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 			univ.get_str(title, cur_type, special.m1);
 			custom_pic_dialog(title, special.ex1a, special.ex1b);
 			break;
-		case eSpecType::STORY_DIALOG:{
-			std::string str1;
-			univ.get_str(str1,cur_type,special.m1);
-			story_dialog(univ, str1, special.m2, special.m3, cur_type, special.pic, ePicType(special.pictype), special.ex1c, special.ex2c);
-		}break;
-		case eSpecType::ONCE_GIVE_ITEM_DIALOG:{
-			std::array<short, 3> buttons = {9, 19, -1};
+		case eSpecType::STORY_DIALOG:
+			univ.get_str(title,cur_type,special.m1);
+			story_dialog(univ, title, special.m2, special.m3, cur_type, special.pic, ePicType(special.pictype), special.ex1c, special.ex2c);
+			break;
+		case eSpecType::ONCE_GIVE_ITEM_DIALOG:
+			buttons = {9, 19, -1};
 			once_dialog(univ, special, cur_type, buttons, &me);
-		}break;
-		case eSpecType::ONCE_TRAP:{
-			std::array<short, 3> buttons = {3, 2, -1};
-			std::array<std::string,6> strs;
+			break;
+		case eSpecType::ONCE_TRAP:
+			buttons = {3, 2, -1};
 			univ.get_strs(strs[0], strs[1], cur_type, special.m1, special.m2);
 			custom_choice_dialog(strs,special.pic,ePicType(special.pictype),buttons, true, special.ex1c, special.ex2c, &univ);
-		}break;
+			break;
 		case eSpecType::ONCE_DIALOG:
 			once_dialog(univ, special, cur_type, &me);
 			break;
@@ -931,17 +939,14 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 			pic_type = ePicType(special.pictype);
 			pic = special.pic;
 			BOOST_FALLTHROUGH;
-		default:{
-			std::string str1;
-			std::string str2;
-			univ.get_strs(str1, str2, cur_type, special.m1, special.m2);
+		default:
+			univ.get_strs(strs[0], strs[1], cur_type, special.m1, special.m2);
+			if(strs[0].empty() && strs[1].empty()) break;
 
-			if(str1.empty() && str2.empty()) break;
-
-			cStrDlog dlog(str1, str2, title, pic, pic_type, &me);
+			cStrDlog dlog(strs[0], strs[1], title, pic, pic_type, &me);
 			dlog->getControl("record").show();
 			dlog.show();
-		}break;
+			break;
 	}
 
 	cDialog::defaultBackground = defaultBackground;

@@ -79,12 +79,10 @@ namespace {
 		.ex2b(STRT_STAIR)
 		.ex2c(STRT_STAIR_MODE)
 		.jump(eSpecPicker::NONE);
-	// TODO implement preview
 	node_properties_t S_LEVER = node_builder_t(eSpecType::TOWN_LEVER)
 		.msg1(eSpecPicker::MSG_SEQUENCE)
 		.pic()
-		.ex1b(eSpecPicker::NODE)
-		.no_preview();
+		.ex1b(eSpecPicker::NODE);
 	// TODO implement preview
 	node_properties_t S_PORTAL = node_builder_t(eSpecType::TOWN_PORTAL)
 		.msg1(eSpecPicker::MSG_SEQUENCE)
