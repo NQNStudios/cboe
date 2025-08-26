@@ -1066,6 +1066,12 @@ static bool edit_spec_enc_type(cDialog& me, std::string item_hit, node_stack_t& 
 	else if(item_hit == "rect") category = eSpecCat::RECT;
 	auto bounds = *category;
 	int start = int(bounds.first), finish = int(bounds.last), current = int(edit_stack.back().node.type);
+	if(item_hit == "all"){
+		bounds = *eSpecCat::GENERAL;
+		start = int(bounds.first);
+		bounds = *eSpecCat::RECT;
+		finish = int(bounds.last);
+	}
 	if(start < 0 || finish < 0) return true;
 	std::vector<std::string> choices;
 	for(int i = start; i <= finish; i++) {
@@ -1602,7 +1608,7 @@ bool edit_spec_enc(short which_node,short mode,cDialog* parent,bool is_new) {
 	cDialog special(*ResMgr::dialogs.get("edit-special-node"),parent);
 	special.attachClickHandlers(std::bind(commit_spec_enc, _1, _2, std::ref(edit_stack)), {"okay", "back"});
 	special.attachClickHandlers(std::bind(edit_spec_enc_type, _1, _2, std::ref(edit_stack)), {
-		"general", "oneshot", "affectpc", "ifthen", "town", "out", "rect"
+		"general", "oneshot", "affectpc", "ifthen", "town", "out", "rect", "all"
 	});
 	special.attachClickHandlers(std::bind(edit_spec_enc_value, _1, _2, std::ref(edit_stack)), {
 		"msg1-edit", "msg2-edit", "msg3-edit", "pict-edit", "pictype-edit", "jump-edit",

@@ -18,6 +18,7 @@
 	<button name='town' type='large' top='49' left='356'>Town Specs</button>
 	<button name='out' type='large' top='73' left='356'>Out Specs</button>
 	<button name='rect' type='large' top='49' left='483'>Rect Specs</button>
+	<button name='all' type='large' top='73' left='483'>All</button>
 	
 	
 	<text size='large' top='28' left='50' width='158' height='16'>Special Type:</text>
