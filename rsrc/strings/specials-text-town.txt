@@ -299,7 +299,7 @@ X coordinate to go to
 Y coordinate to go to
 Unused
 Number of town to place party in
-What text? (0 - up, 1 - down)
+What text? (0 - up, 1 - down, 8+ - instant)
 Trigger Limitations
 Special to Call in New Town
 A dialog box comes up saying the party has found a stairway, and asking if they want to climb it. The dialog buttons are Climb and Leave. If the Leave button is pressed, the Jump To special is used, and the party is not allowed to enter the space. If the Climb button is pushed, the party is moved to another town.
