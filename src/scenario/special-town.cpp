@@ -83,12 +83,10 @@ namespace {
 		.msg1(eSpecPicker::MSG_SEQUENCE)
 		.pic()
 		.ex1b(eSpecPicker::NODE);
-	// TODO implement preview
 	node_properties_t S_PORTAL = node_builder_t(eSpecType::TOWN_PORTAL)
 		.msg1(eSpecPicker::MSG_SEQUENCE)
 		.pic()
-		.loc(eSpecField::EX1A, eSpecField::EX1B, eLocType::ACTIVE_TOWN)
-		.no_preview();
+		.loc(eSpecField::EX1A, eSpecField::EX1B, eLocType::ACTIVE_TOWN);
 	// TODO implement preview
 	node_properties_t S_STAIR = node_builder_t(eSpecType::TOWN_STAIR)
 		.msg1(eSpecPicker::MSG_SEQUENCE)

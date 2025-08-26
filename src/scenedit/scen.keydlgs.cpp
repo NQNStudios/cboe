@@ -883,12 +883,17 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 	cDialog::defaultBackground = cDialog::BG_DARK;
 
 	switch(special.type){
+		case eSpecType::TOWN_PORTAL:
+			if(special.m1 < 0) break;
+			univ.get_strs(strs, cur_type,special.m1);
+			buttons = {9, 8, -1};
+			custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, true, special.ex1c, special.ex2c, &univ);
+			break;
 		case eSpecType::TOWN_LEVER:
-				if(special.m1 < 0) break;
-				univ.get_strs(strs,cur_type, special.m1);
-				buttons = {9, 35, -1};
-				if(custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, true, special.ex1c, special.ex2c, &univ) == 1)
-				break;
+			if(special.m1 < 0) break;
+			univ.get_strs(strs,cur_type, special.m1);
+			buttons = {9, 35, -1};
+			custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, true, special.ex1c, special.ex2c, &univ);
 			break;
 		case eSpecType::TOWN_GENERIC_STAIR:
 			if(special.ex2b < 8)
