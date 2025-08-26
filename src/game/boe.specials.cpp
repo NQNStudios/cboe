@@ -3812,12 +3812,6 @@ void ifthen_spec(const runtime_state& ctx) {
 }
 
 void townmode_spec(const runtime_state& ctx) {
-	static const char*const stairDlogs[8] = {
-		"basic-stair-up", "basic-stair-down",
-		"basic-slope-up", "basic-slope-down",
-		"slimy-stair-up", "slimy-stair-down",
-		"dark-slope-up", "dark-slope-down"
-	};
 	bool check_mess = true;
 	std::array<std::string, 6> strs;
 	short r1;
