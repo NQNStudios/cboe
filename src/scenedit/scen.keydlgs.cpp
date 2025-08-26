@@ -874,15 +874,19 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 	ePicType pic_type = PIC_SCEN;
 	pic_num_t pic = scenario.intro_pic;
 
+	// Use dark background that the game uses:
+	short defaultBackground = cDialog::defaultBackground;
+	cDialog::defaultBackground = cDialog::BG_DARK;
+
 	switch(special.type){
+		case eSpecType::DISPLAY_PICTURE:
+			univ.get_str(title, cur_type, special.m1);
+			custom_pic_dialog(title, special.ex1a, special.ex1b);
+			break;
 		case eSpecType::STORY_DIALOG:{
 			std::string str1;
 			univ.get_str(str1,cur_type,special.m1);
-			// Use dark background that the game uses:
-			short defaultBackground = cDialog::defaultBackground;
-			cDialog::defaultBackground = cDialog::BG_DARK;
 			story_dialog(univ, str1, special.m2, special.m3, cur_type, special.pic, ePicType(special.pictype), special.ex1c, special.ex2c);
-			cDialog::defaultBackground = defaultBackground;
 		}break;
 		case eSpecType::ONCE_GIVE_ITEM_DIALOG:{
 			std::array<short, 3> buttons = {9, 19, -1};
@@ -909,15 +913,13 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 
 			if(str1.empty() && str2.empty()) break;
 
-			// Use dark background that the game uses:
-			short defaultBackground = cDialog::defaultBackground;
-			cDialog::defaultBackground = cDialog::BG_DARK;
 			cStrDlog dlog(str1, str2, title, pic, pic_type, &me);
 			dlog->getControl("record").show();
 			dlog.show();
-			cDialog::defaultBackground = defaultBackground;
 		}break;
 	}
+
+	cDialog::defaultBackground = defaultBackground;
 	return true;
 }
 

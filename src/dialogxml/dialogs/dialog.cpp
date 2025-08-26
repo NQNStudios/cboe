@@ -1344,3 +1344,33 @@ void story_dialog(cUniverse& univ, std::string title, str_num_t first, str_num_t
 	story_dlg["title"].setText(title);
 	story_dlg.run();
 }
+
+void custom_pic_dialog(std::string title, pic_num_t bigpic, pic_num_t icon) {
+	cDialog pic_dlg(*ResMgr::dialogs.get("show-map"));
+	cControl& okay = pic_dlg["okay"];
+	cControl& text = pic_dlg["title"];
+	okay.attachClickHandler(std::bind(&cDialog::toast, &pic_dlg, false));
+	text.setText(title);
+
+	// The default small icon is a map
+	if(icon < 0) icon = 21;
+	cPict& icon_pict = dynamic_cast<cPict&>(pic_dlg["icon"]);
+	icon_pict.setPict(icon, PIC_DLOG); // Does this allow custom?
+
+	cPict& map = dynamic_cast<cPict&>(pic_dlg["map"]);
+	// We don't provide a way to use non-custom full sheets - why would you want to show standard help graphics?
+	map.setPict(bigpic, PIC_CUSTOM_FULL);
+
+	// Now we need to adjust the size to ensure that everything fits correctly.
+	map.recalcRect();
+	rectangle mapBounds = map.getBounds();
+	rectangle btnBounds = okay.getBounds();
+	rectangle txtBounds = text.getBounds();
+	btnBounds.offset(-btnBounds.left, -btnBounds.top);
+	btnBounds.offset(mapBounds.right - btnBounds.width(), mapBounds.bottom + 10);
+	okay.setBounds(btnBounds);
+	txtBounds.right = mapBounds.right;
+	text.setBounds(txtBounds);
+	pic_dlg.recalcRect();
+	pic_dlg.run();
+}

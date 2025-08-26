@@ -2363,10 +2363,9 @@ void general_spec(const runtime_state& ctx) {
 			}
 			break;
 		case eSpecType::DISPLAY_PICTURE:
-			// TODO: In addition to the large picture, there's a small icon; should that be customizable?
 			check_mess = false;
 			univ.get_str(str1, ctx.cur_spec_type, spec.m1);
-			custom_pic_dialog(str1, spec.ex1a);
+			custom_pic_dialog(str1, spec.ex1a, spec.ex1b);
 			break;
 		case eSpecType::SDF_RANDOM:
 			check_mess = true;
