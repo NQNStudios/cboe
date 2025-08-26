@@ -879,6 +879,10 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 	cDialog::defaultBackground = cDialog::BG_DARK;
 
 	switch(special.type){
+		case eSpecType::IF_TEXT_RESPONSE:
+			univ.get_str(title,eSpecCtxType::SCEN,special.m1);
+			get_text_response(title);
+			break;
 		case eSpecType::DISPLAY_PICTURE:
 			univ.get_str(title, cur_type, special.m1);
 			custom_pic_dialog(title, special.ex1a, special.ex1b);

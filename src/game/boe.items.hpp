@@ -32,7 +32,6 @@ void place_glands(location where,mon_num_t m_type);
 void reset_item_max();
 short item_val(cItem item);
 void place_treasure(location where,short level,short loot,short mode);
-std::string get_text_response(std::string prompt = "", pic_num_t pic = 16);
 
 enum class eSelectPC {
 	ANY,

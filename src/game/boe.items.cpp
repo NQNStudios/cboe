@@ -811,30 +811,6 @@ void place_treasure(location where,short level,short loot,short mode) {
 	}
 }
 
-static bool get_text_response_event_filter(cDialog& me, std::string item_hit, eKeyMod) {
-	me.toast(true);
-	if(item_hit == "cancel") me.setResult(std::string {""});
-	else me.setResult(me["response"].getText());
-	return true;
-}
-
-std::string get_text_response(std::string prompt, pic_num_t pic) {
-	set_cursor(sword_curs);
-	
-	cDialog strPanel(*ResMgr::dialogs.get("get-response"));
-	strPanel.attachClickHandlers(get_text_response_event_filter, {"okay", "cancel"});
-	if(!prompt.empty()) {
-		dynamic_cast<cPict&>(strPanel["pic"]).setPict(pic);
-		strPanel["prompt"].setText(prompt);
-	}
-	
-	strPanel.run();
-	// Note: Originally it only changed the first 15 characters.
-	std::string result = strPanel.getResult<std::string>();
-	std::transform(result.begin(), result.end(), result.begin(), tolower);
-	return result;
-}
-
 static bool select_pc_event_filter (cDialog& me, std::string item_hit, eKeyMod) {
 	me.toast(true);
 	if(item_hit == "pick-all"){

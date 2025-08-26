@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include <map>
+#include <boost/algorithm/string/case_conv.hpp>
 #include "dialog.hpp"
 #include "gfx/tiling.hpp" // for bg
 #include "fileio/resmgr/res_dialog.hpp"
@@ -1373,4 +1374,28 @@ void custom_pic_dialog(std::string title, pic_num_t bigpic, pic_num_t icon) {
 	text.setBounds(txtBounds);
 	pic_dlg.recalcRect();
 	pic_dlg.run();
+}
+
+static bool get_text_response_event_filter(cDialog& me, std::string item_hit, eKeyMod) {
+	me.toast(true);
+	if(item_hit == "cancel") me.setResult(std::string {""});
+	else me.setResult(me["response"].getText());
+	return true;
+}
+
+std::string get_text_response(std::string prompt, pic_num_t pic) {
+	set_cursor(sword_curs);
+
+	cDialog strPanel(*ResMgr::dialogs.get("get-response"));
+	strPanel.attachClickHandlers(get_text_response_event_filter, {"okay", "cancel"});
+	if(!prompt.empty()) {
+		dynamic_cast<cPict&>(strPanel["pic"]).setPict(pic);
+		strPanel["prompt"].setText(prompt);
+	}
+
+	strPanel.run();
+	// Note: Originally it only changed the first 15 characters.
+	std::string result = strPanel.getResult<std::string>();
+	boost::algorithm::to_lower(result);
+	return result;
 }
