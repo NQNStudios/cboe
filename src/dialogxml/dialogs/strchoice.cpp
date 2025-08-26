@@ -151,6 +151,8 @@ bool cStringChoice::onLeft(){
 	if(page == 0) page = lastPage();
 	else page--;
 	fillPage();
+	clearHighlights();
+	highlightSearch();
 	return true;
 }
 
@@ -162,6 +164,8 @@ bool cStringChoice::onRight(){
 	if(page == lastPage()) page = 0;
 	else page++;
 	fillPage();
+	clearHighlights();
+	highlightSearch();
 	return true;
 }
 
