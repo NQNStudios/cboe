@@ -879,6 +879,13 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 	cDialog::defaultBackground = cDialog::BG_DARK;
 
 	switch(special.type){
+		case eSpecType::IF_NUM_RESPONSE:{
+			int min = special.m2;
+			int max = special.m3;
+			if(min > max) std::swap(min,max);
+			univ.get_str(title,eSpecCtxType::SCEN,special.m1);
+			int i = get_num_response(min,max,title);
+		}break;
 		case eSpecType::IF_TEXT_RESPONSE:
 			univ.get_str(title,eSpecCtxType::SCEN,special.m1);
 			get_text_response(title);
