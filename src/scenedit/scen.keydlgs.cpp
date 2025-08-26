@@ -769,6 +769,7 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 	std::string button = field + "-edit";
 	std::string button2 = field + "-edit2";
 	std::string toggle = field + "-toggle";
+	me[button2].hide();
 	switch(fcn.button) {
 		case eSpecPicker::NONE:
 			me[button].hide();
