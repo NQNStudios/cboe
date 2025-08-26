@@ -346,7 +346,10 @@ short get_num_response(short min, short max, std::string prompt, std::vector<std
 			dynamic_cast<cLed&>(numPanel["extra-led"]).setState(*led_output ? led_red : led_off);
 	}
 
-	sout << " (" << min << '-' << max << ')';
+	// No min/max are applied if they are equal
+	if(min != max)
+		sout << " (" << min << '-' << max << ')';
+
 	numPanel["prompt"].setText(sout.str());
 	numPanel["number"].setTextToNum(initial_value);
 	if(!choice_names.empty()){
