@@ -98,11 +98,10 @@ namespace{
 		.sdf()
 		.sdf(eSpecField::EX1A, eSpecField::EX1B)
 		.no_preview();
-	// TODO implement preview
 	node_properties_t S_PICTURE = node_builder_t(eSpecType::DISPLAY_PICTURE)
 		.msg1(eSpecPicker::MSG_SINGLE)
 		.ex1a(PIC_FULL)
-		.no_preview();
+		.ex1b(PIC_DLOG);
 	node_properties_t S_REST = node_builder_t(eSpecType::REST)
 		.msg();
 	node_properties_t S_MSG_TITLE = node_builder_t(eSpecType::TITLED_MSG)

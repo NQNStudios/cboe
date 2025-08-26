@@ -608,29 +608,6 @@ bool show_get_items(std::string titleText, std::vector<cItem*>& itemRefs, short 
 	
 }
 
-void custom_pic_dialog(std::string title, pic_num_t bigpic) {
-	cDialog pic_dlg(*ResMgr::dialogs.get("show-map"));
-	cControl& okay = pic_dlg["okay"];
-	cControl& text = pic_dlg["title"];
-	okay.attachClickHandler(std::bind(&cDialog::toast, &pic_dlg, false));
-	text.setText(title);
-	cPict& map = dynamic_cast<cPict&>(pic_dlg["map"]);
-	// We don't provide a way to use non-custom full sheets - why would you want to show standard help graphics?
-	map.setPict(bigpic, PIC_CUSTOM_FULL);
-	// Now we need to adjust the size to ensure that everything fits correctly.
-	map.recalcRect();
-	rectangle mapBounds = map.getBounds();
-	rectangle btnBounds = okay.getBounds();
-	rectangle txtBounds = text.getBounds();
-	btnBounds.offset(-btnBounds.left, -btnBounds.top);
-	btnBounds.offset(mapBounds.right - btnBounds.width(), mapBounds.bottom + 10);
-	okay.setBounds(btnBounds);
-	txtBounds.right = mapBounds.right;
-	text.setBounds(txtBounds);
-	pic_dlg.recalcRect();
-	pic_dlg.run();
-}
-
 static bool get_num_of_items_event_filter(cDialog& me, std::string item_hit, eKeyMod) {
 	if(item_hit == "cancel"){
 		me.setResult<int>(0);

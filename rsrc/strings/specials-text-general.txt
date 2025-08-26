@@ -415,7 +415,7 @@ Unused
 Unused
 Unused
 Number of large (full-sheet) pic to display
-Unused
+Number of small icon to display (-1: a map)
 Unused
 Unused
 Unused

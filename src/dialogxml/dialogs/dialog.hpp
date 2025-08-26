@@ -396,6 +396,7 @@ public:
 void setup_dialog_pict_anim(cDialog& dialog, std::string pict_id, short anim_loops, short anim_fps);
 
 void story_dialog(cUniverse& univ, std::string title, str_num_t first, str_num_t last, eSpecCtxType which_str_type, pic_num_t pic, ePicType pt, short anim_loops, int anim_fps);
+void custom_pic_dialog(std::string title, pic_num_t bigpic, pic_num_t icon);
 
 // For development/debugging only.
 void preview_dialog_xml(fs::path dialog_xml);

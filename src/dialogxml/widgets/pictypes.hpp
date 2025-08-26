@@ -40,7 +40,7 @@ enum ePicType {
 	PIC_CUSTOM_TER = 101,		///< 28x36 custom terrain graphic from the custom sheets
 	PIC_CUSTOM_TER_ANIM = 102,	///< 28x36 custom animated terrain graphic from the custom sheets
 	PIC_CUSTOM_MONST = 103,		///< 28x36 custom monster graphic from the custom sheets
-	PIC_CUSTOM_DLOG = 104,		///< 36x36 dialog graphic drawn from two 18x26 halves in the custom sheets
+	PIC_CUSTOM_DLOG = 104,		///< 36x36 dialog graphic drawn from two 18x36 halves in the custom sheets
 	PIC_CUSTOM_TALK = 105,		///< 32x32 talking portrait drawn from two 16x32 halves in the custom sheets
 	PIC_CUSTOM_SCEN = 106,		///< 32x32 scenario portrait loading from scenname.exr/scenario.png
 	PIC_CUSTOM_ITEM = 107,		///< 28x36 custom item graphic from the custom sheets
