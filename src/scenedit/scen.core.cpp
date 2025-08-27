@@ -2354,8 +2354,9 @@ static void put_quest_in_dlog(cDialog& me, const cQuest& quest, size_t which_que
 	}
 }
 
-static bool save_quest_from_dlog(cDialog& me, cQuest& quest, size_t which_quest, bool& is_new, bool need_confirm, bool close) {
+static bool save_quest_from_dlog(cDialog& me, cQuest& quest, size_t which_quest, bool& is_new, bool need_confirm, bool close, bool commit) {
 	if(!me.toast(true)) return false;
+	if(!close) me.untoast();
 	
 	quest.name = me["name"].getText();
 	quest.descr = me["descr"].getText();
@@ -2371,6 +2372,8 @@ static bool save_quest_from_dlog(cDialog& me, cQuest& quest, size_t which_quest,
 		quest.bank2 = me["bank2"].getTextAsNum();
 	} else quest.bank1 = quest.bank2 = -1;
 	
+	if(!commit) return true;
+
 	// Edit confirmed and real changes made:
 	if(scenario.quests[which_quest] != quest || is_new){
 		if(need_confirm){
@@ -2395,12 +2398,11 @@ static bool save_quest_from_dlog(cDialog& me, cQuest& quest, size_t which_quest,
 		is_new = false;
 	}
 
-	if(!close) me.untoast();
 	return true;
 }
 
 static bool change_quest_dlog_page(cDialog& me, std::string dir, cQuest& quest, size_t& which_quest, bool& is_new) {
-	if(!save_quest_from_dlog(me, quest, which_quest, is_new, true, false))
+	if(!save_quest_from_dlog(me, quest, which_quest, is_new, true, false, true))
 		return true;
 	
 	if(dir == "left") {
@@ -2431,7 +2433,7 @@ bool edit_quest(size_t which_quest) {
 	
 	cDialog quest_dlg(*ResMgr::dialogs.get("edit-quest"));
 	quest_dlg["cancel"].attachClickHandler(std::bind(&cDialog::toast, _1, false));
-	quest_dlg["okay"].attachClickHandler(std::bind(save_quest_from_dlog, _1, std::ref(quest), std::ref(which_quest), std::ref(is_new), false, true));
+	quest_dlg["okay"].attachClickHandler(std::bind(save_quest_from_dlog, _1, std::ref(quest), std::ref(which_quest), std::ref(is_new), false, true, true));
 	quest_dlg.attachClickHandlers([](cDialog& me, std::string item_hit, eKeyMod) {
 		std::string field_id = item_hit.substr(7);
 		std::string title = field_id == "evt" ? "Select an event:" : "Select a job board:";
@@ -2455,6 +2457,18 @@ bool edit_quest(size_t which_quest) {
 		}
 		return true;
 	});
+
+	quest_dlg["preview"].attachClickHandler([&quest, &which_quest](cDialog& me, std::string, eKeyMod) -> bool {
+		bool is_new;
+		save_quest_from_dlog(me, quest, which_quest, is_new, false, false, false);
+		// Use dark background that the game uses:
+		short defaultBackground = cDialog::defaultBackground;
+		cDialog::defaultBackground = cDialog::BG_DARK;
+		show_quest(quest, 0, &me);
+		cDialog::defaultBackground = defaultBackground;
+		return true;
+	});
+
 	// TODO: Some focus handlers
 	// Should quests be able to award negative XP or negative gold? I typed the text fields as 'uint' for now.
 	

@@ -40,6 +40,7 @@
 #include "scenario/scenario.hpp"
 #include "universe/universe.hpp"
 #include "item.hpp"
+#include "quest.hpp"
 
 using namespace std;
 using namespace ticpp;
@@ -1406,4 +1407,19 @@ void show_spec_item(const cSpecItem& item, const cScenario& scenario, cDialog* p
 							 item.name,scenario.intro_pic,PIC_SCEN,parent);
 	display_strings.setSound(57);
 	display_strings.show();
+}
+
+void show_quest(const cQuest& quest, int start, cDialog* parent) {
+	cDialog quest_dlg(*ResMgr::dialogs.get("quest-info"), parent);
+	quest_dlg["name"].setText(quest.name);
+	quest_dlg["descr"].setText(quest.descr);
+	quest_dlg["start"].setText(fmt::format("Day {}", start));
+	if(quest.deadline > 0)
+		quest_dlg["chop"].setText(fmt::format("Day {}", quest.deadline + int(quest.deadline_is_relative) * start));
+	else quest_dlg["chop"].setText("None");
+	if(quest.gold > 0)
+		quest_dlg["pay"].setText(fmt::format("{} gold", quest.gold));
+	else quest_dlg["pay"].setText("Unknown");
+	quest_dlg["done"].attachClickHandler(std::bind(&cDialog::toast, &quest_dlg, false));
+	quest_dlg.run();
 }

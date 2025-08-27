@@ -40,6 +40,7 @@ struct DialogDefn;
 class cUniverse;
 class cSpecItem;
 class cScenario;
+class cQuest;
 
 /// Specifies the relative position of a control's labelling text.
 enum eLabelPos {
@@ -402,6 +403,7 @@ void custom_pic_dialog(std::string title, pic_num_t bigpic, pic_num_t icon);
 std::string get_text_response(std::string prompt = "", pic_num_t pic = 16);
 
 void show_spec_item(const cSpecItem& item, const cScenario& scenario, cDialog* parent = nullptr);
+void show_quest(const cQuest& quest, int start, cDialog* parent = nullptr);
 
 // For development/debugging only.
 void preview_dialog_xml(fs::path dialog_xml);

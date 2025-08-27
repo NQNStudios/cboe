@@ -27,8 +27,10 @@
 	<button name='choose-bank1' type='regular' anchor='bank1' relative='pos pos-in' top='-4' left='8'>Choose</button>
 	<field name='bank2' type='int' top='332' left='359' width='110' height='16'/>
 	<button name='choose-bank2' type='regular' anchor='bank2' relative='pos pos-in' top='-4' left='8'>Choose</button>
-	<button name='left' type='left' def-key='left' top='358' left='50'/>
-	<button name='right' type='right' def-key='right' top='358' left='115'/>
-	<button name='cancel' type='regular' top='358' left='322'>Cancel</button>
-	<button name='okay' type='regular' top='358' left='387'>OK</button>
+
+	<button name='preview' type='regular' top='358' left='387'>Preview</button>
+	<button name='left' type='left' def-key='left' top='382' left='50'/>
+	<button name='right' type='right' def-key='right' top='382' left='115'/>
+	<button name='cancel' type='regular' top='382' left='322'>Cancel</button>
+	<button name='okay' type='regular' top='382' left='387'>OK</button>
 </dialog>

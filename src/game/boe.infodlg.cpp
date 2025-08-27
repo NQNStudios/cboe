@@ -687,19 +687,7 @@ void add_to_journal(short event) {
 
 void put_quest_info(short which_i) {
 	cQuest& quest = univ.scenario.quests[which_i];
-	cDialog quest_dlg(*ResMgr::dialogs.get("quest-info"));
-	quest_dlg["name"].setText(quest.name);
-	quest_dlg["descr"].setText(quest.descr);
-	int start = univ.party.active_quests[which_i].start;
-	quest_dlg["start"].setText(fmt::format("Day {}", start));
-	if(quest.deadline > 0)
-		quest_dlg["chop"].setText(fmt::format("Day {}", quest.deadline + int(quest.deadline_is_relative) * start));
-	else quest_dlg["chop"].setText("None");
-	if(quest.gold > 0)
-		quest_dlg["pay"].setText(fmt::format("{} gold", quest.gold));
-	else quest_dlg["pay"].setText("Unknown");
-	quest_dlg["done"].attachClickHandler(std::bind(&cDialog::toast, &quest_dlg, false));
-	quest_dlg.run();
+	show_quest(quest, univ.party.active_quests[which_i].start);
 }
 
 void put_spec_item_info (short which_i) {
