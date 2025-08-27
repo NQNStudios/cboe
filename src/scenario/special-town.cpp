@@ -14,6 +14,8 @@ node_category_info_t CAT_TOWN{eSpecType::MAKE_TOWN_HOSTILE, eSpecType::TOWN_PLAC
 namespace {
 	node_properties_t S_ATTITUDE = node_builder_t(eSpecType::MAKE_TOWN_HOSTILE)
 		.msg()
+		.ex1a(eSpecPicker::TOWNPERSON)
+		.ex1b(eSpecPicker::TOWNPERSON)
 		.ex2a(STRT_ATTITUDE);
 	node_properties_t S_MISSILE = node_builder_t(eSpecType::TOWN_RUN_MISSILE)
 		.msg()

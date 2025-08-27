@@ -794,6 +794,13 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 			me[toggle].show();
 			dynamic_cast<cLed&>(me[toggle]).setState(value > 0 ? eLedState::led_red : eLedState::led_off);
 			break;
+		case eSpecPicker::TOWNPERSON:
+			me[button].hide();
+			me[toggle].show();
+			dynamic_cast<cLed&>(me[toggle]).setState(value < 0 ? eLedState::led_red : eLedState::led_off);
+			me[toggle].setText("Relative to end");
+			me[button2].show();
+			break;
 		default:
 			me[button].show();
 			me[button2].hide();
@@ -1563,6 +1570,43 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 		case eSpecPicker::ITEM_CLASS: store = choose_text_editable(scenario.ic_names, val, &me, "Select item class:"); break;
 		case eSpecPicker::JOB_BOARD: store = choose_text_editable(scenario.qb_names, val, &me, "Select a job board:"); break;
 		case eSpecPicker::POINTER: store = val; break; // TODO: Not implemented...
+		case eSpecPicker::TOWNPERSON:
+			if(town->creatures.empty()){
+				showWarning("There are no creatures in this town to change attitude!");
+				break;
+			}
+			if(alt_button){
+				std::vector<pic_num_t> pics;
+				std::vector<std::string> labels;
+				for(size_t i = 0; i < town->creatures.size(); ++i){
+					const cTownperson& person = town->creatures[i];
+					if(person.number <= 0) {
+						pics.push_back(-1);
+						labels.push_back("");
+					}else{
+						const cMonster& monst = scenario.scen_monsters[person.number];
+						pics.push_back(monst.picture_num);
+						labels.push_back(fmt::format("{} at {}", monst.m_name, boost::lexical_cast<std::string>(person.start_loc)));
+					}
+				}
+				size_t sel = val < 0 ? town->creatures.size() + val : val;
+				cPictChoice choice(pics, labels, PIC_MONST, &me);
+				choice.show(sel);
+				size_t new_sel = choice.getSelected();
+				if(val < 0){
+					store = -(town->creatures.size() - new_sel);
+				}else{
+					store = new_sel;
+				}
+			}
+			// The townperson picker toggle changes whether the field counts up from 0 or down from the end of the list
+			else{
+				// TODO: We should also add a focus handler so that manually changing the field value updates the toggle...
+				if(val < 0) store = town->creatures.size() + val;
+				else store = -(town->creatures.size() - val);
+				dynamic_cast<cLed&>(me[item_hit]).setState(store < 0 ? eLedState::led_red : eLedState::led_off);
+			}
+			break;
 		case eSpecPicker::NONE: return false;
 	}
 	me[field].setTextToNum(store);
