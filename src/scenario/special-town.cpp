@@ -123,6 +123,7 @@ namespace {
 		.ex2b(eSpecPicker::TOGGLE);
 	node_properties_t S_CHARM = node_builder_t(eSpecType::TOWN_SET_ATTITUDE)
 		.msg()
+		.ex1a(eSpecPicker::TOWNPERSON)
 		.ex1b(STRT_ATTITUDE);
 	node_properties_t S_CAMERA = node_builder_t(eSpecType::TOWN_SET_CENTER)
 		.msg();
