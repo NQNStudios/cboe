@@ -20,7 +20,10 @@
 /// A dialog that presents a list of icons with LEDs and allows you to choose one.
 /// The list may span several pages.
 class cPictChoice {
-	static const size_t per_page = 36;
+	static const size_t PER_PAGE_DEFAULT = 36; // 6 columns of 6
+	static const size_t PER_PAGE_LABELED = 12; // 2 columns of 6 with space between
+	size_t per_page = PER_PAGE_DEFAULT;
+
 	bool didAccept;
 	cDialog dlg;
 	void attachHandlers();
@@ -31,6 +34,7 @@ class cPictChoice {
 	bool onSelect(bool losing);
 	void fillPage();
 	std::vector<std::pair<pic_num_t,ePicType>> picts;
+	std::vector<std::string> labels;
 	size_t page, cur;
 	cLedGroup* leds;
 	std::function<void(cPictChoice&,int)> select_handler;
@@ -40,6 +44,12 @@ public:
 	/// @param t The type of icons to show; all icons are assumed to be of the same type.
 	/// @param parent Optionally, a parent dialog.
 	cPictChoice(const std::vector<pic_num_t>& pics, ePicType t, cDialog* parent = nullptr);
+	/// Initializes a dialog from a list of icons with labels.
+	/// @param pics A list of all icons in the dialog.
+	/// @param labels A list of all icon labels
+	/// @param t The type of icons to show; all icons are assumed to be of the same type.
+	/// @param parent Optionally, a parent dialog.
+	cPictChoice(const std::vector<pic_num_t>& pics, const std::vector<std::string> labels, ePicType t, cDialog* parent = nullptr);
 	/// Initializes a dialog from a list of icons.
 	/// @param pics A list of all icons in the dialog as {num,type} pairs.
 	/// @param parent Optionally, a parent dialog.

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- NOTE: This file should be updated to use relative positioning the next time it changes. -->
+<?xml-stylesheet href="dialog.xsl" type="text/xsl"?>
+<dialog defbtn='done' escbtn='cancel'>
+	<pict name='mainpic' type='dlog' num='16' top='6' left='6'/>
+	<text name='prompt' size='large' top='6' left='50' width='248' height='14'>Select a graphic:</text>
+	<group name='group'>
+		<led name='led1' state='off' top='29' left='55' width='57' height='36'/>
+		<led name='led2' state='off' top='74' left='55' width='57' height='36'/>
+		<led name='led3' state='off' top='119' left='55' width='57' height='36'/>
+		<led name='led4' state='off' top='164' left='55' width='57' height='36'/>
+		<led name='led5' state='off' top='209' left='55' width='57' height='36'/>
+		<led name='led6' state='off' top='254' left='55' width='57' height='36'/>
+		<led name='led7' state='off' top='29' left='251' width='57' height='36'/>
+		<led name='led8' state='off' top='74' left='251' width='57' height='36'/>
+		<led name='led9' state='off' top='119' left='251' width='57' height='36'/>
+		<led name='led10' state='off' top='164' left='251' width='57' height='36'/>
+		<led name='led11' state='off' top='209' left='251' width='57' height='36'/>
+		<led name='led12' state='off' top='254' left='251' width='57' height='36'/>
+	</group>
+	<pict name='pic1' type='ter' num='0' top='29' left='76'/>
+	<pict name='pic2' type='ter' num='1' top='74' left='76'/>
+	<pict name='pic3' type='ter' num='2' top='119' left='76'/>
+	<pict name='pic4' type='ter' num='3' top='164' left='76'/>
+	<pict name='pic5' type='ter' num='4' top='209' left='76'/>
+	<pict name='pic6' type='ter' num='5' top='254' left='76'/>
+	<pict name='pic7' type='ter' num='18' top='29' left='272'/>
+	<pict name='pic8' type='ter' num='19' top='74' left='272'/>
+	<pict name='pic9' type='ter' num='20' top='119' left='272'/>
+	<pict name='pic10' type='ter' num='21' top='164' left='272'/>
+	<pict name='pic11' type='ter' num='22' top='209' left='272'/>
+	<pict name='pic12' type='ter' num='23' top='254' left='272'/>
+	<text name='help' top='294' left='6' width='422' height='16'>Click button to left of graphic to select. Use arrows to change pages.</text>
+	<button name='left' type='left' top='314' left='6' def-key='left'/>
+	<button name='right' type='right' top='314' left='69' def-key='right'/>
+	<button name='done' type='done' top='314' left='393'/>
+	<button name='cancel' type='regular' top='314' left='322'>Cancel</button>
+</dialog>

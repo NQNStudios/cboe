@@ -935,6 +935,7 @@ bool cDialog::addLabelFor(std::string key, std::string label, eLabelPos where, s
 	cControl& ctrl = this->getControl(key);
 	key += "-label";
 	rectangle labelRect = ctrl.getBounds();
+	// TODO I think these are completely wrong? But am afraid of changing it having unintended impacts.
 	switch(where) {
 		case LABEL_LEFT:
 			labelRect.right = labelRect.left;

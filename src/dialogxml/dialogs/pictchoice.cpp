@@ -17,7 +17,20 @@ static DialogDefn& loadDefn() {
 	return *ResMgr::dialogs.get("choose-pict");
 }
 
+static DialogDefn& loadDefnLabeled() {
+	return *ResMgr::dialogs.get("choose-pict-labeled");
+}
+
 cPictChoice::cPictChoice(const std::vector<pic_num_t>& pics,ePicType t,cDialog* parent) : cPictChoice(pics.begin(), pics.end(), t, parent) {}
+
+cPictChoice::cPictChoice(const std::vector<pic_num_t>& pics, const std::vector<std::string> labels, ePicType t, cDialog* parent)
+	: dlg(loadDefnLabeled(),parent), labels(labels), per_page(PER_PAGE_LABELED) {
+
+	for(auto iter = pics.begin(); iter != pics.end(); iter++) {
+		picts.push_back({*iter,t});
+	}
+	attachHandlers();
+}
 
 cPictChoice::cPictChoice(const std::vector<std::pair<pic_num_t,ePicType>>& pics,cDialog* parent) : dlg(loadDefn(),parent) {
 	picts = pics;
@@ -91,10 +104,16 @@ void cPictChoice::fillPage(){
 		clear_sstr(sout);
 		sout << "pic" << i + 1;
 		cPict& pic = dynamic_cast<cPict&>(dlg[sout.str()]);
-		if(page * per_page + i < picts.size()){
+		int idx = page * per_page + i;
+		if(idx < picts.size()){
 			pic.show();
-			ePicType tp = picts[per_page * page + i].second;
-			pic.setPict(picts[per_page * page + i].first, tp);
+			if(labels.size() > idx){
+				// TODO clicking on the label text will not trigger the led/pict's click handler
+				dlg.addLabelFor(sout.str(), labels[idx], LABEL_RIGHT, 4, false);
+				// TODO the offset of 4 is not working
+			}
+			ePicType tp = picts[idx].second;
+			pic.setPict(picts[idx].first, tp);
 			rectangle b = pic.getBounds();
 			if(tp == PIC_DLOG_LG || tp == PIC_CUSTOM_DLOG_LG || tp == PIC_SCEN_LG) {
 				pic.setFormat(TXT_WRAP, false);
