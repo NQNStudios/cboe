@@ -93,19 +93,19 @@ void cPictChoice::fillPage(){
 	cLedGroup& group = dynamic_cast<cLedGroup&>(dlg["group"]);
 	group.setSelected(""); // unselect all LEDs, since the currently selected one may be on another page
 	for(size_t i = 0; i < per_page; i++){
+		int idx = page * per_page + i;
 		std::ostringstream sout;
 		sout << "led" << i + 1;
-		if(page * per_page + i >= picts.size())
+		if(idx >= picts.size() || picts[idx].first < 0)
 			dlg[sout.str()].hide();
 		else
 			dlg[sout.str()].show();
-		if(page * per_page + i == cur)
+		if(idx == cur)
 			group.setSelected(sout.str());
 		clear_sstr(sout);
 		sout << "pic" << i + 1;
 		cPict& pic = dynamic_cast<cPict&>(dlg[sout.str()]);
-		int idx = page * per_page + i;
-		if(idx < picts.size()){
+		if(idx < picts.size() && picts[idx].first >= 0){
 			pic.show();
 			if(labels.size() > idx){
 				// TODO clicking on the label text will not trigger the led/pict's click handler

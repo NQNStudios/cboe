@@ -936,6 +936,7 @@ bool cDialog::addLabelFor(std::string key, std::string label, eLabelPos where, s
 	key += "-label";
 	rectangle labelRect = ctrl.getBounds();
 	// TODO I think these are completely wrong? But am afraid of changing it having unintended impacts.
+	// offset for labels on right side is absolutely not working right.
 	switch(where) {
 		case LABEL_LEFT:
 			labelRect.right = labelRect.left;
