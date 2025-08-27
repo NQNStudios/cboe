@@ -2283,7 +2283,13 @@ static bool edit_spec_item_event_filter(cDialog& me, std::string hit, cSpecItem&
 		if(edit_spec_enc(spec,0,&me,is_new))
 			me["spec"].setTextToNum(spec);
 		save_spec_item(me, item, which, is_new);
-		
+	} else if(hit == "preview"){
+		// Use dark background that the game uses:
+		short defaultBackground = cDialog::defaultBackground;
+		cDialog::defaultBackground = cDialog::BG_DARK;
+		save_spec_item(me, item, which, is_new);
+		show_spec_item(item, scenario);
+		cDialog::defaultBackground = defaultBackground;
 	}
 	return true;
 }
@@ -2302,7 +2308,7 @@ bool edit_spec_item(short which_item) {
 	
 	cDialog item_dlg(*ResMgr::dialogs.get("edit-special-item"));
 	item_dlg["spec"].attachFocusHandler(std::bind(check_range_msg, _1, _2, _3, -1, scenario.scen_specials.size(), "Scenario special node called", "-1 for no special"));
-	item_dlg.attachClickHandlers(std::bind(edit_spec_item_event_filter, _1, _2, std::ref(item), std::ref(which_item), std::ref(is_new)), {"okay", "cancel", "clear", "edit-spec", "left", "right"});
+	item_dlg.attachClickHandlers(std::bind(edit_spec_item_event_filter, _1, _2, std::ref(item), std::ref(which_item), std::ref(is_new)), {"okay", "cancel", "clear", "edit-spec", "left", "right", "preview"});
 	
 	if(scenario.special_items.size() == 1) {
 		item_dlg["left"].hide();

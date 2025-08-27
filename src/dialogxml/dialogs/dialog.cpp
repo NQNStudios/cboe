@@ -18,6 +18,7 @@
 #include "fileio/resmgr/res_dialog.hpp"
 #include "sounds.hpp"
 #include "dialogxml/dialogs/choicedlog.hpp"
+#include "dialogxml/dialogs/strdlog.hpp"
 #include "dialogxml/widgets/pict.hpp"
 #include "dialogxml/widgets/button.hpp"
 #include "dialogxml/widgets/field.hpp"
@@ -38,6 +39,7 @@
 #include <boost/lexical_cast.hpp>
 #include "scenario/scenario.hpp"
 #include "universe/universe.hpp"
+#include "item.hpp"
 
 using namespace std;
 using namespace ticpp;
@@ -55,7 +57,6 @@ std::function<void(sf::RenderWindow& win)> cDialog::onHandleEvents;
 extern std::map<std::string,sf::Color> colour_map;
 
 extern bool check_for_interrupt(std::string);
-extern void showError(std::string str1, cDialog* parent = nullptr);
 
 std::string cDialog::generateId(const std::string& explicitId) const {
 	return explicitId.empty() ? cControl::generateRandomString() : explicitId;
@@ -1398,4 +1399,11 @@ std::string get_text_response(std::string prompt, pic_num_t pic) {
 	std::string result = strPanel.getResult<std::string>();
 	boost::algorithm::to_lower(result);
 	return result;
+}
+
+void show_spec_item(const cSpecItem& item, const cScenario& scenario, cDialog* parent) {
+	cStrDlog display_strings(item.descr,"",
+							 item.name,scenario.intro_pic,PIC_SCEN,parent);
+	display_strings.setSound(57);
+	display_strings.show();
 }
