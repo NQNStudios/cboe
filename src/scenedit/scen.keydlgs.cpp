@@ -1132,16 +1132,15 @@ short choose_field_type(short cur, cDialog* parent, bool includeSpec) {
 }
 
 pic_num_t choose_damage_type(short cur, cDialog* parent, bool allow_spec) {
-	static const char*const damageNames[] = {"Weapon", "Fire", "Poison", "Magic", "Weird", "Cold", "Undead", "Demon", "Acid", "Unblockable"};
-	static const std::vector<pic_num_t> pics = {3,0,2,1,5,4,3,3,6,1};
+	static const std::vector<std::string> damageNames = {"Weapon", "Fire", "Poison", "Magic", "Weird", "Cold", "Undead", "Demon", "Acid", "Unblockable"};
+	std::vector<pic_num_t> pics = {3,0,2,1,5,4,3,3,6,1};
 	short prev = cur;
 	if(cur < 0 || cur >= pics.size()) cur = 0;
-	cPictChoice pic_dlg(pics.begin(), pics.end() - !allow_spec, PIC_BOOM, parent);
+	if(!allow_spec){
+		pics.pop_back();
+	}
+	cPictChoice pic_dlg(pics, damageNames, PIC_BOOM, parent);
 	pic_dlg->getControl("prompt").setText("Select a damage type:");
-	pic_dlg->getControl("help").setText(damageNames[cur]);
-	pic_dlg.attachSelectHandler([](cPictChoice& me, int n) {
-		me->getControl("help").setText(damageNames[n]);
-	});
 	bool made_choice = pic_dlg.show(cur);
 	size_t item_hit = pic_dlg.getSelected();
 	return made_choice ? item_hit : prev;
