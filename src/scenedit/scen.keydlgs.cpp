@@ -1586,7 +1586,12 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 					}else{
 						const cMonster& monst = scenario.scen_monsters[person.number];
 						pics.push_back(monst.picture_num);
-						labels.push_back(fmt::format("{} at {}", monst.m_name, boost::lexical_cast<std::string>(person.start_loc)));
+						std::string name = monst.m_name;
+						if(person.personality >= 0){
+							int pers_town_num = person.personality / 10;
+							name = scenario.towns[pers_town_num]->talking.people[person.personality % 10].title;
+						}
+						labels.push_back(fmt::format("{} at {}", name, boost::lexical_cast<std::string>(person.start_loc)));
 					}
 				}
 				size_t sel = val < 0 ? town->creatures.size() + val : val;
