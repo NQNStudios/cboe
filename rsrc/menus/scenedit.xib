@@ -880,6 +880,7 @@
 								</object>
 								<object class="NSMenuItem" id="441636068">
 									<reference key="NSMenu" ref="374024848"/>
+									<bool key="NSIsDisabled">YES</bool>
 									<string key="NSTitle">Scenario Design Contest!</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
