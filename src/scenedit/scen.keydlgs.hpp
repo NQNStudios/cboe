@@ -24,6 +24,8 @@ void edit_scen_intro();
 bool edit_area_rect_str(info_rect_t& r);
 size_t num_strs(eStrMode str_mode);
 
+short choose_townperson(short cur_sel = 0, cDialog* parent = nullptr);
+
 pic_num_t choose_damage_type(short cur, cDialog* parent, bool allow_spec);
 short choose_field_type(short cur, cDialog* parent, bool includeSpec);
 snd_num_t choose_sound(short cur, cDialog* parent, std::string title = "Which sound?");

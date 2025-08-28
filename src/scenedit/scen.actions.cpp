@@ -92,7 +92,7 @@ ePalBtn town_buttons[6][10] = {
 	{PAL_SPEC, PAL_COPY_SPEC, PAL_ERASE_SPEC, PAL_EDIT_SPEC, PAL_SPEC_SPOT, PAL_BOAT, PAL_HORSE, PAL_COPY_TER, PAL_CHANGE, PAL_TERRAIN},
 	{PAL_ROAD, PAL_WEB, PAL_CRATE, PAL_BARREL, PAL_BLOCK, PAL_EDIT_STORAGE, PAL_EDIT_ITEM, PAL_COPY_ITEM, PAL_ERASE_ITEM, PAL_ITEM},
 	{PAL_FIRE_BARR, PAL_FORCE_BARR, PAL_QUICKFIRE, PAL_FORCECAGE, PAL_BLANK, PAL_PASTE, PAL_EDIT_MONST, PAL_COPY_MONST, PAL_ERASE_MONST, PAL_MONST},
-	{PAL_SFX_SB, PAL_SFX_MB, PAL_SFX_LB, PAL_SFX_SS, PAL_SFX_LS, PAL_SFX_ASH, PAL_SFX_BONE, PAL_SFX_ROCK, PAL_ERASE_FIELD, PAL_BLANK},
+	{PAL_SFX_SB, PAL_SFX_MB, PAL_SFX_LB, PAL_SFX_SS, PAL_SFX_LS, PAL_SFX_ASH, PAL_SFX_BONE, PAL_SFX_ROCK, PAL_ERASE_FIELD, PAL_FIND_MONST},
 };
 
 rectangle working_rect;
@@ -1792,11 +1792,16 @@ static bool handle_toolpal_action(location cur_point2) {
 						mode_count = 2;
 						set_string("Create saved item rect","Select upper left corner");
 						break;
-					case PAL_WANDER:
-						overall_mode = MODE_SET_WANDER_POINTS;
-						mode_count = 4;
-						set_string("Place first wandering monster arrival point","");
-						break;
+					case PAL_FIND_MONST:{
+						short which = choose_townperson(-1, nullptr);
+						if(which >= 0){
+							cTownperson& pers = town->creatures[which];
+
+							cen_x = pers.start_loc.x;
+							cen_y = pers.start_loc.y;
+							redraw_screen();
+						}
+					}break;
 					case PAL_CHANGE: // replace terrain
 						swap_terrain();
 						draw_main_screen();
