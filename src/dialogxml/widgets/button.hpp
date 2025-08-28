@@ -10,6 +10,8 @@
 #define BUTTON_H
 
 #include "control.hpp"
+#include "drawable.hpp"
+#include "event_listener.hpp"
 
 /// A button type.
 enum eBtnType {	// w x h
@@ -31,7 +33,7 @@ enum eBtnType {	// w x h
 
 
 /// A clickable button control.
-class cButton : public cControl {
+class cButton : public cControl, public iEventListener, public iDrawable{
 public:
 	/// @copydoc cDialog::init()
 	static void init();
@@ -64,6 +66,7 @@ public:
 	}
 	cButton& operator=(cButton& other) = delete;
 	cButton(cButton& other) = delete;
+	bool handle_event(const sf::Event&) override;
 protected:
 	/// The type of button.
 	eBtnType type;

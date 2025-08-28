@@ -13,6 +13,7 @@
 #include "dialogxml/dialogs/dialog.hpp"
 #include "gfx/render_image.hpp"
 #include "gfx/render_text.hpp"
+#include "tools/winutil.hpp"
 
 #include "fileio/resmgr/res_image.hpp"
 
@@ -328,4 +329,36 @@ void cButton::initPreset() {
 			// Other button types don't have prebaked text, so do nothing
 			break;
 	}
+}
+
+// Parentless button handle input
+bool cButton::handle_event(const sf::Event& event) {
+	// Not visible -> not interested
+	if(!this->isVisible())
+		return false;
+
+	switch(event.type) {
+		case sf::Event::MouseButtonPressed:{
+			location where = {(int)(event.mouseButton.x / get_ui_scale()), (int)(event.mouseButton.y / get_ui_scale())};
+			// Making a framerate limiter just for this is not great
+			cFramerateLimiter fps;
+			if(getBounds().contains(where)){
+				// TODO handleClick calls redraw() but this doesn't seem to reach the drawable_manager
+				// because the button never appears depressed
+				if(this->handleClick(where, fps)){
+					// Also bad:
+					cDialog dummy_dlg;
+					eKeyMod mod;
+					triggerClickHandler(dummy_dlg, "", mod);
+				}
+				return true;
+			}
+		}break;
+		case sf::Event::KeyPressed:
+			// TODO parentless button handle hotkey
+			break;
+		default: break;
+	}
+
+	return false;
 }
