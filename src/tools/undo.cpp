@@ -43,12 +43,14 @@ void cUndoList::undo(){
 	if(noUndo()) return;
 	(*cur)->undo();
 	cur++;
+	if(onChange) onChange();
 }
 
 void cUndoList::redo(){
 	if(noRedo()) return;
 	cur--;
 	(*cur)->redo();
+	if(onChange) onChange();
 }
 
 std::string cUndoList::undoName() const {
@@ -91,4 +93,6 @@ void cUndoList::add(action_ptr what){
 		theList.pop_back();
 	}
 	cur = theList.begin();
+
+	if(onChange) onChange();
 }
