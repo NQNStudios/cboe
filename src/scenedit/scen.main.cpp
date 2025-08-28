@@ -877,7 +877,6 @@ void handle_menu_choice(eMenu item_hit) {
 		case eMenu::HELP_TEST:
 			helpDlog = "help-testing";
 			isHelp = true;
-			isOutdated = true;
 			break;
 		case eMenu::HELP_DIST:
 			helpDlog = "help-distributing";
