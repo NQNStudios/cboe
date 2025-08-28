@@ -194,6 +194,10 @@ static void launch_scenario(eLaunchType type) {
 
 //Changed to ISO C specified argument and return type.
 int main(int argc, char* argv[]) {
+	extern cUndoList undo_list;
+	undo_list.onChange = []() -> void {
+		save_scenario(false, true);
+	};
 	try {
 		init_scened(argc, argv);
 		

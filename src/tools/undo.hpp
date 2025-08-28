@@ -93,6 +93,8 @@ public:
 	/// dropped from the front of the list.
 	/// Actions are only dropped when adding new actions.
 	static size_t maxUndoSize;
+	/// Called every time the list is updated either by performing something new, or and undo/redo call (but not on clear)
+	std::function<void()> onChange;
 };
 
 // As a special convention, I will prefix non-abstract action classes with 'a' instead of 'c'

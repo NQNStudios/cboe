@@ -1101,32 +1101,52 @@ struct overrides_sheet {
 	}
 };
 
+const int MAX_ED_AUTOSAVE_DEFAULT = 10; // TODO make a pref
+static fs::path next_autosave_path() {
+	extern fs::path edAutoDir;
+
+	auto ed_autosaves = sorted_file_mtimes(edAutoDir, {".boes"});
+
+	if(ed_autosaves.size() >= MAX_ED_AUTOSAVE_DEFAULT){
+		return ed_autosaves.back().first; // Reuse oldest auto slot
+	}else if(ed_autosaves.empty()){
+		return edAutoDir / "auto0.boes";
+	}else{
+		fs::path newest_auto = ed_autosaves[0].first;
+		int num = std::stoi(newest_auto.stem().string().substr(4)) + 1;
+		std::string temp = "auto" + std::to_string(num) + ".boes";
+		return edAutoDir / temp;
+	}
+}
+
 extern std::string scenario_temp_dir_name;
 extern fs::path scenDir;
-void save_scenario(bool rename) {
+void save_scenario(bool rename, bool autosave) {
 	fs::path toFile = scenario.scen_file;
-	if(rename || toFile.empty()) {
-		fs::path def = scenario.scen_file;
-		if(def.empty())
-			def = scenDir/"myscenario.boes";
-		toFile = nav_put_scenario(def);
-		if(toFile.empty()) return;
-	}
-	
-	if(fs::is_directory(toFile)) {
-		// Unpacked scenario
-		set_pref("LastScenario", (toFile / "header.exs").string());
-	}else{
-		set_pref("LastScenario", toFile.string());
-	}
-	save_prefs();
+	if(!autosave){
+		if(rename || toFile.empty()) {
+			fs::path def = scenario.scen_file;
+			if(def.empty())
+				def = scenDir/"myscenario.boes";
+			toFile = nav_put_scenario(def);
+			if(toFile.empty()) return;
+		}
 
-	extern cUndoList undo_list;
-	undo_list.save();
+		if(fs::is_directory(toFile)) {
+			// Unpacked scenario
+			set_pref("LastScenario", (toFile / "header.exs").string());
+		}else{
+			set_pref("LastScenario", toFile.string());
+		}
+		save_prefs();
+
+		extern cUndoList undo_list;
+		undo_list.save();
+
+		if(scenario.is_legacy && cChoiceDlog("save-legacy-scen", {"update", "cancel"}).show() == "update")
+			scenario.is_legacy = false;
 	
-	if(scenario.is_legacy && cChoiceDlog("save-legacy-scen", {"update", "cancel"}).show() == "update")
-		scenario.is_legacy = false;
-	
+	}
 	scenario.reset_version();
 	tarball scen_file;
 	{
@@ -1197,7 +1217,11 @@ void save_scenario(bool rename) {
 		writeDialogueToXml(ticpp::Printer("talk.xml", town_talk), scenario.towns[i]->talking, i);
 	}
 
-	change_made = false;
+	if(autosave){
+		toFile = next_autosave_path();
+	}else{
+		change_made = false;
+	}
 	
 	// Alright. At this point, check to see if the scenario was unpacked.
 	if(fs::is_directory(toFile)) {
