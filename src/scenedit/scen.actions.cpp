@@ -3035,7 +3035,12 @@ void set_up_start_screen() {
 	set_lb(4,LB_TEXT,LB_LOAD_SCEN,"Load Scenario");
 	fs::path last_scenario = get_string_pref("LastScenario");
 	if(!last_scenario.empty() && fs::exists(last_scenario)){
-		set_lb(5,LB_TEXT,LB_LOAD_LAST,"Load Last: " + last_scenario.filename().string());
+		// Probably unpacked, unless a legacy scenario called header.exs exists:
+		if(last_scenario.filename().string() == "header.exs"){
+			set_lb(5,LB_TEXT,LB_LOAD_LAST,"Load Last: " + last_scenario.parent_path().filename().string());
+		}else{
+			set_lb(5,LB_TEXT,LB_LOAD_LAST,"Load Last: " + last_scenario.filename().string());
+		}
 	}
 	set_lb(4,LB_TEXT,LB_LOAD_SCEN,"Load Scenario");
 	set_lb(7,LB_TEXT,LB_NO_ACTION,"To find out how to use the");

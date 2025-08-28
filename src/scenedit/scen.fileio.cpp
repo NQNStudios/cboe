@@ -1113,7 +1113,12 @@ void save_scenario(bool rename) {
 		if(toFile.empty()) return;
 	}
 	
-	set_pref("LastScenario", toFile.string());
+	if(fs::is_directory(toFile)) {
+		// Unpacked scenario
+		set_pref("LastScenario", (toFile / "header.exs").string());
+	}else{
+		set_pref("LastScenario", toFile.string());
+	}
 	save_prefs();
 
 	extern cUndoList undo_list;
