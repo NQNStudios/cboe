@@ -2,6 +2,17 @@
 #ifndef BOE_SCEN_GLOBAL_HPP
 #define BOE_SCEN_GLOBAL_HPP
 
+#define SCEN_EDIT_CATCH(then) catch(std::exception& x) {\
+	showFatalError(x.what());\
+	then;\
+} catch(std::string& x) {\
+	showFatalError(x);\
+	then;\
+} catch(...) {\
+	showFatalError("An unknown error occurred!");\
+	then;\
+}
+
 #include <vector>
 
 const int BITMAP_WIDTH = 28;
