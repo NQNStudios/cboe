@@ -60,6 +60,7 @@ short cen_x, cen_y;
 eScenMode overall_mode = MODE_INTRO_SCREEN;
 std::shared_ptr<cScrollbar> right_sbar, pal_sbar;
 std::shared_ptr<cTextField> palette_search_field;
+std::shared_ptr<cButton> dialogs_preview_button;
 short mode_count = 0;
 short right_button_hovered = -1;
 
@@ -267,6 +268,43 @@ static void init_search_field() {
 	event_listeners["search_field"] = std::dynamic_pointer_cast<iEventListener>(palette_search_field);
 }
 
+static void init_preview_button() {
+	static cParentless mainWin(mainPtr());
+	cButton::init();
+	dialogs_preview_button.reset(new cButton(mainWin));
+	dialogs_preview_button->setColour(Colours::BLACK);
+	dialogs_preview_button->relocate({RIGHT_AREA_UL_X + 5, RIGHT_AREA_UL_Y + RIGHT_AREA_HEIGHT + 16});
+	dialogs_preview_button->setBtnType(BTN_TINY);
+	dialogs_preview_button->setText("Preview All Dialogs");
+	dialogs_preview_button->show();
+	dialogs_preview_button->recalcRect();
+	drawable_mgr.add_drawable(UI_LAYER_DEFAULT, "preview_button", dialogs_preview_button);
+	event_listeners["preview_button"] = std::dynamic_pointer_cast<iEventListener>(dialogs_preview_button);
+
+	dialogs_preview_button->attachClickHandler([](cDialog&, std::string, eKeyMod) -> bool {
+		std::vector<cSpecial>* current_specials;
+		switch(scenario.editor_state.special_editing_mode){
+			case 0:
+				current_specials = &scenario.scen_specials;
+				break;
+			case 1:
+				current_specials = &current_terrain->specials;
+				break;
+			case 2:
+				current_specials = &town->specials;
+				break;
+		}
+
+		for(cSpecial& special : *current_specials){
+			if((*special.type).can_preview){
+				extern bool preview_spec_enc_dlog(cDialog* parent, cSpecial& special, short mode);
+				preview_spec_enc_dlog(nullptr, special, scenario.editor_state.special_editing_mode);
+			}
+		}
+		return true;
+	});
+}
+
 sf::FloatRect compute_viewport(const sf::RenderWindow& mainPtr, float ui_scale) {
 
 	// See compute_viewport() in boe.graphics.cpp
@@ -384,6 +422,7 @@ void init_scened(int argc, char* argv[]) {
 	Set_up_win();
 	init_scrollbars();
 	init_search_field();
+	init_preview_button();
 	init_lb();
 	init_rb();
 	

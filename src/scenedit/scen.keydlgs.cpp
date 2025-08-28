@@ -873,7 +873,8 @@ static void save_spec_enc(cDialog& me, node_stack_t& edit_stack) {
 	the_node.jumpto = me["jump"].getTextAsNum();
 }
 
-static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, short mode) {
+bool preview_spec_enc_dlog(cDialog* parent, cSpecial& special, short mode) {
+	// TODO pass parent to all the preview dialogs
 	eSpecCtxType cur_type = static_cast<eSpecCtxType>(mode);
 
 	extern cUniverse temp_universe();
@@ -943,7 +944,7 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 			break;
 		case eSpecType::ONCE_GIVE_ITEM_DIALOG:
 			buttons = {9, 19, -1};
-			once_dialog(univ, special, cur_type, buttons, &me);
+			once_dialog(univ, special, cur_type, buttons, parent);
 			break;
 		case eSpecType::ONCE_TRAP:
 			buttons = {3, 2, -1};
@@ -951,7 +952,7 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 			custom_choice_dialog(strs,special.pic,ePicType(special.pictype),buttons, true, special.ex1c, special.ex2c, &univ);
 			break;
 		case eSpecType::ONCE_DIALOG:
-			once_dialog(univ, special, cur_type, &me);
+			once_dialog(univ, special, cur_type, parent);
 			break;
 		case eSpecType::TITLED_MSG:
 			univ.get_str(title, cur_type, special.m3);
@@ -962,7 +963,7 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 			univ.get_strs(strs[0], strs[1], cur_type, special.m1, special.m2);
 			if(strs[0].empty() && strs[1].empty()) break;
 
-			cStrDlog dlog(strs[0], strs[1], title, pic, pic_type, &me);
+			cStrDlog dlog(strs[0], strs[1], title, pic, pic_type, parent);
 			dlog->getControl("record").show();
 			dlog.show();
 			break;
@@ -970,6 +971,10 @@ static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, s
 
 	cDialog::defaultBackground = defaultBackground;
 	return true;
+}
+
+static bool preview_spec_enc_dlog(cDialog& me, std::string, cSpecial& special, short mode) {
+	return preview_spec_enc_dlog(&me, special, mode);
 }
 
 static bool preview_spec_enc_dlog_stack(cDialog& me, std::string item_hit, node_stack_t& edit_stack, short mode) {

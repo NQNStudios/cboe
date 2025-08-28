@@ -20,6 +20,7 @@
 #include <boost/variant.hpp>
 #include <boost/algorithm/string.hpp>
 #include "dialogxml/widgets/field.hpp"
+#include "dialogxml/widgets/button.hpp"
 #include "universe/universe.hpp"
 
 #include "dialogxml/dialogs/dialog.hpp"
@@ -58,6 +59,7 @@ extern rectangle right_buttons[NRSONPAGE];
 extern rectangle right_scrollbar_rect;
 extern std::shared_ptr<cScrollbar> right_sbar, pal_sbar;
 extern std::shared_ptr<cTextField> palette_search_field;
+extern std::shared_ptr<cButton> dialogs_preview_button;
 extern rectangle search_field_text_rect;
 extern boost::variant<boost::none_t, std::pair<long,bool>, cTownperson, cTown::cItem, vector2d<ter_num_t>> clipboard;
 
@@ -428,6 +430,8 @@ extern size_t num_strs(short mode); // defined in scen.keydlgs.cpp
 static void apply_mode_buttons() {
 	right_button_status.clear();
 	int num_options;
+
+	dialogs_preview_button->hide();
 	switch(overall_mode){
 		case MODE_EDIT_SPECIAL_ITEMS:
 			num_options = scenario.special_items.size() + 1;
@@ -558,6 +562,7 @@ static void apply_mode_buttons() {
 				case 2: set_rb(num_specs, RB_TOWN_SPEC, num_specs, make_new); break;
 			}
 			set_lb(NLS - 3,LB_TEXT,LB_NO_ACTION,"Alt-click to delete",true);
+			dialogs_preview_button->show();
 		}break;
 		case MODE_EDIT_DIALOGUE:{
 			// TODO use stringstream and give more readable info
@@ -616,8 +621,6 @@ void draw_main_screen() {
 	}else{
 		palette_search_field->hide();
 	}
-	
-	
 }
 
 void draw_lb() {
