@@ -1253,6 +1253,37 @@ static std::string get_control_for_field(eSpecField field) {
 	return "num";
 }
 
+short choose_townperson(short cur_sel, cDialog* parent) {
+	if(cur_sel < 0) cur_sel = 0;
+
+	std::vector<pic_num_t> pics;
+	std::vector<std::string> labels;
+	for(size_t i = 0; i < town->creatures.size(); ++i){
+		const cTownperson& person = town->creatures[i];
+		if(person.number <= 0) {
+			pics.push_back(-1);
+			labels.push_back("");
+		}else{
+			const cMonster& monst = scenario.scen_monsters[person.number];
+			pics.push_back(monst.picture_num);
+			std::string name = monst.m_name;
+			if(person.personality >= 0){
+				int pers_town_num = person.personality / 10;
+				name = scenario.towns[pers_town_num]->talking.people[person.personality % 10].title;
+			}
+			// TODO use loc_str
+			labels.push_back(fmt::format("{} at {}", name, boost::lexical_cast<std::string>(person.start_loc)));
+		}
+	}
+	cPictChoice choice(pics, labels, PIC_MONST, parent);
+	choice->getControl("prompt").setText("Select a creature:");
+	if(choice.show(cur_sel)){
+		return choice.getSelected();
+	}else{
+		return -1;
+	}
+}
+
 static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t& edit_stack) {
 	std::string field = item_hit.substr(0, item_hit.find_first_of('-'));
 	bool alt_button = item_hit.substr(item_hit.find_first_of('-') + 1) == "edit2";
@@ -1581,28 +1612,8 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 				break;
 			}
 			if(alt_button){
-				std::vector<pic_num_t> pics;
-				std::vector<std::string> labels;
-				for(size_t i = 0; i < town->creatures.size(); ++i){
-					const cTownperson& person = town->creatures[i];
-					if(person.number <= 0) {
-						pics.push_back(-1);
-						labels.push_back("");
-					}else{
-						const cMonster& monst = scenario.scen_monsters[person.number];
-						pics.push_back(monst.picture_num);
-						std::string name = monst.m_name;
-						if(person.personality >= 0){
-							int pers_town_num = person.personality / 10;
-							name = scenario.towns[pers_town_num]->talking.people[person.personality % 10].title;
-						}
-						labels.push_back(fmt::format("{} at {}", name, boost::lexical_cast<std::string>(person.start_loc)));
-					}
-				}
 				size_t sel = val < 0 ? town->creatures.size() + val : val;
-				cPictChoice choice(pics, labels, PIC_MONST, &me);
-				choice.show(sel);
-				size_t new_sel = choice.getSelected();
+				size_t new_sel = choose_townperson(sel, &me);
 				if(val < 0){
 					store = -(town->creatures.size() - new_sel);
 				}else{
