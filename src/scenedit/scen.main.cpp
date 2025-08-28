@@ -871,13 +871,8 @@ void handle_menu_choice(eMenu item_hit) {
 			helpDlog = "about-scened";
 			isHelp = true;
 			break;
-		case eMenu::HELP_TOC:
+		case eMenu::HELP_TOC: case eMenu::HELP_START:
 			launchDocs("editor/Contents.html");
-			break;
-		case eMenu::HELP_START:
-			helpDlog = "help-editing";
-			isHelp = true;
-			isOutdated = true;
 			break;
 		case eMenu::HELP_TEST:
 			helpDlog = "help-testing";
@@ -888,11 +883,7 @@ void handle_menu_choice(eMenu item_hit) {
 			helpDlog = "help-distributing";
 			isHelp = true;
 			break;
-		case eMenu::HELP_CONTEST:
-			helpDlog = "help-contest";
-			isHelp = true;
-			isOutdated = true;
-			break;
+		default: break;
 	}
 	if(isEdit) {
 		if(!cDialog::sendInput(editKey)) {
