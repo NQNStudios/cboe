@@ -208,16 +208,7 @@ int main(int argc, char* argv[]) {
 		
 		close_program();
 		return 0;
-	} catch(std::exception& x) {
-		showFatalError(x.what());
-		throw;
-	} catch(std::string& x) {
-		showFatalError(x);
-		throw;
-	} catch(...) {
-		showFatalError("An unknown error occurred!");
-		throw;
-	}
+	} SCEN_EDIT_CATCH(throw);
 }
 
 static void init_sbar(std::shared_ptr<cScrollbar>& sbar, const std::string& name, rectangle rect, rectangle events_rect, int pgSz) {

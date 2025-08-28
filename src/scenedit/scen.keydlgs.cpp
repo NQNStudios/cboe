@@ -874,100 +874,102 @@ static void save_spec_enc(cDialog& me, node_stack_t& edit_stack) {
 }
 
 bool preview_spec_enc_dlog(cDialog* parent, cSpecial& special, short mode) {
-	// TODO pass parent to all the preview dialogs
-	eSpecCtxType cur_type = static_cast<eSpecCtxType>(mode);
-
-	extern cUniverse temp_universe();
-	cUniverse univ = temp_universe();
-	std::string title = "";
-	std::array<std::string,6> strs;
-	std::array<short, 3> buttons;
-
-	ePicType pic_type = PIC_SCEN;
-	pic_num_t pic = scenario.intro_pic;
-
 	// Use dark background that the game uses:
 	short defaultBackground = cDialog::defaultBackground;
 	cDialog::defaultBackground = cDialog::BG_DARK;
+	try{
+	// TODO pass parent to all the preview dialogs
+		eSpecCtxType cur_type = static_cast<eSpecCtxType>(mode);
 
-	switch(special.type){
-		case eSpecType::TOWN_STAIR:
-			// No message, or skip dialog and force:
-			if((special.m1 < 0) || (special.ex2b == 1)) break;
-			univ.get_strs(strs, cur_type, special.m1);
-			buttons = {20, 24, -1};
-			custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, false, -1, -1, &univ);
-			break;
-		case eSpecType::TOWN_PORTAL:
-			if(special.m1 < 0) break;
-			univ.get_strs(strs, cur_type,special.m1);
-			buttons = {9, 8, -1};
-			custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, true, special.ex1c, special.ex2c, &univ);
-			break;
-		case eSpecType::TOWN_LEVER:
-			if(special.m1 < 0) break;
-			univ.get_strs(strs,cur_type, special.m1);
-			buttons = {9, 35, -1};
-			custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, true, special.ex1c, special.ex2c, &univ);
-			break;
-		case eSpecType::TOWN_GENERIC_STAIR:
-			if(special.ex2b < 8)
-				cChoiceDlog(stairDlogs[max(0,special.ex2b)],{"climb","leave"}).show();
-			break;
-		case eSpecType::TOWN_GENERIC_BUTTON:
-			cChoiceDlog("basic-button",{"yes","no"}).show();
-			break;
-		case eSpecType::TOWN_GENERIC_PORTAL:
-			cChoiceDlog("basic-portal",{"yes","no"}).show();
-			break;
-		case eSpecType::TOWN_GENERIC_LEVER:
-			cChoiceDlog("basic-lever",{"pull", "leave"}).show();
-			break;
-		case eSpecType::IF_NUM_RESPONSE:{
-			int min = special.m2;
-			int max = special.m3;
-			if(min > max) std::swap(min,max);
-			univ.get_str(title,eSpecCtxType::SCEN,special.m1);
-			int i = get_num_response(min,max,title);
-		}break;
-		case eSpecType::IF_TEXT_RESPONSE:
-			univ.get_str(title,eSpecCtxType::SCEN,special.m1);
-			get_text_response(title);
-			break;
-		case eSpecType::DISPLAY_PICTURE:
-			univ.get_str(title, cur_type, special.m1);
-			custom_pic_dialog(title, special.ex1a, special.ex1b);
-			break;
-		case eSpecType::STORY_DIALOG:
-			univ.get_str(title,cur_type,special.m1);
-			story_dialog(univ, title, special.m2, special.m3, cur_type, special.pic, ePicType(special.pictype), special.ex1c, special.ex2c);
-			break;
-		case eSpecType::ONCE_GIVE_ITEM_DIALOG:
-			buttons = {9, 19, -1};
-			once_dialog(univ, special, cur_type, buttons, parent);
-			break;
-		case eSpecType::ONCE_TRAP:
-			buttons = {3, 2, -1};
-			univ.get_strs(strs[0], strs[1], cur_type, special.m1, special.m2);
-			custom_choice_dialog(strs,special.pic,ePicType(special.pictype),buttons, true, special.ex1c, special.ex2c, &univ);
-			break;
-		case eSpecType::ONCE_DIALOG:
-			once_dialog(univ, special, cur_type, parent);
-			break;
-		case eSpecType::TITLED_MSG:
-			univ.get_str(title, cur_type, special.m3);
-			pic_type = ePicType(special.pictype);
-			pic = special.pic;
-			BOOST_FALLTHROUGH;
-		default:
-			univ.get_strs(strs[0], strs[1], cur_type, special.m1, special.m2);
-			if(strs[0].empty() && strs[1].empty()) break;
+		extern cUniverse temp_universe();
+		cUniverse univ = temp_universe();
+		std::string title = "";
+		std::array<std::string,6> strs;
+		std::array<short, 3> buttons;
 
-			cStrDlog dlog(strs[0], strs[1], title, pic, pic_type, parent);
-			dlog->getControl("record").show();
-			dlog.show();
-			break;
-	}
+		ePicType pic_type = PIC_SCEN;
+		pic_num_t pic = scenario.intro_pic;
+
+
+		switch(special.type){
+			case eSpecType::TOWN_STAIR:
+				// No message, or skip dialog and force:
+				if((special.m1 < 0) || (special.ex2b == 1)) break;
+				univ.get_strs(strs, cur_type, special.m1);
+				buttons = {20, 24, -1};
+				custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, false, -1, -1, &univ);
+				break;
+			case eSpecType::TOWN_PORTAL:
+				if(special.m1 < 0) break;
+				univ.get_strs(strs, cur_type,special.m1);
+				buttons = {9, 8, -1};
+				custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, true, special.ex1c, special.ex2c, &univ);
+				break;
+			case eSpecType::TOWN_LEVER:
+				if(special.m1 < 0) break;
+				univ.get_strs(strs,cur_type, special.m1);
+				buttons = {9, 35, -1};
+				custom_choice_dialog(strs, special.pic, ePicType(special.pictype), buttons, true, special.ex1c, special.ex2c, &univ);
+				break;
+			case eSpecType::TOWN_GENERIC_STAIR:
+				if(special.ex2b < 8)
+					cChoiceDlog(stairDlogs[max(0,special.ex2b)],{"climb","leave"}).show();
+				break;
+			case eSpecType::TOWN_GENERIC_BUTTON:
+				cChoiceDlog("basic-button",{"yes","no"}).show();
+				break;
+			case eSpecType::TOWN_GENERIC_PORTAL:
+				cChoiceDlog("basic-portal",{"yes","no"}).show();
+				break;
+			case eSpecType::TOWN_GENERIC_LEVER:
+				cChoiceDlog("basic-lever",{"pull", "leave"}).show();
+				break;
+			case eSpecType::IF_NUM_RESPONSE:{
+				int min = special.m2;
+				int max = special.m3;
+				if(min > max) std::swap(min,max);
+				univ.get_str(title,eSpecCtxType::SCEN,special.m1);
+				int i = get_num_response(min,max,title);
+			}break;
+			case eSpecType::IF_TEXT_RESPONSE:
+				univ.get_str(title,eSpecCtxType::SCEN,special.m1);
+				get_text_response(title);
+				break;
+			case eSpecType::DISPLAY_PICTURE:
+				univ.get_str(title, cur_type, special.m1);
+				custom_pic_dialog(title, special.ex1a, special.ex1b);
+				break;
+			case eSpecType::STORY_DIALOG:
+				univ.get_str(title,cur_type,special.m1);
+				story_dialog(univ, title, special.m2, special.m3, cur_type, special.pic, ePicType(special.pictype), special.ex1c, special.ex2c);
+				break;
+			case eSpecType::ONCE_GIVE_ITEM_DIALOG:
+				buttons = {9, 19, -1};
+				once_dialog(univ, special, cur_type, buttons, parent);
+				break;
+			case eSpecType::ONCE_TRAP:
+				buttons = {3, 2, -1};
+				univ.get_strs(strs[0], strs[1], cur_type, special.m1, special.m2);
+				custom_choice_dialog(strs,special.pic,ePicType(special.pictype),buttons, true, special.ex1c, special.ex2c, &univ);
+				break;
+			case eSpecType::ONCE_DIALOG:
+				once_dialog(univ, special, cur_type, parent);
+				break;
+			case eSpecType::TITLED_MSG:
+				univ.get_str(title, cur_type, special.m3);
+				pic_type = ePicType(special.pictype);
+				pic = special.pic;
+				BOOST_FALLTHROUGH;
+			default:
+				univ.get_strs(strs[0], strs[1], cur_type, special.m1, special.m2);
+				if(strs[0].empty() && strs[1].empty()) break;
+
+				cStrDlog dlog(strs[0], strs[1], title, pic, pic_type, parent);
+				dlog->getControl("record").show();
+				dlog.show();
+				break;
+		}
+	} SCEN_EDIT_CATCH(0);
 
 	cDialog::defaultBackground = defaultBackground;
 	return true;
