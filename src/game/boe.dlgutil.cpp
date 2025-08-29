@@ -1874,7 +1874,7 @@ class cChooseScenario {
 		for(fs::path file : files){
 			std::string ext = file.extension().string();
 			std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
-			if(ext == ".sav"){
+			if(ext == ".sav" || ext == ".exg"){
 				choices.push_back("Load premade party: " + file.filename().string());
 				handlers.push_back([file](cButtonPanel& dlg) -> void {
 					if(replaying){
