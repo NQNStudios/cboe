@@ -586,6 +586,9 @@ std::string cSpecial::editor_hint(cUniverse& univ) const {
 		case eSpecType::ONCE_DIALOG:
 			hint += fmt::format(": '{}'", first_of_six_str(m1));
 			break;
+		case eSpecType::TITLED_MSG:
+			hint += fmt::format(": '{}'", first_of_many_str(m3, m1, m2));
+			break;
 
 		case eSpecType::INC_SDF:
 			preposition = ex1b == 1 ? "decrease by" : "increase by";
