@@ -37,7 +37,7 @@ Human is the default species in Blades of Exile. Humans have skins of a variety 
 Nephilim
 The Nephilim are a race of feline humanoids. Once common on the surface world, they have been hunted to near extinction, although some now remain in Exile. Nephilim characters start with better dexterity, and are much better at using missile weapons.
 Slithzerikai
-The Slithzerikai (sliths for short) are a race of lizard men, both strong and smart. Once unknown on the surface world, they are starting to appear there. Slith characters get bonuses to strength and intelligence, and are better at using pole weapons.
+The Slithzerikai (sliths for short) are a race of humanoid lizards, both strong and smart. Once unknown on the surface world, they are starting to appear there. Slith characters get bonuses to strength and intelligence, and are better at using pole weapons.
 Vahnatai
 The Vahnatai are a frail and spindly yet intelligent subterranean race. They get a penalty to strength and can't carry as much, but also receive a bonus to intelligence and are better at casting mage spells.
 Reptile
