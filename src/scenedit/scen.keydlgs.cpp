@@ -877,6 +877,7 @@ bool preview_spec_enc_dlog(cDialog* parent, cSpecial& special, short mode) {
 	// Use dark background that the game uses:
 	short defaultBackground = cDialog::defaultBackground;
 	cDialog::defaultBackground = cDialog::BG_DARK;
+	cDialog::defaultDoAnimations = false;
 	try{
 	// TODO pass parent to all the preview dialogs
 		eSpecCtxType cur_type = static_cast<eSpecCtxType>(mode);
@@ -972,6 +973,7 @@ bool preview_spec_enc_dlog(cDialog* parent, cSpecial& special, short mode) {
 	} SCEN_EDIT_CATCH(0);
 
 	cDialog::defaultBackground = defaultBackground;
+	cDialog::defaultDoAnimations = true;
 	return true;
 }
 
