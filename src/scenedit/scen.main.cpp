@@ -195,8 +195,15 @@ static void launch_scenario(eLaunchType type) {
 //Changed to ISO C specified argument and return type.
 int main(int argc, char* argv[]) {
 	extern cUndoList undo_list;
-	undo_list.onChange = []() -> void {
-		save_scenario(false, true);
+	int change_counter = 0;
+	undo_list.onChange = [&change_counter]() -> void {
+		++change_counter;
+		// TODO allow setting this pref (min 1)
+		if(change_counter == get_int_pref("EdAutoInterval", 3)){
+			save_scenario(false, true);
+			change_counter = 0;
+		}
+
 	};
 	try {
 		init_scened(argc, argv);
