@@ -24,6 +24,8 @@
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include <fmt/format.h>
+#include "fileio/tarball.hpp"
+#include "gzstream.h"
 
 #define	DONE_BUTTON_ITEM	1
 
@@ -552,24 +554,43 @@ void try_auto_save(std::string reason) {
 	print_buf();
 }
 
-std::vector<std::string> extra_extensions = {".sav", ".txt", ".rtf", ".htm", ".html"};
-
 std::vector<fs::path> extra_files(fs::path scen_file) {
 	std::vector<fs::path> files;
 
 	std::string scen_extension = scen_file.extension().string();
 	std::transform(scen_extension.begin(), scen_extension.end(), scen_extension.begin(), tolower);
-	if(scen_extension != ".exs") return files;
+	if(scen_extension == ".boes"){
+		tarball pack;
+		igzstream gzin(scen_file.string().c_str());
+		pack.readFrom(gzin);
+		if(gzin.bad()) {
+			showError("There was an error checking for extra files");
+			return files;
+		}
+		for(auto file : pack){
+			fs::path path = file.filename;
+			if(path.parent_path() == "scenario/extra" && find(extra_extensions.begin(), extra_extensions.end(), path.extension()) != extra_extensions.end()){
+				extern fs::path tempDir;
+				// extract the extra file temporarily
+				std::istream& f = file.contents;
+				std::ofstream fout((tempDir / path.filename()).string(), std::ios::binary);
+				fout << f.rdbuf();
+				fout.close();
+				// Return that path
+				files.push_back(tempDir / path.filename());
+			}
+		}
+	}else if(scen_extension == ".exs"){
+		fs::path directory = scen_file.parent_path();
 
-	fs::path directory = scen_file.parent_path();
-
-	fs::recursive_directory_iterator file_iter(directory);
-	for(; file_iter != fs::recursive_directory_iterator(); file_iter++) {
-		fs::path file = *file_iter;
-		std::string extension = file.extension().string();
-		std::transform(extension.begin(), extension.end(), extension.begin(), tolower);
-		if(std::find(extra_extensions.begin(), extra_extensions.end(), extension) != extra_extensions.end()){
-			files.push_back(file);
+		fs::recursive_directory_iterator file_iter(directory);
+		for(; file_iter != fs::recursive_directory_iterator(); file_iter++) {
+			fs::path file = *file_iter;
+			std::string extension = file.extension().string();
+			std::transform(extension.begin(), extension.end(), extension.begin(), tolower);
+			if(std::find(extra_extensions.begin(), extra_extensions.end(), extension) != extra_extensions.end()){
+				files.push_back(file);
+			}
 		}
 	}
 
