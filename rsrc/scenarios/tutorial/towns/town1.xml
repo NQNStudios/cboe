@@ -15,7 +15,7 @@
         <![CDATA[This room contains multiple books explaining the almost 30-year history of Blades of Exile! To read one, you must be standing next to it. Then, either right-click its space, or click the eye button in your hotbar (hotkey: 'l' for look) before selecting its space.]]>
     </string>
     <string id="1">
-        <![CDATA[Try glancing at at least one of them before you rush off through the portal to the north.]]>
+        <![CDATA[Try glancing at at least one of them before you rush off through the portal to the east.]]>
     </string>
     <string id="2">
         <![CDATA[happened]]>
@@ -27,7 +27,7 @@
         <![CDATA[A primer for the TRULY uninitiated.]]>
     </string>
     <string id="9">
-        <![CDATA[*]]>
+        <![CDATA[Exile: Escape from the Pit]]>
     </string>
     <string id="10">
         <![CDATA[Do you remember being young and pretending you were a knight or a wizard or a space explorer? Or maybe you pretended to be one of those things just yesterday. Whenever it last happened, you were role-playing.]]>
@@ -45,15 +45,63 @@
         <![CDATA[We (the small group of volunteers working to preserve this game) want as many people as possible to enjoy it, and that includes you! Even if you've never played an RPG before. This tutorial is our best effort at helping you get started.]]>
     </string>
     <string id="15">
-        <![CDATA[*]]>
+        <![CDATA["What Do I Need to Know About the world of Exile?"]]>
     </string>
     <string id="16">
-        <![CDATA[*]]>
+        <![CDATA[A really quick lore dump.]]>
     </string>
-    <string id="17">
-        <![CDATA[*]]>
+    <string id="21">
+        <![CDATA[The continent of Valorim is ruled by the Empire, a tyrannical regime that controls almost everything on its surface. The Empire wiped almost every magical or non-human form of life out of existence, banishing the rest to a prison colony, Exile, in a vast network of inhospitable caves.]]>
     </string>
-    <string id="18">
-        <![CDATA[*]]>
+    <string id="22">
+        <![CDATA[In Exile I, you are thrown into the Pit for your disobedience. There, you discover an entire society of people the Empire tried to cast aside, imperiled by war with the sliths. You achieve glory as the adventurers who kill their leader Sss-Thsss, ending that war.]]>
+    </string>
+    <string id="23">
+        <![CDATA[Exile II: Crystal Souls]]>
+    </string>
+    <string id="24">
+        <![CDATA[In Exile II, peace has been attained with the sliths, but the Empire wages a retaliatory war against Exile, threatening  to wipe out the fragile civilization that has developed in the caves over centuries. In so doing, they uncover an ancient alien race known as the Vahnatai, and plunder their sacred artifacts known as Crystal Souls. Each Crystal Soul contains a revered, immortalized Vahnatai.]]>
+    </string>
+    <string id="25">
+        <![CDATA[The Empire]]>
+    </string>
+    <string id="26">
+        <![CDATA[Nephilim]]>
+    </string>
+    <string id="27">
+        <![CDATA[Among the creatures the Empire nearly eradicated, there was an entire species with its own culture and customs. This is one of them, a nephil. Feline humanoids, nephilim tend to be more dextrous than humans.]]>
+    </string>
+    <string id="28">
+        <![CDATA[Most surviving nephilim live underground, where they were either banished or fled.]]>
+    </string>
+    <string id="29">
+        <![CDATA[Slithzerikai]]>
+    </string>
+    <string id="30">
+        <![CDATA[Slithzerikai, or sliths, are humanoid lizards who occupied the caves of Exile before the Empire started throwing humans down there. As exiled humans and nephilim expanded their underground society, a drawn-out war with the slithzerikai ensued.]]>
+    </string>
+    <string id="31">
+        <![CDATA[Then, joining with a group of powerful and angry rebel mages, you find a way back to the surface and strike a vengeful blow by killing the Emperor Hawthorne.]]>
+    </string>
+    <string id="32">
+        <![CDATA[The Vahnatai, wary of the exiled humans and nephils who have encroached on their caves, make a pact with the people of Exile, to fight together against the Empire's war of domination. Together, you recover the Crystal Souls and repel the invasion.]]>
+    </string>
+    <string id="33">
+        <![CDATA[Exile III: Ruined World]]>
+    </string>
+    <string id="34">
+        <![CDATA[In Exile III, people of the underground nation have begun emerging from their long captivity. What they find, however, is a surface world stricken by destruction, with its lumbering Empire unable to prevent a verging collapse. ]]>
+    </string>
+    <string id="35">
+        <![CDATA[Moving quickly, you heal the plagues of the land and uncover a conspiracy led by Rentar-Ihrno, a vengeful Vahnatai, who seeks to destroy the surface civilization for its theft of the Crystal Souls.]]>
+    </string>
+    <string id="36">
+        <![CDATA[Blades of Exile]]>
+    </string>
+    <string id="37">
+        <![CDATA[BoE came with 3 new scenarios, self-contained adventures taking place at various places and times before, after, or during the events of the Exile trilogy.]]>
+    </string>
+    <string id="38">
+        <![CDATA[More importantly, BoE came with an accessible construction kit for making UNLIMITED custom scenarios. Fans of the Exile Trilogy formed a thriving community around BoE, which produced almost 300 scenarios (that we know of) over the course of several years.]]>
     </string>
 </town>

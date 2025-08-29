@@ -40,7 +40,7 @@
         <out-width>1</out-width>
         <out-height>1</out-height>
         <start-town>1</start-town>
-        <town-start x="12" y="14" />
+        <town-start x="5" y="7" />
         <outdoor-start x="0" y="0" />
         <sector-start x="24" y="24" />
         <shop>
