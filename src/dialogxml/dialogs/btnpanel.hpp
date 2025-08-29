@@ -11,7 +11,7 @@
 /// A dialog that presents a list of labeled tiny buttons, plus an OK and Cancel button.
 /// The list may span several pages.
 class cButtonPanel {
-	const size_t per_page = 5;
+	const size_t per_page = 6;
 	cDialog dlg;
 	bool onLeft();
 	bool onRight();
