@@ -49,8 +49,8 @@
 	goto -1
 @story-dlog = 7
 	sdf -1, -1
-	msg 7, 10, 10
-	pic 0, 4
+	msg 3, 10, 14
+	pic 24, 4
 	ex1 -1, -1, -1
 	ex2 -1, -1, -1
 	goto -1
