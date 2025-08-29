@@ -2818,6 +2818,8 @@ void run_quick_menu() {
 
 	cButtonPanel panel(choices, handlers, "Quick Menu");
 	panel->getControl("cancel").setText("Resume");
+	// Bump Resume left because it looks weird without an Okay button
+	panel->getControl("cancel").relocateRelative({160, 0}, &panel->getControl("cancel"), POS_REL_NEG, POS_CONT_PLUS);
 	panel->getControl("done").hide();
 	dynamic_cast<cPict&>(panel->getControl("pic")).setPict(23,PIC_DLOG);
 	panel.show();
