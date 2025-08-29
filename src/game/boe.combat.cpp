@@ -2053,6 +2053,9 @@ static std::vector<short> list_enemy_monsters(short m_num) {
 	return enemies;
 }
 
+std::set<location, loc_compare> monst_path_this_turn;
+
+// This is for combat mode! See do_monsters() in boe.monster.cpp for peace behavior
 void do_monster_turn() {
 	bool acted_yet, had_monst = false,printed_poison = false,printed_disease = false,printed_acid = false;
 	bool redraw_not_yet_done = true;
@@ -2165,7 +2168,7 @@ void do_monster_turn() {
 			else pc_adj[j] = false;
 		
 		
-		
+		monst_path_this_turn = {cur_monst->cur_loc};
 		while((cur_monst->ap > 0) && (cur_monst->is_alive())) {  // Spend each action point
 			
 			if(is_combat()) { // Pick target. If in town, target already picked
