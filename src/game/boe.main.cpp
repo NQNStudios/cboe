@@ -225,7 +225,7 @@ static void showWelcome();
 
 static void replay_next_action();
 
-void handle_quit_event();
+bool handle_quit_event();
 void handle_help_toc();
 void menu_give_help(short help1);
 
@@ -631,6 +631,9 @@ static void replay_action(Element& action) {
 		eKeyMod mods = static_cast<eKeyMod>(std::stoi(info["mods"]));
 		handle_startup_button_click(btn, mods);
 		return;
+	}else if(t == "quick_menu"){
+		extern void run_quick_menu();
+		run_quick_menu();
 	}else if(t == "change_fps"){
 		extern boost::optional<cFramerateLimiter> replay_fps_limit;
 		// default new fps: slow the replay down substantially
@@ -1342,14 +1345,14 @@ void handle_events() {
 	}
 }
 
-void handle_quit_event() {
+bool handle_quit_event() {
 	if(recording){
 		record_action("close_window", "");
 	}
 	if(overall_mode == MODE_STARTUP) {
 		if(party_in_memory) {
 			std::string choice = cChoiceDlog("quit-confirm-save", {"save","quit","cancel"}).show();
-			if(choice == "cancel") return;
+			if(choice == "cancel") return false;
 			if(choice == "save") {
 				do_save();
 			}
@@ -1358,15 +1361,16 @@ void handle_quit_event() {
 	}else if(overall_mode == MODE_TOWN || overall_mode == MODE_OUTDOORS){
 		std::string choice = cChoiceDlog("quit-confirm-save", {"save", "quit", "cancel"}).show();
 		if(choice == "cancel")
-			return;
+			return false;
 		if(choice == "save")
 			do_save();
 	} else {
 		std::string choice = cChoiceDlog("quit-confirm-nosave", {"quit", "cancel"}).show();
 		if(choice == "cancel")
-			return;
+			return false;
 	}
 	All_Done = true;
+	return true;
 }
 
 int last_window_x = 0;

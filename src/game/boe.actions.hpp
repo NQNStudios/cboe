@@ -8,6 +8,8 @@
 #include "dialogxml/keycodes.hpp"
 #include "tools/framerate_limiter.hpp"
 
+class cDialog;
+
 struct key_action_t {
     std::vector<char> keys;
     std::string name;
@@ -31,10 +33,10 @@ void handle_menu_spell(short spell_picked,short spell_type) ;
 void initiate_outdoor_combat(short i);
 bool handle_keystroke(const sf::Event& event, cFramerateLimiter& fps_limiter);
 bool handle_scroll(const sf::Event& event);
-void do_load();
+bool do_load();
 void post_load();
 void do_save(bool save_as = false);
-void do_abort();
+bool do_abort();
 void increase_age(bool eating_trigger_autosave = true);
 void handle_hunting();
 void switch_pc(short which);
@@ -72,7 +74,7 @@ void handle_drop_item(location destination, bool& need_redraw);
 void handle_give_item(short item_hit, bool& did_something, bool& need_redraw);
 void handle_toggle_active(bool& need_reprint);
 void handle_parry(bool& did_something, bool& need_redraw, bool& need_reprint);
-void show_dialog_action(std::string xml_file);
+void show_dialog_action(std::string xml_file, bool record = true, cDialog* parent = nullptr);
 void handle_new_pc_graphic();
 void handle_rename_pc();
 void handle_begin_look(bool right_button, bool& need_redraw, bool& need_reprint);
