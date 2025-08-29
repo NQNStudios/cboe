@@ -1320,7 +1320,8 @@ void save_scenario(bool rename, bool autosave) {
 		else fname += ".boes";
 	}
 	toFile = toFile.parent_path()/fname;
-	scenario.scen_file = toFile;
+	if(!autosave)
+		scenario.scen_file = toFile;
 	// Creating a new scenario, or using Save As, needs to update last_load_file so the new file will be launched:
 	last_load_file = toFile.string();
 	
