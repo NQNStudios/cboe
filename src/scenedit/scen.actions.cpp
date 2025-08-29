@@ -3146,13 +3146,15 @@ bool last_shift_continuous = false;
 
 static void restore_current_out_state() {
 	// Restore the last view state of the new outdoor section UNLESS we shifted to it continuously
-	if(!last_shift_continuous && scenario.editor_state.out_view_state.find(cur_out) != scenario.editor_state.out_view_state.end()){
-		location cen = scenario.editor_state.out_view_state[cur_out].center;
-		cen_x = cen.x;
-		cen_y = cen.y;
-		cur_viewing_mode = scenario.editor_state.out_view_state[cur_out].cur_viewing_mode;
-	}else{
-		cur_viewing_mode = 0;
+	if(!last_shift_continuous){
+		if(scenario.editor_state.out_view_state.find(cur_out) != scenario.editor_state.out_view_state.end()){
+			location cen = scenario.editor_state.out_view_state[cur_out].center;
+			cen_x = cen.x;
+			cen_y = cen.y;
+			cur_viewing_mode = scenario.editor_state.out_view_state[cur_out].cur_viewing_mode;
+		}else{
+			cur_viewing_mode = 0;
+		}
 	}
 }
 
