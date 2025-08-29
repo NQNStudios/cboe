@@ -40,6 +40,10 @@ fs::path os_file_picker(bool saving);
 extern fs::path run_file_picker(bool saving);
 
 const std::set<fs::path> save_extensions = {".exg", ".boe", ".SAV", ".mac"};
+
+// Extra files you can package with a scenario
+const std::vector<std::string> extra_extensions = {".sav", ".txt", ".rtf", ".htm", ".html", ".exg"};
+
 // Return a directory's files sorted by last modified time
 std::vector<std::pair<fs::path, std::time_t>> sorted_file_mtimes(fs::path dir, std::set<fs::path> valid_extensions = save_extensions);
 

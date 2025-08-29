@@ -1236,6 +1236,21 @@ void save_scenario(bool rename, bool autosave) {
 		return;
 	}
 	
+	// Extra files! (Like readme.txt or a prefab party)
+	fs::path extraPath = tempDir/scenario_temp_dir_name/"extra";
+	if(fs::exists(extraPath) && fs::is_directory(extraPath)) {
+		fs::directory_iterator iter(extraPath);
+		for(; iter != fs::directory_iterator(); iter++) {
+			fs::path extra = iter->path();
+			if(find(extra_extensions.begin(), extra_extensions.end(), extra.extension()) != extra_extensions.end()){
+				std::ostream& extra_out = scen_file.newFile("scenario/extra/" + extra.filename().string());
+				std::ifstream fin(iter->path().string(), std::ios::binary);
+				extra_out << fin.rdbuf();
+				fin.close();
+			}
+		}
+	}
+
 	// Now, custom graphics.
 	if(spec_scen_g.is_old) {
 		spec_scen_g.convert_sheets();
