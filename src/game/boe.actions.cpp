@@ -30,6 +30,7 @@
 #include "mathutil.hpp"
 #include "fileio/fileio.hpp"
 #include "fileio/resmgr/res_dialog.hpp"
+#include "dialogxml/dialogs/btnpanel.hpp"
 #include "dialogxml/dialogs/choicedlog.hpp"
 #include "dialogxml/dialogs/pictchoice.hpp"
 #include "dialogxml/dialogs/dialog.hpp"
@@ -275,12 +276,12 @@ void init_screen_locs() {
 }
 
 // Some actions directly show a dialog. This handles that, and records it.
-void show_dialog_action(std::string xml_file) {
-	if(recording){
+void show_dialog_action(std::string xml_file, bool record, cDialog* parent) {
+	if(recording && record){
 		record_action("show_dialog_action", xml_file);
 	}
 	
-	cChoiceDlog(xml_file).show();
+	cChoiceDlog(xml_file, parent).show();
 }
 
 bool prime_time() {
@@ -2766,6 +2767,62 @@ static bool handle_debug_key(char key) {
 
 extern std::vector<std::string> preset_words;
 
+void run_quick_menu() {
+	if(!replaying){
+		record_action("quick_menu", "");
+	}
+
+	// "Pause" menu
+	std::vector<std::string> choices;
+	std::vector<std::function<void(cButtonPanel&)>> handlers;
+
+	choices.push_back("Save");
+	handlers.push_back([](cButtonPanel&) -> void {
+		do_save(true); // "Save" is always a "Save As" in modern Spiderweb pause menus
+	});
+	choices.push_back("Load");
+	handlers.push_back([](cButtonPanel& me) -> void {
+		if(do_load())
+			me->toast(true);
+	});
+	choices.push_back("Settings");
+	handlers.push_back([](cButtonPanel& me) -> void {
+		pick_preferences(me.operator->());
+	});
+	choices.push_back("Help");
+	handlers.push_back([](cButtonPanel& me) -> void {
+		// passing false = don't record these - because the recorded menu button press will handle it
+		if(is_out()) show_dialog_action("help-outdoor", false, me.operator->());
+		else if(is_town()) show_dialog_action("help-town", false, me.operator->());
+		else if(is_combat()) show_dialog_action("help-combat", false, me.operator->());
+		// TODO is this possible? Should it be added to the '?' key handler?
+		else show_dialog_action("help-hints", false, me.operator->());
+	});
+	choices.push_back("Main Menu");
+	handlers.push_back([](cButtonPanel& me) -> void {
+		if(!replaying){ // do_abort is recorded as an action
+			if(do_abort()){
+				me->toast(true);
+			}
+		}
+	});
+	choices.push_back("Quit to Desktop");
+	handlers.push_back([](cButtonPanel& me) -> void {
+		if(!replaying){ // close_window is recorded as an action
+			extern bool handle_quit_event();
+			if(handle_quit_event()){
+				me->toast(true);
+			}
+		}
+	});
+
+	cButtonPanel panel(choices, handlers, "Quick Menu");
+	panel->getControl("cancel").setText("Resume");
+	panel->getControl("done").hide();
+	dynamic_cast<cPict&>(panel->getControl("pic")).setPict(23,PIC_DLOG);
+	panel.show();
+}
+
 bool handle_keystroke(const sf::Event& event, cFramerateLimiter& fps_limiter){
 	bool are_done = false;
 	location pass_point; // TODO: This isn't needed
@@ -2838,8 +2895,8 @@ bool handle_keystroke(const sf::Event& event, cFramerateLimiter& fps_limiter){
 				handled = false;
 				break;
 		}
-		if(!handled && map_visible){
-			close_map();
+		if(!handled && univ.party.is_in_scenario()){
+			run_quick_menu();
 			return false;
 		}
 	}
@@ -3162,18 +3219,18 @@ bool handle_scroll(const sf::Event& event) {
 	return true;
 }
 
-void do_load() {
+bool do_load() {
 	// Edge case: Replay can be cut off before a file is chosen,
 	// or party selection can be canceled, and this will cause
 	// a crash trying to decode a party
 	if(replaying && !has_next_action("load_party")){
-		return;
+		return false;
 	}
 	fs::path file_to_load = run_file_picker(false);
-	if(file_to_load.empty()) return;
+	if(file_to_load.empty()) return false;
 	set_cursor(watch_curs);
 	if(!load_party(file_to_load, univ, spec_scen_g))
-		return;
+		return false;
 	finish_load_party();
 	if(overall_mode != MODE_STARTUP)
 		post_load();
@@ -3186,6 +3243,7 @@ void do_load() {
 	}
 	menu_activate();
 	restore_cursor();
+	return true;
 }
 
 void post_load() {
@@ -3247,19 +3305,20 @@ void do_save(bool save_as) {
 	redraw_screen(REFRESH_TEXT);
 }
 
-void do_abort() {
+bool do_abort() {
 	if(recording){
 		record_action("do_abort", "");
 	}
 	if(party_in_memory) {
 		std::string choice = cChoiceDlog("abort-game",{"okay","cancel"}).show();
-		if (choice=="cancel") return;
+		if (choice=="cancel") return false;
 		reload_startup();
 		overall_mode = MODE_STARTUP;
 	}
 	party_in_memory = false;
 	draw_startup(0);
 	menu_activate();
+	return true;
 }
 
 void do_rest(long length, int hp_restore, int mp_restore) {

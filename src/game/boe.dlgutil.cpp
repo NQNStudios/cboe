@@ -1462,14 +1462,14 @@ static bool reset_help(cDialog& me, std::string, eKeyMod) {
 	return true;
 }
 
-void pick_preferences(bool record) {
+void pick_preferences(bool record, cDialog* parent) {
 	if(record && recording){
 		record_action("pick_preferences", "");
 	}
 
 	set_cursor(sword_curs);
 	
-	cDialog prefsDlog(*ResMgr::dialogs.get("preferences"));
+	cDialog prefsDlog(*ResMgr::dialogs.get("preferences"), parent);
 	prefsDlog.attachClickHandlers(&prefs_autosave_event_filter, {"autosave-toggle", "autosave-details"});
 	prefsDlog.attachClickHandlers(&prefs_event_filter, {"okay", "cancel"});
 	prefsDlog.attachClickHandlers(&reset_help, {"resethelp"});

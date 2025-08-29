@@ -1513,7 +1513,7 @@ void draw_map(bool need_refresh, std::string tooltip_text) {
 	style.colour = sf::Color::White;
 	style.lineHeight = 12;
 	win_draw_string(mini_map(), map_title_rect,title_string,eTextMode::WRAP,style);
-	win_draw_string(mini_map(), map_bar_rect,"(Hit Escape to close.)",eTextMode::WRAP,style);
+	win_draw_string(mini_map(), map_bar_rect,"(Hit 'a' to close.)",eTextMode::WRAP,style);
 	
 	if(canMap) {
 		rect_draw_some_item(map_gworld().getTexture(),the_rect,mini_map(),area_to_draw_on);
