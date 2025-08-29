@@ -1101,13 +1101,12 @@ struct overrides_sheet {
 	}
 };
 
-const int MAX_ED_AUTOSAVE_DEFAULT = 10; // TODO make a pref
 static fs::path next_autosave_path() {
 	extern fs::path edAutoDir;
 
 	auto ed_autosaves = sorted_file_mtimes(edAutoDir, {".boes"});
 
-	if(ed_autosaves.size() >= MAX_ED_AUTOSAVE_DEFAULT){
+	if(ed_autosaves.size() >= get_int_pref("EdAutoSlots", 10)){ // TODO allow changing the pref
 		return ed_autosaves.back().first; // Reuse oldest auto slot
 	}else if(ed_autosaves.empty()){
 		return edAutoDir / "auto0.boes";
