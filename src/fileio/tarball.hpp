@@ -50,7 +50,6 @@ public:
 	void writeTo(std::ostream& out);
 	void readFrom(std::istream& in);
 	std::ostream& newFile(std::string fname);
-	void newDirectory(std::string dname);
 	std::istream& getFile(std::string fname);
 	bool hasFile(std::string fname);
 	std::deque<tarfile>::iterator begin() {return files.begin();}
