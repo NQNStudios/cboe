@@ -434,7 +434,7 @@ bool cControl::triggerFocusHandler(cDialog& dlg, std::string id, bool losing){
 }
 
 void cControl::drawFrame(short amt, eFrameStyle frameStyle){
-	if(frameStyle == FRM_NONE) return;
+	if(frameStyle == FRM_NONE || !visible) return;
 	// dk_gray had a 0..65535 component of 12287, and med_gray had a 0..65535 component of 24574
 	static sf::Color lt_gray = {224,224,224},dk_gray = {48,48,48};
 	rectangle rect = frame, ul_rect;
