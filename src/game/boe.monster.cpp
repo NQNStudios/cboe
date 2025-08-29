@@ -28,6 +28,7 @@ extern location center;
 extern short boom_gr[8],futzing;
 extern bool processing_fields,monsters_going;
 extern cUniverse univ;
+extern std::set<location, loc_compare> monst_path_this_turn;
 
 short out_enc_lev_tot(short which) {
 	short count = 0;
@@ -190,6 +191,7 @@ void set_up_monst(eAttitude mode,mon_num_t m_num) {
 	univ.town.monst[which].mobility = 1;
 }
 
+// This is for peace mode! See do_monster_turn() in boe.combat.cpp for combat behavior
 void do_monsters() {
 	short r1,target;
 	location l1,l2;
@@ -342,7 +344,9 @@ bool monst_hate_spot(short which_m,location *good_loc) {
 	}
 	if(hate_spot) {
 		prospect = find_clear_spot(loc,1,univ.town.monst[which_m].x_width,univ.town.monst[which_m].y_width);
-		if(prospect.x > 0) {
+		// If the monster was already on that spot this turn, backtracking is not a good idea!
+		// It will probably just repeat the same move (i.e. walking onto a damaging field repeatedly)
+		if(prospect.x > 0 && monst_path_this_turn.find(prospect) == monst_path_this_turn.end()) {
 			*good_loc = prospect;
 			return true;
 		}
@@ -715,6 +719,7 @@ bool combat_move_monster(short which,location destination) {
 		return false;
 	}
 	else {
+		monst_path_this_turn.insert(destination);
 		univ.town.monst[which].direction = set_direction(univ.town.monst[which].cur_loc, destination);
 		univ.town.monst[which].cur_loc = destination;
 		monst_inflict_fields(which);
