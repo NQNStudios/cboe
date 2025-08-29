@@ -57,6 +57,7 @@ cDialog* cButtonPanel::operator->() {
 
 bool cButtonPanel::show() {
 	page = 0;
+	dlg.setResult(false); // If the dialog toasts itself, don't crash or trigger any 'confirm' action
 	dlg.run(std::bind(&cButtonPanel::fillPage, this));
 	return dlg.getResult<bool>();
 }
