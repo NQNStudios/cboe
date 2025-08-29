@@ -40,6 +40,7 @@ class tarball {
 		// Seemingly, stringstream is non-copyable.
 		tarfile() {}
 		tarfile(const tarfile& other) {
+			filename = other.filename;
 			contents.str("");
 			contents << other.contents.str();
 		}
