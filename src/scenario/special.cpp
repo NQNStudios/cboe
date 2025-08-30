@@ -1132,11 +1132,11 @@ std::vector<graph_node_t> global_node_graph(std::vector<cSpecial>& globals) {
 		node_properties_t props = *(special.type);
 
 		// Forward connections
-		for(int i = 1; i <= static_cast<int>(eSpecField::JUMP); ++i){
-			eSpecField fld = static_cast<eSpecField>(i);
+		for(int j = 1; j <= static_cast<int>(eSpecField::JUMP); ++j){
+			eSpecField fld = static_cast<eSpecField>(j);
 			if(props.get(special, fld).button == eSpecPicker::NODE){
 				if(special.get(fld) >= 0){
-					node.to_nodes.insert(std::make_pair(true, i));
+					node.to_nodes.insert(std::make_pair(true, special.get(fld)));
 				}
 				// TODO negative numbers can be pointers, which the graph can't follow,
 				// but that ambiguity or the pointer's identity could be noted on the graph
@@ -1149,7 +1149,7 @@ std::vector<graph_node_t> global_node_graph(std::vector<cSpecial>& globals) {
 	for(int i = 0; i < globals.size(); ++ i){
 		graph_node_t& node = graph_nodes[i];
 		for(node_id id : node.to_nodes){
-			graph_nodes[id.second].from_nodes.insert(id);
+			graph_nodes[id.second].from_nodes.insert(node.id);
 		}
 	}
 
