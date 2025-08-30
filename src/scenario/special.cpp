@@ -1100,3 +1100,73 @@ node_condition_builder_t& node_condition_builder_t::loc(eSpecField a, eSpecField
 	self.loc(a, b, type, where);
 	return *this;
 }
+
+short cSpecial::get(eSpecField fld) {
+	switch(fld){
+		case eSpecField::SDF1: return sd1;
+		case eSpecField::SDF2: return sd2;
+		case eSpecField::MSG1: return m1;
+		case eSpecField::MSG2: return m2;
+		case eSpecField::MSG3: return m3;
+		case eSpecField::PICT: return pic;
+		case eSpecField::PTYP: return pictype;
+		case eSpecField::EX1A: return ex1a;
+		case eSpecField::EX1B: return ex1b;
+		case eSpecField::EX1C: return ex1c;
+		case eSpecField::EX2A: return ex2a;
+		case eSpecField::EX2B: return ex2b;
+		case eSpecField::EX2C: return ex2c;
+		case eSpecField::JUMP: return jumpto;
+		default: return -1; // Or should it throw?
+	}
+}
+
+// TODO oh god the edit stack won't be reflected when graphing on a stack
+std::vector<graph_node_t> global_node_graph(std::vector<cSpecial>& globals) {
+	std::vector<graph_node_t> graph_nodes;
+
+	for(int i = 0; i < globals.size(); ++ i){
+		graph_node_t node = { std::make_pair(true, i) };
+
+		cSpecial& special = globals[i];
+		node_properties_t props = *(special.type);
+
+		// Forward connections
+		for(int i = 1; i <= static_cast<int>(eSpecField::JUMP); ++i){
+			eSpecField fld = static_cast<eSpecField>(i);
+			if(props.get(special, fld).button == eSpecPicker::NODE){
+				if(special.get(fld) >= 0){
+					node.to_nodes.insert(std::make_pair(true, i));
+				}
+				// TODO negative numbers can be pointers, which the graph can't follow,
+				// but that ambiguity or the pointer's identity could be noted on the graph
+			}
+		}
+		graph_nodes.push_back(node);
+	}
+
+	// Backward connections
+	for(int i = 0; i < globals.size(); ++ i){
+		graph_node_t& node = graph_nodes[i];
+		for(node_id id : node.to_nodes){
+			graph_nodes[id.second].from_nodes.insert(id);
+		}
+	}
+
+	return graph_nodes;
+}
+
+bool node_compare::operator()(node_id a, node_id b) const {
+	// This is just a lexicographical ordering.
+	if(a.first != b.first) return a.first < b.first;
+	if(a.second != b.second) return a.second < b.second;
+	return false;
+}
+
+std::vector<graph_node_t> local_node_graph(std::vector<cSpecial>& locals, std::vector<cSpecial>& globals) {
+	std::vector<graph_node_t> global_nodes = global_node_graph(globals);
+
+	std::vector<graph_node_t> local_nodes;
+
+	return local_nodes;
+}

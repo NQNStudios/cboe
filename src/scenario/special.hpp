@@ -12,11 +12,13 @@
 #include <iosfwd>
 #include <string>
 #include <functional>
+#include <set>
 #include "location.hpp"
 #include "dialogxml/widgets/pictypes.hpp"
 
 namespace legacy { struct special_node_type; };
 class cUniverse;
+enum class eSpecField;
 
 static const short SDF_COMPLETE = 250;
 
@@ -90,6 +92,7 @@ public:
 	void import_legacy(legacy::special_node_type& old);
 	void writeTo(std::ostream& file, int n) const;
 
+	short get(eSpecField fld);
 	bool operator==(const cSpecial& other) const {
 		CHECK_EQ(other, type);
 		CHECK_EQ(other, sd1);
@@ -111,6 +114,20 @@ public:
 	bool operator!=(const cSpecial& other) const { return !(*this == other); }
 	std::string editor_hint(cUniverse& univ) const;
 };
+
+typedef std::pair<bool, size_t> node_id;
+struct node_compare {
+	bool operator()(node_id a, node_id b) const;
+};
+
+struct graph_node_t {
+	node_id id;
+	std::set<node_id, node_compare> from_nodes;
+	std::set<node_id, node_compare> to_nodes;
+};
+
+std::vector<graph_node_t> global_node_graph(std::vector<cSpecial>& globals);
+std::vector<graph_node_t> local_node_graph(std::vector<cSpecial>& locals, std::vector<cSpecial&> globals);
 
 enum class eSpecCtxType {
 	SCEN, OUTDOOR, TOWN,
@@ -242,10 +259,10 @@ struct node_properties_t {
 	node_function_t ex1a(const cSpecial&) const, ex1b(const cSpecial&) const, ex1c(const cSpecial&) const;
 	node_function_t ex2a(const cSpecial&) const, ex2b(const cSpecial&) const, ex2c(const cSpecial&) const;
 	node_properties_t() : node_properties_t(eSpecType::INVALID) {}
+	node_function_t get(const cSpecial& spec, eSpecField fld) const;
 	bool can_preview;
 private:
 	node_properties_t(eSpecType type);
-	node_function_t get(const cSpecial& spec, eSpecField fld) const;
 	void set(eSpecField fld, node_function_t fcn);
 	std::map<eSpecField, node_function_t> fields;
 	std::vector<std::pair<node_condition_t, node_properties_t>> conditions;
