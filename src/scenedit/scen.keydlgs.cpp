@@ -814,6 +814,16 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 
 static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 	cSpecial& spec = edit_stack.back().node;
+
+	// Graph fun!
+	std::vector<graph_node_t> globals = global_node_graph(scenario.scen_specials);
+	graph_node_t which = globals[edit_stack.back().which];
+	for(node_id from_id : which.from_nodes){
+		LOG(fmt::format("{} -> {}", from_id.second, which.id.second));
+	}
+	for(node_id to_id : which.from_nodes){
+		LOG(fmt::format("{} -> {}", which.id.second, to_id.second));
+	}
 	
 	// Show which node is being edited and what type of node it is
 	switch(edit_stack.back().mode) {
