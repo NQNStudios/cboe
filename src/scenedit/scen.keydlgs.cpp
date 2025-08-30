@@ -818,10 +818,11 @@ static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 	// Graph fun!
 	std::vector<graph_node_t> globals = global_node_graph(scenario.scen_specials);
 	graph_node_t which = globals[edit_stack.back().which];
+
 	for(node_id from_id : which.from_nodes){
 		LOG(fmt::format("{} -> {}", from_id.second, which.id.second));
 	}
-	for(node_id to_id : which.from_nodes){
+	for(node_id to_id : which.to_nodes){
 		LOG(fmt::format("{} -> {}", which.id.second, to_id.second));
 	}
 	
