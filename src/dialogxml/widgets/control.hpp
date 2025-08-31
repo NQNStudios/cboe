@@ -385,6 +385,9 @@ public:
 	/// If the control automatically determines its rect based on certain criteria, override this.
 	/// It will automatically be called during parsing.
 	virtual void recalcRect() {}
+
+	// Set text that will be displayed when the mouse hovers this
+	void setTooltipText(std::string text) { this->tooltip_text = text; }
 protected:
 	/// Create a new control attached to a dialog.
 	/// @param t The type of the control.
@@ -508,6 +511,8 @@ private:
 	std::string anchor;
 	bool is_link = false;
 	static std::mt19937 ui_rand;
+	// TODO make this specifiable in dialogXML
+	std::string tooltip_text;
 };
 
 #endif
