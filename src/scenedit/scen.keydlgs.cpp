@@ -754,14 +754,6 @@ bool edit_area_rect_str(info_rect_t& r) {
 
 // MARK: Special node dialog
 
-struct editing_node_t {
-	short which, mode;
-	cSpecial node;
-	bool is_new;
-};
-
-typedef std::vector<editing_node_t> node_stack_t;
-
 static void setup_node_field(cDialog& me, std::string field, short value, const node_function_t& fcn) {
 	me[field + "-lbl"].setText(fcn.label());
 	me[field].setTextToNum(value);
@@ -816,14 +808,23 @@ static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 	cSpecial& spec = edit_stack.back().node;
 
 	// Graph fun!
-	std::vector<graph_node_t> globals = global_node_graph(scenario.scen_specials);
-	graph_node_t which = globals[edit_stack.back().which];
-
-	for(node_id from_id : which.from_nodes){
-		LOG(fmt::format("{} -> {}", from_id.second, which.id.second));
+	graph_node_t which;
+	int mode = edit_stack.back().mode;
+	if(mode == 0){
+		std::vector<graph_node_t> globals = global_node_graph(scenario, edit_stack);
+		which = globals[edit_stack.back().which];
+	}else if(mode == 1){
+		std::vector<graph_node_t> locals = local_node_graph(scenario, edit_stack, cur_out.x, cur_out.y);
+		which = locals[edit_stack.back().which];
+	}else if(mode == 2){
+		std::vector<graph_node_t> locals = local_node_graph(scenario, edit_stack, cur_town);
+		which = locals[edit_stack.back().which];
 	}
-	for(node_id to_id : which.to_nodes){
-		LOG(fmt::format("{} -> {}", which.id.second, to_id.second));
+	for(node_id_t from_id : which.from_nodes){
+		LOG(fmt::format("({}, {}, {}) -> ({}, {}, {})", from_id.which, from_id.town_num_or_out_x, from_id.out_y, which.id.which, which.id.town_num_or_out_x, which.id.out_y));
+	}
+	for(node_id_t to_id : which.to_nodes){
+		LOG(fmt::format("({}, {}, {}) -> ({}, {}, {})", which.id.which, which.id.town_num_or_out_x, which.id.out_y, to_id.which, to_id.town_num_or_out_x, to_id.out_y));
 	}
 	
 	// Show which node is being edited and what type of node it is
