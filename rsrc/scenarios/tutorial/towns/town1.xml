@@ -78,7 +78,7 @@
         <![CDATA[Slithzerikai]]>
     </string>
     <string id="30">
-        <![CDATA[Slithzerikai, or sliths, are humanoid lizards who occupied the caves of Exile before the Empire started throwing humans down there. As exiled humans and nephilim expanded their underground society, a drawn-out war with the slithzerikai ensued.]]>
+        <![CDATA[Slithzerikai, or sliths, are humanoid lizards who occupied the caves of Exile before the Empire started throwing its subjects down there. As exiled humans and nephilim expanded their underground society, a drawn-out war with the slithzerikai ensued.]]>
     </string>
     <string id="31">
         <![CDATA[Then, joining with a group of powerful and angry rebel mages, you find a way back to the surface and strike a vengeful blow by killing the Emperor Hawthorne.]]>
@@ -103,5 +103,44 @@
     </string>
     <string id="38">
         <![CDATA[More importantly, BoE came with an accessible construction kit for making UNLIMITED custom scenarios. Fans of the Exile Trilogy formed a thriving community around BoE, which produced almost 300 scenarios (that we know of) over the course of several years.]]>
+    </string>
+    <string id="39">
+        <![CDATA["What is Blades of Exile?"]]>
+    </string>
+    <string id="45">
+        <![CDATA[Blades of Exile is an RPG created by Spiderweb Software in 1997. It's part of the Exile series along with 3 other games. We call it BoE for short.]]>
+    </string>
+    <string id="46">
+        <![CDATA[We're still keeping BoE alive because it did something very special: it gave players complete access to the editor for designing new adventures in the Exile universe. Along with the official adventures made by Spiderweb Software, you can play literally HUNDREDS of adventures created by the player community. The archive of BoE scenarios is vast, and is extremely sentimental for anyone who dove into this game at the height of its popularity.]]>
+    </string>
+    <string id="47">
+        <![CDATA[The next book will fill you in on the other Exile games' storylines, which will help you understand BoE and its scenarios much better. If you've played the Exile series, or Spiderweb Software's modern remakes, Avernum 1-3, you might want to skip it.]]>
+    </string>
+    <string id="48">
+        <![CDATA[The final book explains how you're playing BoE almost 30 years after its creation.]]>
+    </string>
+    <string id="51">
+        <![CDATA["Open Blades of Exile 2.0"]]>
+    </string>
+    <string id="52">
+        <![CDATA[The story of a modern restoration by dozens of devoted fans.]]>
+    </string>
+    <string id="57">
+        <![CDATA["Open Blades of Exile 2.0"]]>
+    </string>
+    <string id="58">
+        <![CDATA[Making computer games is extremely hard! It was in the 1990s, and it still is now. Blades of Exile was made by an extremely small team with only one person, Jeff Vogel, doing the writing, design, and programming.]]>
+    </string>
+    <string id="59">
+        <![CDATA[Games don't last forever without someone updating or preserving them--and that takes hundreds of hours of labor. Jeff Vogel maintained Blades of Exile for as long as he could, but eventually (and understandably!) had to move on. In 2007, he released the original source code to allow the game's fans to pick up where he left off.]]>
+    </string>
+    <string id="60">
+        <![CDATA[You're now playing Open Blades of Exile, the result of dozens of BoE fans' hard work since 2007!]]>
+    </string>
+    <string id="63">
+        <![CDATA[Before leaving this floor, you should read at least one of these books!]]>
+    </string>
+    <string id="64">
+        <![CDATA[Remember, stand next to a book and right-click it to read.]]>
     </string>
 </town>
