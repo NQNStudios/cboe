@@ -1121,22 +1121,46 @@ short cSpecial::get(eSpecField fld) {
 	}
 }
 
-// TODO oh god the edit stack won't be reflected when graphing on a stack
-std::vector<graph_node_t> global_node_graph(std::vector<cSpecial>& globals) {
+static cSpecial* get_spec_ref(cScenario& scenario, node_stack_t& stack, size_t which, int town_num_or_out_x = -1, int out_y = -1) {
+	int mode = (out_y >= 0 ? 1 : (town_num_or_out_x >= 0 ? 2 : 0));
+	for(auto it = stack.rbegin(); it != stack.rend(); ++it){
+		if(it->mode == mode && it->which == which)
+			return &it->node;
+	}
+	switch(mode) {
+		case 0:
+			if(scenario.scen_specials.size() <= which) return nullptr;
+			return &scenario.scen_specials[which];
+		case 1:
+			if(scenario.outdoors[town_num_or_out_x][out_y]->specials.size() <= which) return nullptr;
+			return &scenario.outdoors[town_num_or_out_x][out_y]->specials[which];
+		case 2:
+			if(scenario.towns[town_num_or_out_x]->specials.size() <= which) return nullptr;
+			return &scenario.towns[town_num_or_out_x]->specials[which];
+		default:
+			throw std::string {"Bad mode"};
+	}
+}
+std::vector<graph_node_t> global_node_graph(cScenario& scenario, node_stack_t& stack) {
 	std::vector<graph_node_t> graph_nodes;
 
-	for(int i = 0; i < globals.size(); ++ i){
-		graph_node_t node = { std::make_pair(true, i) };
+	// The edit stack might contain new nodes (maybe, I think? Ugh) so I don't think we can use
+	// the size of the list to determine how far to loop
+	int i = 0;
+	cSpecial* next;
+	while((next = get_spec_ref(scenario, stack, i)) != nullptr){
+		node_id_t id; id.which = i++;
+		graph_node_t node = { id };
 
-		cSpecial& special = globals[i];
-		node_properties_t props = *(special.type);
+		node_properties_t props = *(next->type);
 
 		// Forward connections
 		for(int j = 1; j <= static_cast<int>(eSpecField::JUMP); ++j){
 			eSpecField fld = static_cast<eSpecField>(j);
-			if(props.get(special, fld).button == eSpecPicker::NODE){
-				if(special.get(fld) >= 0){
-					node.to_nodes.insert(std::make_pair(true, special.get(fld)));
+			if(props.get(*next, fld).button == eSpecPicker::NODE){
+				if(next->get(fld) >= 0){
+					node_id_t id; id.which = next->get(fld);
+					node.to_nodes.insert(id);
 				}
 				// TODO negative numbers can be pointers, which the graph can't follow,
 				// but that ambiguity or the pointer's identity could be noted on the graph
@@ -1146,27 +1170,84 @@ std::vector<graph_node_t> global_node_graph(std::vector<cSpecial>& globals) {
 	}
 
 	// Backward connections
-	for(int i = 0; i < globals.size(); ++ i){
+	for(i = 0; i < graph_nodes.size(); ++i){
 		graph_node_t& node = graph_nodes[i];
-		for(node_id id : node.to_nodes){
-			graph_nodes[id.second].from_nodes.insert(node.id);
+		for(node_id_t id : node.to_nodes){
+			graph_nodes[id.which].from_nodes.insert(node.id);
+		}
+	}
+
+	// Backward connections to Call Global nodes in towns/outdoors
+	for(int town = 0; town < scenario.towns.size(); ++town){
+		i = 0;
+		while((next = get_spec_ref(scenario, stack, i, town)) != nullptr){
+			if(next->type == eSpecType::CALL_GLOBAL){
+				node_id_t from; from.which = i; from.town_num_or_out_x = town;
+				graph_nodes[next->jumpto].from_nodes.insert(from);
+			}
+			++i;
+		}
+	}
+	for(int x = 0; x < scenario.outdoors.width(); ++x){
+		for(int y = 0; y < scenario.outdoors.height(); ++y){
+			i = 0;
+			while((next = get_spec_ref(scenario, stack, i, x, y)) != nullptr){
+				if(next->type == eSpecType::CALL_GLOBAL){
+					node_id_t from; from.which = i; from.town_num_or_out_x = x; from.out_y = y;
+					graph_nodes[next->jumpto].from_nodes.insert(from);
+				}
+				++i;
+			}
 		}
 	}
 
 	return graph_nodes;
 }
 
-bool node_compare::operator()(node_id a, node_id b) const {
+bool node_compare::operator()(node_id_t a, node_id_t b) const {
 	// This is just a lexicographical ordering.
-	if(a.first != b.first) return a.first < b.first;
-	if(a.second != b.second) return a.second < b.second;
+	if(a.which != b.which) return a.which < b.which;
+	if(a.town_num_or_out_x != b.town_num_or_out_x) return a.town_num_or_out_x < b.town_num_or_out_x;
+	if(a.out_y != b.out_y) return a.out_y < b.out_y;
 	return false;
 }
 
-std::vector<graph_node_t> local_node_graph(std::vector<cSpecial>& locals, std::vector<cSpecial>& globals) {
-	std::vector<graph_node_t> global_nodes = global_node_graph(globals);
+std::vector<graph_node_t> local_node_graph(cScenario& scenario, node_stack_t& stack, int town_num_or_out_x, int out_y) {
+	std::vector<graph_node_t> graph_nodes;
+	int i = 0;
+	cSpecial* next;
+	while((next = get_spec_ref(scenario, stack, i, town_num_or_out_x, out_y)) != nullptr){
+		node_id_t id; id.which = i++; id.town_num_or_out_x = town_num_or_out_x; id.out_y = out_y;
+		graph_node_t node = { id };
 
-	std::vector<graph_node_t> local_nodes;
+		node_properties_t props = *(next->type);
 
-	return local_nodes;
+		// Forward connections
+		for(int j = 1; j <= static_cast<int>(eSpecField::JUMP); ++j){
+			eSpecField fld = static_cast<eSpecField>(j);
+			if(props.get(*next, fld).button == eSpecPicker::NODE){
+				if(next->get(fld) >= 0){
+					node_id_t id; id.which = next->get(fld);
+					if(next->type != eSpecType::CALL_GLOBAL){
+						id.town_num_or_out_x = town_num_or_out_x;
+						id.out_y = out_y;
+					}
+					node.to_nodes.insert(id);
+				}
+				// TODO negative numbers can be pointers, which the graph can't follow,
+				// but that ambiguity or the pointer's identity could be noted on the graph
+			}
+		}
+		graph_nodes.push_back(node);
+	}
+
+	// Backward connections
+	for(i = 0; i < graph_nodes.size(); ++i){
+		graph_node_t& node = graph_nodes[i];
+		for(node_id_t id : node.to_nodes){
+			graph_nodes[id.which].from_nodes.insert(node.id);
+		}
+	}
+
+	return graph_nodes;
 }

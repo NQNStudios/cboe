@@ -18,6 +18,7 @@
 
 namespace legacy { struct special_node_type; };
 class cUniverse;
+class cScenario;
 enum class eSpecField;
 
 static const short SDF_COMPLETE = 250;
@@ -115,19 +116,32 @@ public:
 	std::string editor_hint(cUniverse& univ) const;
 };
 
-typedef std::pair<bool, size_t> node_id;
+struct node_id_t {
+	int which;
+	int town_num_or_out_x = -1;
+	int out_y = -1;
+};
+
 struct node_compare {
-	bool operator()(node_id a, node_id b) const;
+	bool operator()(node_id_t a, node_id_t b) const;
 };
 
 struct graph_node_t {
-	node_id id;
-	std::set<node_id, node_compare> from_nodes;
-	std::set<node_id, node_compare> to_nodes;
+	node_id_t id;
+	std::set<node_id_t, node_compare> from_nodes;
+	std::set<node_id_t, node_compare> to_nodes;
 };
 
-std::vector<graph_node_t> global_node_graph(std::vector<cSpecial>& globals);
-std::vector<graph_node_t> local_node_graph(std::vector<cSpecial>& locals, std::vector<cSpecial&> globals);
+struct editing_node_t {
+	short which, mode;
+	cSpecial node;
+	bool is_new;
+};
+
+typedef std::vector<editing_node_t> node_stack_t;
+
+std::vector<graph_node_t> global_node_graph(cScenario& scenario, node_stack_t& edit_stack);
+std::vector<graph_node_t> local_node_graph(cScenario& scenario, node_stack_t& edit_stack, int town_num_or_out_x, int out_y = -1);
 
 enum class eSpecCtxType {
 	SCEN, OUTDOOR, TOWN,
