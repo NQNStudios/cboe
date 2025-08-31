@@ -63,8 +63,8 @@ cThreeChoice::cThreeChoice
 		if(j < 0) buttonDefs[i++] = null_btn;
 		else buttonDefs[i++] = basic_buttons[j];
 	}
-	init_buttons(buttonDefs[0], buttonDefs[1], buttonDefs[2]);
 	init_pict(pic);
+	init_buttons(buttonDefs[0], buttonDefs[1], buttonDefs[2]);
 	parentDlog.recalcRect();
 }
 
@@ -171,6 +171,7 @@ void cThreeChoice::init_pict(pic_num_t pic){
 	pic_ctrl->setPict(pic,type);
 	pic_ctrl->recalcRect();
 	me->add(pic_ctrl, pic_ctrl->getBounds(), "pict");
+	buttons_top = max(buttons_top, pic_ctrl->getBounds().bottom + 8);
 }
 
 std::string cThreeChoice::show(){
