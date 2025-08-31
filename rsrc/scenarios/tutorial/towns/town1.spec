@@ -124,3 +124,66 @@
 	ex1 -1, -1, -1
 	ex2 -1, -1, -1
 	goto -1
+@set-sdf = 18
+	sdf 1, 1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 19, -1, -1
+	ex2 -1, -1, -1
+	goto 1
+@once-dlog = 19
+	sdf -1, -1
+	msg 39, -1, 1
+	pic 24, 4
+	ex1 34, 20, -1
+	ex2 -1, -1, -1
+	goto -1
+@once-dlog = 20
+	sdf -1, -1
+	msg 45, -1, 1
+	pic 24, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@set-sdf = 21
+	sdf 1, 1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 22, -1, -1
+	ex2 -1, -1, -1
+	goto 1
+@once-dlog = 22
+	sdf -1, -1
+	msg 51, -1, 1
+	pic 24, 4
+	ex1 34, 23, -1
+	ex2 -1, -1, -1
+	goto -1
+@once-dlog = 23
+	sdf -1, -1
+	msg 57, -1, 1
+	pic 24, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@if-sdf = 24
+	sdf 1, 0
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 1, 25, -1
+	ex2 -1, -1, -1
+	goto 26
+@stair = 25
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 24, 24, -1
+	ex2 0, 1, 2
+	goto -1
+@disp-msg = 26
+	sdf -1, -1
+	msg 63, 64, -1
+	pic 0, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
