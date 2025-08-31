@@ -107,6 +107,8 @@ public:
 	/// Create a new dialog with no items.
 	/// @param p Optionally, a parent dialog.
 	explicit cDialog(cDialog* p = nullptr);
+	/// Designate a control as the place to display tooltip text
+	void setTooltipControl(std::string key) { this->tooltip_control = key; }
 	/// Creates a new dialog, loading its definition from a file.
 	/// @param path The name of the file to load. It must be in the game's dialogs directory.
 	/// @param p Optionally, a parent dialog.
@@ -298,6 +300,8 @@ private:
 	std::string fname;
 	std::string defaultButton;
 	std::string escapeButton;
+	/// TODO make this specifiable in dialogxml
+	std::string tooltip_control;
 	sf::Clock animTimer, paintTimer;
 	friend class cControl;
 	friend class cContainer;

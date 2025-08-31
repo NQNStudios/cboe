@@ -808,13 +808,23 @@ void cDialog::handle_one_event(const sf::Event& currentEvent, cFramerateLimiter&
 					redraw_everything();
 
 			bool inField = false;
+			bool onTooltip = false;
 			for(auto& ctrl : controls) {
+				if(!ctrl.second->tooltip_text.empty() && ctrl.second->getBounds().contains(x, y)){
+					if(tooltip_control.empty()){
+						LOG("Warning! Tooltip activated but nowhere to show it!");
+					}else{
+						getControl(tooltip_control).setText(ctrl.second->tooltip_text);
+						onTooltip = true;
+					}
+				}
 				if(ctrl.second->getType() == CTRL_FIELD && ctrl.second->getBounds().contains(x, y)) {
 					set_cursor(text_curs);
 					inField = true;
 					break;
 				}
 			}
+			if(!onTooltip && !tooltip_control.empty()) getControl(tooltip_control).setText("");
 			if(!inField) set_cursor(sword_curs);
 		}break;
 		default: // To silence warning of unhandled enum values

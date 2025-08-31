@@ -829,6 +829,8 @@ static void push_spec_enc_in_stack(cDialog& me, node_stack_t& edit_stack, node_i
 	put_spec_enc_in_dlog(me, edit_stack);
 }
 
+extern cUniverse temp_universe();
+
 static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 	cSpecial& spec = edit_stack.back().node;
 
@@ -845,12 +847,15 @@ static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 		std::vector<graph_node_t> locals = local_node_graph(scenario, edit_stack, cur_town);
 		which = locals[edit_stack.back().which];
 	}
+	cUniverse univ = temp_universe();
 	int i = 0;
 	for(node_id_t from_id : which.from_nodes){
 		if(me.hasControl(fmt::format("calledby{}", i))){
 			me[fmt::format("calledby{}", i)].setText(label(from_id));
+			me[fmt::format("calledby{}", i)].recalcRect();
 			me[fmt::format("calledby{}", i)].show();
-			// TODO setTooltipText
+			// TODO null check get_spec_ref
+			me[fmt::format("calledby{}", i)].setTooltipText(get_spec_ref(scenario, edit_stack, from_id.which, from_id.town_num_or_out_x, from_id.out_y)->editor_hint(univ));
 			me[fmt::format("calledby{}", i)].attachClickHandler([from_id, &edit_stack](cDialog& me, std::string, eKeyMod) -> bool {
 				push_spec_enc_in_stack(me, edit_stack, from_id);
 				return true;
@@ -868,8 +873,10 @@ static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 	for(node_id_t to_id : which.to_nodes){
 		if(me.hasControl(fmt::format("calls{}", i))){
 			me[fmt::format("calls{}", i)].setText(label(to_id));
+			me[fmt::format("calls{}", i)].recalcRect();
 			me[fmt::format("calls{}", i)].show();
-			// TODO setTooltipText
+			// TODO null check get_spec_ref
+			me[fmt::format("calls{}", i)].setTooltipText(get_spec_ref(scenario, edit_stack, to_id.which, to_id.town_num_or_out_x, to_id.out_y)->editor_hint(univ));
 			me[fmt::format("calls{}", i)].attachClickHandler([to_id, &edit_stack](cDialog& me, std::string, eKeyMod) -> bool {
 				push_spec_enc_in_stack(me, edit_stack, to_id);
 				return true;
@@ -1743,6 +1750,7 @@ bool edit_spec_enc(short which_node,short mode,cDialog* parent,bool is_new) {
 	}
 
 	cDialog special(*ResMgr::dialogs.get("edit-special-node"),parent);
+	special.setTooltipControl("tooltip");
 	special.attachClickHandlers(std::bind(commit_spec_enc, _1, _2, std::ref(edit_stack)), {"okay", "back"});
 	special.attachClickHandlers(std::bind(edit_spec_enc_type, _1, _2, std::ref(edit_stack)), {
 		"general", "oneshot", "affectpc", "ifthen", "town", "out", "rect", "all"
