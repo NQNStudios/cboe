@@ -1344,6 +1344,10 @@ void out_move_party(short x,short y) {
 
 // mode - 0=full teleport flash 1=no teleport flash 2=only fade flash 3=only arrival flash
 void teleport_party(short x,short y,short mode) {
+	if(!univ.town->is_on_map(loc(x,y))){
+		showError("The scenario tried to teleport you out of bounds!");
+		return;
+	}
 	// TODO: Teleport sound? (Sound 10)
 	location l;
 	bool fadeIn = false, fadeOut = false;
