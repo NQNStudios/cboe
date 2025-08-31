@@ -3371,6 +3371,9 @@ void restore_editor_state() {
 			case MODE_EDIT_SPECIAL_ITEMS:
 				start_special_item_editing();
 				break;
+			case MODE_EDIT_SPECIALS:
+				start_special_editing(scenario.editor_state.special_editing_mode);
+				break;
 			default: break;
 		}
 	}
