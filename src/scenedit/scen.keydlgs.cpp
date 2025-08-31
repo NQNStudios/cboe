@@ -804,6 +804,31 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 	}
 }
 
+static std::string label(node_id_t id) {
+	std::string lbl = std::to_string(id.which);
+	if(id.town_num_or_out_x < 0) lbl = "G" + lbl;
+	else if(id.out_y < 0) lbl = "T" + lbl;
+	else lbl = "O" + lbl;
+	return lbl;
+}
+
+static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack);
+
+static void push_spec_enc_in_stack(cDialog& me, node_stack_t& edit_stack, node_id_t id) {
+	cSpecial* spec = get_spec_ref(scenario, edit_stack, id.which, id.town_num_or_out_x, id.out_y);
+	if(spec == nullptr){
+		throw std::string{"This should never happen"};
+	}
+	editing_node_t stack_frame;
+	stack_frame.which = id.which;
+	stack_frame.mode = (id.out_y >= 0 ? 1 : (id.town_num_or_out_x >= 0 ? 2 : 0));
+	stack_frame.node = *spec;
+	stack_frame.is_new = false;
+	edit_stack.push_back(stack_frame);
+	me["back"].show();
+	put_spec_enc_in_dlog(me, edit_stack);
+}
+
 static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 	cSpecial& spec = edit_stack.back().node;
 
@@ -820,11 +845,43 @@ static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 		std::vector<graph_node_t> locals = local_node_graph(scenario, edit_stack, cur_town);
 		which = locals[edit_stack.back().which];
 	}
+	int i = 0;
 	for(node_id_t from_id : which.from_nodes){
-		LOG(fmt::format("({}, {}, {}) -> ({}, {}, {})", from_id.which, from_id.town_num_or_out_x, from_id.out_y, which.id.which, which.id.town_num_or_out_x, which.id.out_y));
+		if(me.hasControl(fmt::format("calledby{}", i))){
+			me[fmt::format("calledby{}", i)].setText(label(from_id));
+			me[fmt::format("calledby{}", i)].show();
+			// TODO setTooltipText
+			me[fmt::format("calledby{}", i)].attachClickHandler([from_id, &edit_stack](cDialog& me, std::string, eKeyMod) -> bool {
+				push_spec_enc_in_stack(me, edit_stack, from_id);
+				return true;
+			});
+		}else{
+			LOG("Warning! Ran out of buttons to show callers!");
+			break;
+		}
+		++i;
 	}
+	for(; me.hasControl(fmt::format("calledby{}", i)); ++i){
+		me[fmt::format("calledby{}", i)].hide();
+	}
+	i = 0;
 	for(node_id_t to_id : which.to_nodes){
-		LOG(fmt::format("({}, {}, {}) -> ({}, {}, {})", which.id.which, which.id.town_num_or_out_x, which.id.out_y, to_id.which, to_id.town_num_or_out_x, to_id.out_y));
+		if(me.hasControl(fmt::format("calls{}", i))){
+			me[fmt::format("calls{}", i)].setText(label(to_id));
+			me[fmt::format("calls{}", i)].show();
+			// TODO setTooltipText
+			me[fmt::format("calls{}", i)].attachClickHandler([to_id, &edit_stack](cDialog& me, std::string, eKeyMod) -> bool {
+				push_spec_enc_in_stack(me, edit_stack, to_id);
+				return true;
+			});
+		}else{
+			LOG("Warning! Ran out of buttons to show nodes it calls!");
+			break;
+		}
+		++i;
+	}
+	for(; me.hasControl(fmt::format("calls{}", i)); ++i){
+		me[fmt::format("calls{}", i)].hide();
 	}
 	
 	// Show which node is being edited and what type of node it is

@@ -140,6 +140,7 @@ struct editing_node_t {
 
 typedef std::vector<editing_node_t> node_stack_t;
 
+cSpecial* get_spec_ref(cScenario& scenario, node_stack_t& stack, size_t which, int town_num_or_out_x = -1, int out_y = -1);
 std::vector<graph_node_t> global_node_graph(cScenario& scenario, node_stack_t& edit_stack);
 std::vector<graph_node_t> local_node_graph(cScenario& scenario, node_stack_t& edit_stack, int town_num_or_out_x, int out_y = -1);
 

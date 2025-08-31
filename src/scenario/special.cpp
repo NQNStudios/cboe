@@ -1121,7 +1121,7 @@ short cSpecial::get(eSpecField fld) {
 	}
 }
 
-static cSpecial* get_spec_ref(cScenario& scenario, node_stack_t& stack, size_t which, int town_num_or_out_x = -1, int out_y = -1) {
+cSpecial* get_spec_ref(cScenario& scenario, node_stack_t& stack, size_t which, int town_num_or_out_x, int out_y) {
 	int mode = (out_y >= 0 ? 1 : (town_num_or_out_x >= 0 ? 2 : 0));
 	for(auto it = stack.rbegin(); it != stack.rend(); ++it){
 		if(it->mode == mode && it->which == which)

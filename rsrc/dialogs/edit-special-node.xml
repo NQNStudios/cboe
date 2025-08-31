@@ -6,7 +6,7 @@
 	<text name='title' size='large' top='6' left='50' width='158' height='16'>Edit Special Node</text>
 	<text top='8' left='222' width='90' height='14'>Node number:</text>
 	<text name='num' top='8' left='314' width='38' height='14'/>
-	<text top='147' left='469' width='125' height='124'>
+	<text name='tip' top='147' left='519' width='125'>
 		Enter properties for this special encounter node.
 		For a detailed description of how this window works, see the documentation.
 	</text>
@@ -124,4 +124,31 @@
 	<button name='okay' type='regular' top='494' left='522'>OK</button>
 	<button name='cancel' type='regular' top='494' left='456'>Cancel</button>
 	<button name='back' type='large' top='494' left='10'>Go Back</button>
+
+	<text name='cb' relative='pos-in pos' anchor='tip' top='8' left='0'>Called By</text>
+	<text relative='pos-in pos' anchor='tip' top='8' left='100'>Calls</text>
+	<!-- There is NO limit to how many things could call a node. Only the designor's sanity.
+			But let's hope this is enough for most cases. -->
+	<button name='calledby0' type='tiny' relative='pos-in pos' anchor='cb' top='2' left='0'/>
+	<button name='calledby1' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby2' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby3' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby4' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby5' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby6' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby7' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby8' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby9' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby10' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby11' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby12' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calledby13' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<!-- There is a limit to how many nodes a node can call. I think it's 3, for the
+			if-elseif-else conditionals. -->
+	<button name='calls0' type='tiny' relative='pos-in pos' anchor='cb' top='2' left='100'/>
+	<button name='calls1' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calls2' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+	<button name='calls3' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
+
+	<text name='tooltip' framed='true' ellipsis='true' width='200' height='24' relative='pos-in pos' anchor='calledby13' top='4' left='0'>Editor hint</text>
 </dialog>
