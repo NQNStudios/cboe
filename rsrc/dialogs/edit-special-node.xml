@@ -150,5 +150,5 @@
 	<button name='calls2' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
 	<button name='calls3' type='tiny' relative='pos-in pos' rel-anchor='prev' top='4' left='0'/>
 
-	<text name='tooltip' framed='true' ellipsis='true' width='200' height='24' relative='pos-in pos' anchor='calledby13' top='4' left='0'>Editor hint</text>
+	<text name='tooltip' framed='true' ellipsis='true' width='200' height='24' relative='pos-in pos' anchor='calledby13' top='4' left='0'></text>
 </dialog>
