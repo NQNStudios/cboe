@@ -805,11 +805,26 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 }
 
 static std::string label(node_id_t id) {
-	std::string lbl = std::to_string(id.which);
-	if(id.town_num_or_out_x < 0) lbl = "G" + lbl;
-	else if(id.out_y < 0) lbl = "T" + lbl;
-	else lbl = "O" + lbl;
-	return lbl;
+	switch(id.caller_type){
+		case eCallerType::SPEC_SPOT:
+			return "Special Spot";
+		case eCallerType::NODE:{
+			std::string lbl = std::to_string(id.which);
+			if(id.town_num_or_out_x < 0) lbl = "G" + lbl;
+			else if(id.out_y < 0) lbl = "T" + lbl;
+			else lbl = "O" + lbl;
+			return lbl;
+		}
+	}
+}
+
+static std::string tooltip_text(cScenario& scenario, node_id_t caller_id) {
+	switch(caller_id.caller_type){
+		case eCallerType::SPEC_SPOT:
+			// TODO use loc_str (make it more customizable for context)
+			return fmt::format("At ({},{})", caller_id.town_num_or_out_x, caller_id.out_y);
+		default: return "";
+	}
 }
 
 static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack);
@@ -854,12 +869,18 @@ static void put_spec_enc_in_dlog(cDialog& me, node_stack_t& edit_stack) {
 			me[fmt::format("calledby{}", i)].setText(label(from_id));
 			me[fmt::format("calledby{}", i)].recalcRect();
 			me[fmt::format("calledby{}", i)].show();
-			// TODO null check get_spec_ref
-			me[fmt::format("calledby{}", i)].setTooltipText(get_spec_ref(scenario, edit_stack, from_id.which, from_id.town_num_or_out_x, from_id.out_y)->editor_hint(univ));
-			me[fmt::format("calledby{}", i)].attachClickHandler([from_id, &edit_stack](cDialog& me, std::string, eKeyMod) -> bool {
-				push_spec_enc_in_stack(me, edit_stack, from_id);
-				return true;
-			});
+			if(from_id.caller_type == eCallerType::NODE){
+				// TODO null check get_spec_ref
+				me[fmt::format("calledby{}", i)].setTooltipText(get_spec_ref(scenario, edit_stack, from_id.which, from_id.town_num_or_out_x, from_id.out_y)->editor_hint(univ));
+				me[fmt::format("calledby{}", i)].attachClickHandler([from_id, &edit_stack](cDialog& me, std::string, eKeyMod) -> bool {
+					push_spec_enc_in_stack(me, edit_stack, from_id);
+					return true;
+				});
+			}else{
+				me[fmt::format("calledby{}", i)].setTooltipText(tooltip_text(scenario, from_id));
+				// No-op for now!
+				me[fmt::format("calledby{}", i)].attachClickHandler([](cDialog&, std::string, eKeyMod) -> bool { return true; });
+			}
 		}else{
 			LOG("Warning! Ran out of buttons to show callers!");
 			break;

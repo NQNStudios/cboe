@@ -116,10 +116,27 @@ public:
 	std::string editor_hint(cUniverse& univ) const;
 };
 
+enum eCallerType {
+	NODE,
+	SPEC_SPOT
+	// TODO more ways to call a node:
+	// TIMER (town/global)
+	// TOWNPERSON_DEATH
+	// TOWN_ENTRY (still alive/been abandoned/hostile)
+	// SPECIAL_TERRAIN (use/walk on)
+	// TALKING (call town/call global)
+	// ITEM_ABILITY
+	// MONSTER_ABILITY
+	// SCENARIO_START
+	// and probably more!
+};
+
+// I am expanding this to include other types of node callers for the graph!
 struct node_id_t {
 	int which;
 	int town_num_or_out_x = -1;
 	int out_y = -1;
+	eCallerType caller_type = eCallerType::NODE;
 };
 
 struct node_compare {
