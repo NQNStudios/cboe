@@ -1795,7 +1795,7 @@ class cChooseScenario {
 								flagPic.setTooltipText("OpenBoE is known to be compatible with this scenario!");
 							}
 						}else if(pair.first == "series"){
-							flagPic.setPict(119); // book
+							flagPic.setPict(109); // book
 							flagPic.setTooltipText(pair.second); // series and number
 						}
 						flagPic.recalcRect();
