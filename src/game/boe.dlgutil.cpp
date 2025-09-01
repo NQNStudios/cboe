@@ -1530,7 +1530,7 @@ void pick_preferences(bool record, cDialog* parent) {
 	dynamic_cast<cLed&>(prefsDlog["target-lock"]).setState(get_bool_pref("TargetLock", true) ? led_red : led_off);	
 
 	cLedGroup& keyshiftOptions = dynamic_cast<cLedGroup&>(prefsDlog["keyshift-options"]);
-	if(get_bool_pref("DirectionalKeyScrolling", false)){
+	if(get_bool_pref("DirectionalKeyScrolling", true)){
 		keyshiftOptions.setSelected("screen-shift");
 	}else{
 		keyshiftOptions.setSelected("target-adjacent");
@@ -1794,6 +1794,9 @@ class cChooseScenario {
 								flagPic.setPict(71); // flowers
 								flagPic.setTooltipText("OpenBoE is known to be compatible with this scenario!");
 							}
+						}else if(pair.first == "series"){
+							flagPic.setPict(119); // book
+							flagPic.setTooltipText(pair.second); // series and number
 						}
 						flagPic.recalcRect();
 						++j;

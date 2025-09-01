@@ -1483,7 +1483,7 @@ void screen_shift(int dx, int dy, bool& need_redraw) {
 
 // If configured to move the screen with arrow keys, do it and return true
 bool handle_screen_shift(location delta, bool& need_redraw) {
-	if(scrollableModes.count(overall_mode) && get_bool_pref("DirectionalKeyScrolling", false) != kb.isShiftPressed()){
+	if(scrollableModes.count(overall_mode) && get_bool_pref("DirectionalKeyScrolling", true) != kb.isShiftPressed()){
 		screen_shift(delta.x, delta.y, need_redraw);
 		return true;
 	}
