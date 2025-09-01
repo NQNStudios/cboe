@@ -143,4 +143,8 @@
     <string id="64">
         <![CDATA[Remember, stand next to a book and right-click it to read.]]>
     </string>
+    <string id="65">
+        <![CDATA[The next part of the tutorial will teach you how to explore new worlds in Blades of Exile! To complete it, you must find three artifact pieces hidden across a small world map. (Don't worry, you'll be guided along the way.)]]>
+    </string>
+    <string id="70" />
 </town>
