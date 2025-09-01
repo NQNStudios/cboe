@@ -706,6 +706,7 @@ cControl::storage_t cControl::store() const {
 	storage_t storage;
 	storage["text"] = lbl;
 	storage["visible"] = visible;
+	storage["tooltip_text"] = tooltip_text;
 	return storage;
 }
 
@@ -715,6 +716,10 @@ void cControl::restore(storage_t to) {
 	else setText("");
 	if(to.find("visible") != to.end())
 		boost::any_cast<bool>(to["visible"]) ? show() : hide();
+	if(to.find("tooltip_text") != to.end()){
+		setTooltipText(boost::any_cast<std::string>(to["tooltip_text"]));
+	}
+	else setTooltipText("");
 }
 
 // Translate raw x/y position using the view of the current rendering target
