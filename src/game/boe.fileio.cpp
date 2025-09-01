@@ -427,6 +427,7 @@ std::vector<scen_header_type> build_scen_headers() {
 // This is only called at startup, when bringing headers of active scenarios.
 bool load_scenario_header(fs::path file,scen_header_type& scen_head){
 	bool file_ok = false;
+	scen_head.meta_flags.clear();
 	
 	std::string fname = file.filename().string();
 	int dot = fname.find_first_of('.');
@@ -494,6 +495,21 @@ bool load_scenario_header(fs::path file,scen_header_type& scen_head){
 	scen_head.difficulty = temp_scenario.difficulty;
 	std::copy(temp_scenario.format.ver, temp_scenario.format.ver + 3, scen_head.ver);
 	std::copy(temp_scenario.format.prog_make_ver, temp_scenario.format.prog_make_ver + 3, scen_head.prog_make_ver);
+
+	if(fs::exists(file.parent_path() / "meta.xml")){
+		ticpp::Document meta_doc;
+		meta_doc.LoadFile((file.parent_path() / "meta.xml").string());
+
+		// Look for flags in the meta
+		Element* next_child = meta_doc.FirstChildElement()->FirstChildElement(false);
+		while(next_child){
+			if(next_child->Value() == "flags"){
+				scen_head.meta_flags = info_from_action(*next_child);
+				break;
+			}
+			next_child = next_child->NextSiblingElement(false);
+		}
+	}
 
 	fname = fname.substr(0,dot);
 	std::transform(fname.begin(), fname.end(), fname.begin(), tolower);

@@ -26,6 +26,7 @@ struct scen_header_type{
 	eContentRating rating;
 	int difficulty, ver[3], prog_make_ver[3];
 	std::string name, teaser1, teaser2, file;
+	std::map<std::string, std::string> meta_flags;
 };
 
 extern std::map<std::string, int> startup_button_indices;

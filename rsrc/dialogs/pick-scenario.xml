@@ -3,6 +3,7 @@
 <?xml-stylesheet href="dialog.xsl" type="text/xsl"?>
 <dialog escbtn='cancel'>
 	<text size='large' top='9' left='130' width='126' height='17'>Start a Scenario:</text>
+	<text top='9' left='240' width='190' height='40' name='tooltip'></text>
 	<stack name='list'>
 		<page>
 			<!-- Prefab scenarios -->
@@ -35,15 +36,33 @@
 		<page default='true' template='scenarios'>
 			<!-- Custom scenarios -->
 			<pict type='dlog' num='16' top='10' left='10'/>
+
 			<pict name='pic1' type='scen' num='0' top='58' left='62'/>
 			<text name='desc1' framed='true' top='34' left='104' width='292' height='80'/>
 			<text outline='double' name='start1' top='32' left='59' width='342' height='84'/>
+			<pict name='tag1-1' type='item' size='small' num='0' top='95' left='110'/>
+			<pict name='tag1-2' type='item' size='small' num='0' top='95' left='134'/>
+			<pict name='tag1-3' type='item' size='small' num='0' top='95' left='158'/>
+			<pict name='tag1-4' type='item' size='small' num='0' top='95' left='182'/>
+			<pict name='tag1-5' type='item' size='small' num='0' top='95' left='206'/>
+
 			<pict name='pic2' type='scen' num='0' top='145' left='62'/>
 			<text name='desc2' framed='true' top='121' left='104' width='292' height='80'/>
 			<text outline='double' name='start2' top='118' left='59' width='342' height='84'/>
+			<pict name='tag2-1' type='item' size='small' num='0' top='181' left='110'/>
+			<pict name='tag2-2' type='item' size='small' num='0' top='181' left='134'/>
+			<pict name='tag2-3' type='item' size='small' num='0' top='181' left='158'/>
+			<pict name='tag2-4' type='item' size='small' num='0' top='181' left='182'/>
+			<pict name='tag2-5' type='item' size='small' num='0' top='181' left='206'/>
+
 			<pict name='pic3' type='scen' num='0' top='232' left='62'/>
 			<text name='desc3' framed='true' top='208' left='104' width='292' height='80'/>
 			<text outline='double' name='start3' top='205' left='59' width='342' height='84'/>
+			<pict name='tag3-1' type='item' size='small' num='0' top='268' left='110'/>
+			<pict name='tag3-2' type='item' size='small' num='0' top='268' left='134'/>
+			<pict name='tag3-3' type='item' size='small' num='0' top='268' left='158'/>
+			<pict name='tag3-4' type='item' size='small' num='0' top='268' left='182'/>
+			<pict name='tag3-5' type='item' size='small' num='0' top='268' left='206'/>
 		</page>
 	</stack>
 
