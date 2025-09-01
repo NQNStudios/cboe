@@ -313,16 +313,17 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 	fs::path meta = file_to_load.parent_path() / "meta.xml";
 	using namespace ticpp;
 	ticpp::Document meta_doc;
+	bool changed = false;
 	if(!fs::exists(meta)){
 		ticpp::Element root_element("meta");
 		meta_doc.InsertEndChild(root_element);
+		changed = true;
 	}else{
 		meta_doc.LoadFile(meta.string());
 	}
 
 	auto info = info_from_action(*meta_doc.FirstChildElement());
 	std::string encoding = "";
-	
 	for(short i = 0; i < 270; i++) {
 		len = (long) (temp_scenario.scen_str_len[i]);
 		fread(temp_str, len, 1, file_id);
@@ -351,6 +352,7 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 				if(which != -1){
 					encoding = info["encoding"] = encodings_to_try[which];
 					decoded = options[which];
+					changed = true;
 				}
 				else{
 					decoded = options[0]; // temp!
@@ -375,17 +377,18 @@ bool load_scenario_v1(fs::path file_to_load, cScenario& scenario, eLoadScenario 
 		} else if(i >= 260) continue; // These were never ever used, for some reason.
 		else scenario.spec_strs[i-160] = decoded;
 	}
-	Element new_root("meta");
-	ticpp::Document new_doc;
-	for(auto& p : info){
-		Element next_child(p.first);
-		Text child_text(p.second);
-		next_child.InsertEndChild(child_text);
-		new_root.InsertEndChild(next_child);
+	if(changed){
+		Element new_root("meta");
+		ticpp::Document new_doc;
+		for(auto& p : info){
+			Element next_child(p.first);
+			Text child_text(p.second);
+			next_child.InsertEndChild(child_text);
+			new_root.InsertEndChild(next_child);
+		}
+		new_doc.InsertEndChild(new_root);
+		new_doc.SaveFile(meta.string());
 	}
-	new_doc.InsertEndChild(new_root);
-	new_doc.SaveFile(meta.string());
-
 	fclose(file_id);
 	
 	scenario.scen_file = file_to_load;
