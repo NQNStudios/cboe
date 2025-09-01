@@ -809,7 +809,9 @@ void cDialog::handle_one_event(const sf::Event& currentEvent, cFramerateLimiter&
 
 			bool inField = false;
 			bool onTooltip = false;
-			for(auto& ctrl : controls) {
+			// Have to use begin() and end() for recursion into containers!
+			for(cDialogIterator iter = begin(); iter != end(); ++iter) {
+				auto& ctrl = *iter;
 				if(!ctrl.second->tooltip_text.empty() && ctrl.second->getBounds().contains(x, y)){
 					if(tooltip_control.empty()){
 						LOG("Warning! Tooltip activated but nowhere to show it!");
