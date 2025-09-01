@@ -173,16 +173,23 @@
 	ex1 1, 25, -1
 	ex2 -1, -1, -1
 	goto 26
-@stair = 25
+@portal-generic = 25
 	sdf -1, -1
 	msg -1, -1, -1
 	pic 0, 4
-	ex1 24, 24, -1
-	ex2 0, 1, 2
+	ex1 12, 14, -1
+	ex2 -1, -1, -1
 	goto -1
 @disp-msg = 26
 	sdf -1, -1
 	msg 63, 64, -1
+	pic 0, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@once-dlog = 27
+	sdf 1, 3
+	msg 65, -1, -1
 	pic 0, 4
 	ex1 -1, -1, -1
 	ex2 -1, -1, -1

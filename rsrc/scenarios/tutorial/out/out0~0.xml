@@ -2,4 +2,22 @@
 <sector boes="2.0.0">
     <name>Area name</name>
     <comment>Comment</comment>
+    <sign id="0">
+        <![CDATA[West - Marshy tower|East - Volcanic Tower|South - Locked Vault]]>
+    </sign>
+    <string id="0">
+        <![CDATA[You're now exploring the great outdoors! When outdoors, each tile on the map represents a larger space, so each move you make takes more in-game time.]]>
+    </string>
+    <string id="1">
+        <![CDATA[In the outdoors, you'll find entrances to towns or dungeons like the tower from which you're emerging now.]]>
+    </string>
+    <string id="2">
+        <![CDATA[Clearing many BoE scenarios usually requires a thorough exploration of the outdoors and every town or dungeon you can find. First of all, you should open your minimap to help keep track of where you've been! Type 'a' to do so.]]>
+    </string>
+    <string id="6">
+        <![CDATA[To read a sign, use the Look command. You can do this by typing 'l' or clicking the button of the eye. You have to be standing next to things  like signs or books to investigate them closely.]]>
+    </string>
+    <string id="7">
+        <![CDATA[You can also look by right-clicking.]]>
+    </string>
 </sector>
