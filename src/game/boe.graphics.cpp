@@ -19,6 +19,7 @@
 #include "gfx/render_shapes.hpp"
 #include "gfx/render_text.hpp"
 #include "gfx/tiling.hpp"
+#include "gfx/graphics.hpp"
 #include "sounds.hpp"
 #include "mathutil.hpp"
 #include "dialogxml/widgets/button.hpp"
@@ -101,6 +102,8 @@ short debug_nums[6] = {0,0,0,0,0,0};
 
 char light_area[13][13];
 char unexplored_area[13][13];
+
+size_t out_max_dim = 96; // 2x2 combined grid of outdoor sections
 
 // Declare the graphics
 sf::RenderTexture& pc_stats_gworld() {
@@ -802,6 +805,10 @@ bool is_nature(short x, short y, unsigned short ground_t) {
 std::vector<location> forcecage_locs;
 extern std::list<text_label_t> posted_labels;
 
+size_t cur_town_max_dim() {
+	return univ.town->max_dim;
+}
+
 //mode ... if 1, don't place on screen after redoing
 // if 2, only redraw over active monst
 void draw_terrain(short mode) {
@@ -989,10 +996,10 @@ void draw_terrain(short mode) {
 			if(is_town() || is_combat())
 				draw_items(where_draw);
 			if(is_out() && univ.out.out_e[where_draw.x][where_draw.y] && univ.out.is_road(where_draw.x,where_draw.y))
-				place_road(q,r,where_draw,true);
+				place_road(terrain_screen_gworld(),q,r,where_draw,true,true);
 			else if(is_town() && univ.town.is_explored(where_draw.x,where_draw.y) && univ.town.is_road(where_draw.x, where_draw.y))
-				place_road(q,r,where_draw,true);
-			else place_road(q,r,where_draw,false);
+				place_road(terrain_screen_gworld(),q,r,where_draw,true,false);
+			else place_road(terrain_screen_gworld(),q,r,where_draw,false,is_out());
 			draw_fields(where_draw);
 			//draw_monsters(where_draw);
 			//draw_vehicles(where_draw);
@@ -1287,29 +1294,16 @@ void draw_trim(short q,short r,short which_trim,ter_num_t ground_ter) {
 	rect_draw_some_item(*from_gworld, from_rect, *mask, terrain_screen_gworld(), to_rect);
 }
 
-
-static bool extend_road_terrain(int x, int y) {
+bool is_road(int x, int y) {
 	if(is_out() && univ.out.is_road(x,y))
 	   return true;
 	if(is_town() && univ.town.is_road(x,y))
 		return true;
-	ter_num_t ter = coord_to_ter(x,y);
-	eTrimType trim = univ.scenario.ter_types[ter].trim_type;
-	eTerSpec spec = univ.scenario.ter_types[ter].special;
-	ter_num_t flag = univ.scenario.ter_types[ter].flag1;
-	if(trim == eTrimType::CITY || trim == eTrimType::WALKWAY)
-		return true;
-	if(spec == eTerSpec::BRIDGE)
-		return true;
-	if(spec == eTerSpec::TOWN_ENTRANCE && trim != eTrimType::NONE)
-		return true; // cave entrance, most likely
-	if(spec == eTerSpec::UNLOCKABLE || spec == eTerSpec::CHANGE_WHEN_STEP_ON)
-		return true; // closed door, possibly locked; or closed portcullis
-	if(spec == eTerSpec::CHANGE_WHEN_USED && univ.scenario.ter_types[flag].special == eTerSpec::CHANGE_WHEN_STEP_ON && univ.scenario.ter_types[flag].flag1 == ter)
-		return true; // open door (I think) TODO: Verify this works
-	if(spec == eTerSpec::LOCKABLE)
-		return true; // open portcullis (most likely)
 	return false;
+}
+
+const cTerrain& get_ter_type(ter_num_t t) {
+	return univ.scenario.ter_types[t];
 }
 
 static bool can_build_roads_on(ter_num_t ter) {
@@ -1327,60 +1321,6 @@ static bool connect_roads(ter_num_t ter){
 	if(spec == eTerSpec::TOWN_ENTRANCE && trim != eTrimType::NONE)
 		return true; // cave entrance, most likely
 	return false;
-}
-
-void place_road(short q,short r,location where,bool here) {
-	rectangle to_rect;
-	static const rectangle road_rects[5] = {
-		{76,28,80,41},	// horizontal partial
-		{72,60,90,64},	// vertical partial
-		{72,28,75,56},	// horizontal full
-		{72,56,108,60},	// vertical full
-		{80,28,84,32},	// central spot
-	};
-	static const rectangle road_dest_rects[7] = {
-		{0,12,18,16},	// top
-		{16,15,20,28},	// right
-		{18,12,36,16},	// bottom
-		{16,0,20,13},	// left
-		{0,12,36,16},	// top + bottom
-		{16,0,20,28},	// right + left
-		{16,12,20,16},	// central spot
-	};
-	
-	sf::Texture& roads_gworld = *ResMgr::graphics.get("fields");
-	
-	if(here){
-		to_rect = road_dest_rects[6];
-		to_rect.offset(13 + q * 28,13 + r * 36);
-		rect_draw_some_item(roads_gworld, road_rects[4], terrain_screen_gworld(), to_rect);
-		
-		if((where.y == 0) || extend_road_terrain(where.x, where.y - 1)) {
-			to_rect = road_dest_rects[0];
-			to_rect.offset(13 + q * 28,13 + r * 36);
-			rect_draw_some_item (roads_gworld, road_rects[1], terrain_screen_gworld(), to_rect);
-		}
-		
-		if(((is_out()) && (where.x == 96)) || (!(is_out()) && (where.x == univ.town->max_dim - 1))
-			|| extend_road_terrain(where.x + 1, where.y)) {
-			to_rect = road_dest_rects[1];
-			to_rect.offset(13 + q * 28,13 + r * 36);
-			rect_draw_some_item (roads_gworld, road_rects[0], terrain_screen_gworld(), to_rect);
-		}
-		
-		if(((is_out()) && (where.y == 96)) || (!(is_out()) && (where.y == univ.town->max_dim - 1))
-			|| extend_road_terrain(where.x, where.y + 1)) {
-			to_rect = road_dest_rects[2];
-			to_rect.offset(13 + q * 28,13 + r * 36);
-			rect_draw_some_item (roads_gworld, road_rects[1], terrain_screen_gworld(), to_rect);
-		}
-		
-		if((where.x == 0) || extend_road_terrain(where.x - 1, where.y)) {
-			to_rect = road_dest_rects[3];
-			to_rect.offset(13 + q * 28,13 + r * 36);
-			rect_draw_some_item (roads_gworld, road_rects[0], terrain_screen_gworld(), to_rect);
-		}
-	}
 }
 
 void draw_rest_screen() {
