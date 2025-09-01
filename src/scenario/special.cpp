@@ -1249,5 +1249,18 @@ std::vector<graph_node_t> local_node_graph(cScenario& scenario, node_stack_t& st
 		}
 	}
 
+	// Backward connections to special spots
+	std::vector<spec_loc_t>& special_locs = (out_y < 0 ? scenario.towns[town_num_or_out_x]->special_locs : (scenario.outdoors[town_num_or_out_x][out_y]->special_locs));
+	for(spec_loc_t loc : special_locs){
+		if(loc.spec >= 0){
+			node_id_t caller_node;
+			caller_node.caller_type = eCallerType::SPEC_SPOT;
+			// I think the 'which' is irrelevant
+			caller_node.town_num_or_out_x = loc.x;
+			caller_node.out_y = loc.y;
+			graph_nodes[loc.spec].from_nodes.insert(caller_node);
+		}
+	}
+
 	return graph_nodes;
 }
