@@ -34,7 +34,7 @@ void make_field_type(short i,short j,eFieldType field_type,field_stroke_t& strok
 void take_field_type(short i,short j,eFieldType field_type,clear_field_stroke_t& stroke);
 bool container_there(location l);
 bool is_spot(short i,short j);
-bool is_road(short i,short j);
+bool is_road(int i,int j);
 short string_length(char *str);
 rectangle get_custom_rect (short which_rect);
 void init_dialogs();

@@ -9,6 +9,7 @@
 #include "gfx/render_shapes.hpp"
 #include "gfx/render_text.hpp"
 #include "gfx/tiling.hpp" // for bg
+#include "gfx/graphics.hpp"
 #include "scen.graphics.hpp"
 #include <cmath>
 #include "scen.keydlgs.hpp"
@@ -1014,6 +1015,16 @@ static ter_num_t ter_at(int q, int r) {
 	return t_to_draw;
 }
 
+const cTerrain& get_ter_type(ter_num_t t) {
+	return scenario.ter_types[t];
+}
+
+size_t cur_town_max_dim() {
+	return town->max_dim;
+}
+
+size_t out_max_dim = 48;
+
 void draw_terrain(){
 	location which_pt,where_draw;
 	rectangle draw_rect,clipping_rect = {8,8,332,260};
@@ -1048,8 +1059,11 @@ void draw_terrain(){
 				sf::Texture& vehicle_gworld = *ResMgr::graphics.get("vehicle");
 				
 				// TODO this doesn't work for the 1 row/column of adjacent outdoor sections drawn
-				if(is_road(cen_x + q - 4,cen_y + r - 4))
-					rect_draw_some_item(fields_gworld, calc_rect(0, 2), mainPtr(), destrec, sf::BlendAlpha);
+				if(is_road(cen_x + q - 4,cen_y + r - 4)){
+					// TODO subtracting from the TER_RECT_UL coords by 6, which I picked through trial and error and is still
+					// a bit off!
+					place_road(mainPtr(), q, r, loc(q + cen_x - 4, r + cen_y - 4), true, !editing_town, loc(TER_RECT_UL_X - 6, TER_RECT_UL_Y - 6));
+				}
 				if(is_spot(cen_x + q - 4,cen_y + r - 4))
 					rect_draw_some_item(fields_gworld, calc_rect(4, 0), mainPtr(), destrec, sf::BlendAlpha);
 				
@@ -1895,7 +1909,7 @@ bool is_spot(short i,short j){
 	return false;
 }
 
-bool is_road(short i,short j){
+bool is_road(int i,int j){
 	if(editing_town)
 		return is_field_type(i,j,SPECIAL_ROAD);
 	else if(i >= 0 && i < 48 && j >= 0 && j < 48)
