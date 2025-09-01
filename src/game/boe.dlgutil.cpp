@@ -1756,6 +1756,7 @@ class cChooseScenario {
 	cDialog me{*ResMgr::dialogs.get("pick-scenario")};
 	std::vector<scen_header_type> scen_headers;
 	void put_scen_info() {
+		me.setTooltipControl("tooltip");
 		std::ostringstream sout;
 		static const char *difficulty[] = {"Low","Medium","High","Very High"};
 		auto& stk = dynamic_cast<cStack&>(me["list"]);
@@ -1784,10 +1785,32 @@ class cChooseScenario {
 					);
 					me["desc" + n].setText(description);
 					me["start" + n].show();
+
+					int j = 1;
+					for(auto pair : header.meta_flags){
+						cPict& flagPic = dynamic_cast<cPict&>(me["tag" + n + "-" + std::to_string(j)]);
+						if(pair.first == "compatibility"){
+							if(pair.second == "good"){
+								flagPic.setPict(71); // flowers
+								flagPic.setTooltipText("OpenBoE is known to be compatible with this scenario!");
+							}
+						}
+						flagPic.recalcRect();
+						++j;
+					}
+					for(; j <= 5; ++j){
+						me["tag" + n + "-" + std::to_string(j)].hide();
+					}
+
 				} else {
 					me["pic" + n].hide();
 					me["desc" + n].setText("");
 					me["start" + n].hide();
+					me["tag" + n + "-1"].hide();
+					me["tag" + n + "-2"].hide();
+					me["tag" + n + "-3"].hide();
+					me["tag" + n + "-4"].hide();
+					me["tag" + n + "-5"].hide();
 				}
 			}
 		}
