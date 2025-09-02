@@ -118,9 +118,9 @@ public:
 
 enum eCallerType {
 	NODE,
-	SPEC_SPOT
+	SPEC_SPOT,
+	TIMER // town, global
 	// TODO more ways to call a node:
-	// TIMER (town/global)
 	// TOWNPERSON_DEATH
 	// TOWN_ENTRY (still alive/been abandoned/hostile)
 	// SPECIAL_TERRAIN (use/walk on)

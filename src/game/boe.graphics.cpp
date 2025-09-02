@@ -793,7 +793,7 @@ void refresh_text_bar() {
 	mainPtr().setActive();
 }
 
-// this is used for determinign whether to round off walkway corners
+// this is used for determining whether to round off walkway corners
 // right now, trying a restrictive rule (just cave floor and grass, mainly)
 bool is_nature(short x, short y, unsigned short ground_t) {
 	ter_num_t ter_type;

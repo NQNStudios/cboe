@@ -808,6 +808,8 @@ static std::string label(node_id_t id) {
 	switch(id.caller_type){
 		case eCallerType::SPEC_SPOT:
 			return "Special Spot";
+		case eCallerType::TIMER:
+			return (id.town_num_or_out_x >= 0) ? "Town Timer" : "Global Timer";
 		case eCallerType::NODE:{
 			std::string lbl = std::to_string(id.which);
 			if(id.town_num_or_out_x < 0) lbl = "G" + lbl;
@@ -823,6 +825,15 @@ static std::string tooltip_text(cScenario& scenario, node_id_t caller_id) {
 		case eCallerType::SPEC_SPOT:
 			// TODO use loc_str (make it more customizable for context)
 			return fmt::format("At ({},{})", caller_id.town_num_or_out_x, caller_id.out_y);
+		case eCallerType::TIMER:{
+			std::string timer_type = caller_id.town_num_or_out_x >= 0 ? "town" : "global";
+			// out_y represents time
+			if(caller_id.out_y <= 0){
+				return fmt::format("Would be called by {} timer {}, but its interval time is set to 0", timer_type, caller_id.which);
+			}else{
+				return fmt::format("Called every {} turns by {} timer {}", caller_id.out_y, timer_type, caller_id.which);
+			}
+		}
 		default: return "";
 	}
 }
