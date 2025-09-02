@@ -51,6 +51,8 @@ cSpecial::cSpecial(){
 
 void cSpecial::writeTo(std::ostream& file, int n) const {
 	// TODO: Output only the needed values somehow
+	// ^ That's possible now that we have the refactored node field system, but I'm not sure it's
+	// a good idea?
 	file << '@' << (*type).opcode() << " = " << n << '\n';
 	file << "\tsdf " << sd1 << ", " << sd2 << '\n';
 	file << "\tmsg " << m1 << ", " << m2 << ", " << m3 << '\n';
@@ -1201,6 +1203,19 @@ std::vector<graph_node_t> global_node_graph(cScenario& scenario, node_stack_t& s
 		}
 	}
 
+	// Backward connections to global timers
+	int which = 0;
+	for(cTimer& timer : scenario.scenario_timers){
+		if(timer.node >= 0){
+			node_id_t caller_node;
+			caller_node.which = which; // this could be linked to a designer name for the caller list tooltip (but timers don't have designer names yet)
+			caller_node.caller_type = eCallerType::TIMER;
+			caller_node.out_y = timer.time;
+			graph_nodes[timer.node].from_nodes.insert(caller_node);
+		}
+		++which;
+	}
+
 	return graph_nodes;
 }
 
@@ -1259,6 +1274,22 @@ std::vector<graph_node_t> local_node_graph(cScenario& scenario, node_stack_t& st
 			caller_node.town_num_or_out_x = loc.x;
 			caller_node.out_y = loc.y;
 			graph_nodes[loc.spec].from_nodes.insert(caller_node);
+		}
+	}
+
+	// Backward connections to town timers
+	if(out_y < 0){
+		int which = 0;
+		for(cTimer& timer : scenario.towns[town_num_or_out_x]->timers){
+			if(timer.node >= 0){
+				node_id_t caller_node;
+				caller_node.which = which; // this could be linked to a designer name for the caller list tooltip (but timers don't have designer names yet)
+				caller_node.caller_type = eCallerType::TIMER;
+				caller_node.town_num_or_out_x = town_num_or_out_x;
+				caller_node.out_y = timer.time;
+				graph_nodes[timer.node].from_nodes.insert(caller_node);
+			}
+			++which;
 		}
 	}
 
