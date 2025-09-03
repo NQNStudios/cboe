@@ -201,3 +201,17 @@
 	ex1 1, -1, -1
 	ex2 -1, -1, -1
 	goto -1
+@if-sdf = 29
+	sdf 1, 4
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 3, -1, -1
+	ex2 -1, -1, -1
+	goto 30
+@block-move = 30
+	sdf -1, -1
+	msg 71, -1, -1
+	pic 0, 4
+	ex1 1, -1, -1
+	ex2 -1, -1, -1
+	goto -1

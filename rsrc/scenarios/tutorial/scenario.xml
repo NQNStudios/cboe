@@ -36,7 +36,7 @@
         <version>2.0.0</version>
     </creator>
     <game>
-        <num-towns>2</num-towns>
+        <num-towns>4</num-towns>
         <out-width>1</out-width>
         <out-height>1</out-height>
         <start-town>1</start-town>
@@ -63,9 +63,12 @@
     </game>
     <editor>
         <default-ground>2</default-ground>
+        <sdf row="0" col="0">entrance message</sdf>
+        <sdf row="0" col="1">supplies message</sdf>
         <sdf row="1" col="0">looked at book</sdf>
         <sdf row="1" col="1">book node</sdf>
         <sdf row="1" col="2">entry message</sdf>
         <sdf row="1" col="3">exit message</sdf>
+        <sdf row="1" col="4">artifact pieces</sdf>
     </editor>
 </scenario>

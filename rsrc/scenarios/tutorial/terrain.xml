@@ -6267,4 +6267,30 @@
         </special>
         <editor />
     </terrain>
+    <terrain id="256">
+        <name>Concealed Path</name>
+        <pic>80</pic>
+        <map>80</map>
+        <blockage>sight</blockage>
+        <transform>0</transform>
+        <fly>false</fly>
+        <boat>false</boat>
+        <ride>true</ride>
+        <archetype>false</archetype>
+        <light>0</light>
+        <step-sound>step</step-sound>
+        <trim>none</trim>
+        <ground>1</ground>
+        <trim-for>-1</trim-for>
+        <arena>11</arena>
+        <special>
+            <type>none</type>
+            <flag>-1</flag>
+            <flag>0</flag>
+            <flag>0</flag>
+        </special>
+        <editor>
+            <shortcut>t</shortcut>
+        </editor>
+    </terrain>
 </terrains>

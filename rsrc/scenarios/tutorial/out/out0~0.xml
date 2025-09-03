@@ -3,7 +3,7 @@
     <name>Part 2: Exploration</name>
     <comment>Comment</comment>
     <sign id="0">
-        <![CDATA[West - Marshy tower|East - Volcanic Tower|South - Locked Vault]]>
+        <![CDATA[West - Marshy Tower|East - Lake Tower|South - Vault Tower]]>
     </sign>
     <area top="25" left="6" bottom="36" right="21">Path to Marshy Tower</area>
     <string id="0">
