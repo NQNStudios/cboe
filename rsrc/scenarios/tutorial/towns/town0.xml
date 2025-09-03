@@ -11,7 +11,41 @@
     <flags>
         <chop kills="30000" />
     </flags>
+    <item id="0">
+        <type>109</type>
+    </item>
+    <item id="1">
+        <type>103</type>
+    </item>
+    <item id="2">
+        <type>106</type>
+    </item>
+    <item id="3">
+        <type>106</type>
+    </item>
+    <item id="4">
+        <type>155</type>
+        <contained>true</contained>
+    </item>
     <string id="0">
         <![CDATA[Your priest, Michael, stops the party. "Let's not go in anywhere dangerous while any of us are poisoned. I'll cure us by pressing 'p' to open the Priest Spells menu, choosing myself as the caster, choosing Cure Poison, then choosing a target, and pressing 'cast.'"]]>
+    </string>
+    <string id="1">
+        <![CDATA[This tower is slowly sinking into the marsh. Not fast enough to be of concern for you, though.]]>
+    </string>
+    <string id="2">
+        <![CDATA[Your expedition has hit another snag. This abandoned security checkpoint  shows no way of opening from the outside.]]>
+    </string>
+    <string id="8">
+        <![CDATA[Michael points to a crack in the wall. "I can break that with another Priest spell!"]]>
+    </string>
+    <string id="9">
+        <![CDATA[You can also cast Priest spells using the 'Cast Priest' menu at the top of the screen. First, click Michael's name in the 'Party Stats' panel in the upper right, to select him.]]>
+    </string>
+    <string id="10">
+        <![CDATA[Then, cast the Priest spell 'Move Mountains' and select the cracked wall to destroy it.]]>
+    </string>
+    <string id="14">
+        <![CDATA[Whenever this tower was last occupied, some supplies were left here for guards on duty. You can search containers by looking at them with 'l'/right-click, and you can take items you find lying around by pressing 'g' or the hand button.]]>
     </string>
 </town>

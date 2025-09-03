@@ -11,6 +11,9 @@
     <flags>
         <chop kills="30000" />
     </flags>
+    <sign id="0">
+        <![CDATA[To exit, gather the 3 pieces of the artifact!]]>
+    </sign>
     <string id="0">
         <![CDATA[This room contains multiple books explaining the almost 30-year history of Blades of Exile! To read one, you must be standing next to it. Then, either right-click its space, or click the eye button in your hotbar (hotkey: 'l' for look) before selecting its space.]]>
     </string>
@@ -146,5 +149,7 @@
     <string id="65">
         <![CDATA[The next part of the tutorial will teach you how to explore new worlds in Blades of Exile! To complete it, you must find three artifact pieces hidden across a small world map. (Don't worry, you'll be guided along the way.)]]>
     </string>
-    <string id="70" />
+    <string id="71">
+        <![CDATA[The portal on the other side of this rune must be your way out of the tutorial. But the rune seems to be looking for something you don't have. You can't cross it.]]>
+    </string>
 </town>
