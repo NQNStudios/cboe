@@ -522,7 +522,7 @@ short choose_text(eStrType list, unsigned short cur_choice, cDialog* parent, std
 			}
 			break;
 		case STRT_CMP:
-			strings = {"Less Than or Equal", "Less Than", "Equal", "Greater Than", "Grater Than or Equal"};
+			strings = {"Less Than or Equal", "Less Than", "Equal", "Greater Than", "Greater Than or Equal"};
 			break;
 		case STRT_ACCUM:
 			strings = {"Current PC Only", "Cumulative", "Average", "Minimum", "Maximum"};
