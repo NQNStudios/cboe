@@ -2545,12 +2545,15 @@ void unfrill_terrain() {
 	for(short i = 0; i < cur_area->max_dim; i++)
 		for(short j = 0; j < cur_area->max_dim; j++) {
 			terrain_type = cur_area->terrain(i,j);
+			bool changed = false;
 			cTerrain& ter = scenario.ter_types[terrain_type];
 			
-			if(ter.frill_for >= 0)
+			if(ter.frill_for >= 0){
 				terrain_type = ter.frill_for;
+				changed = true;
+			}
 			
-			set_terrain(loc(i, j), terrain_type, changes);
+			if(changed) set_terrain(loc(i, j), terrain_type, changes);
 		}
 	undo_list.add(action_ptr(new aDrawTerrain("Remove Terrain Frills", changes)));
 	update_edit_menu();
