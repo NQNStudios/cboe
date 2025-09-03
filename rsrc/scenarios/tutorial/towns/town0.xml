@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <town boes="2.0.0">
     <size>48</size>
-    <name>Part 2: Exploration</name>
+    <name>Marshy Tower</name>
     <comment>Comment 1</comment>
     <comment>Comment 2</comment>
     <comment>Comment 3</comment>
     <bounds top="3" left="3" bottom="44" right="44" />
     <difficulty>0</difficulty>
-    <lighting>dark</lighting>
+    <lighting>lit</lighting>
     <flags>
         <chop kills="30000" />
     </flags>
+    <string id="0">
+        <![CDATA[Your priest, Michael, stops the party. "Let's not go in anywhere dangerous while any of us are poisoned. I'll cure us by pressing 'p' to open the Priest Spells menu, choosing myself as the caster, choosing Cure Poison, then choosing a target, and pressing 'cast.'"]]>
+    </string>
 </town>

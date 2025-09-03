@@ -189,8 +189,15 @@
 	goto -1
 @once-dlog = 27
 	sdf 1, 3
-	msg 65, -1, -1
+	msg 65, -1, 1
 	pic 0, 4
 	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@block-move = 28
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 1, -1, -1
 	ex2 -1, -1, -1
 	goto -1
