@@ -42,7 +42,7 @@ void start_quest_editing();
 void start_shops_editing();
 void start_string_editing(eStrMode mode);
 void start_special_editing(short mode);
-void town_entry(location spot_hit);
+void town_entry(location spot_hit, bool is_new = false);
 void start_dialogue_editing();
 void update_mouse_spot(location the_point);
 
