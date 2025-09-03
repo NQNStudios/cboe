@@ -2756,7 +2756,7 @@ void set_terrain(location l,ter_num_t terrain_type,stroke_ter_changes_t& stroke_
 		draw_terrain();
 		redraw_screen();
 
-		town_entry(l);
+		town_entry(l, true);
 		mouse_button_held = false;
 	}
 }
@@ -2999,7 +2999,7 @@ void set_special(location spot_hit) {
 	}
 }
 
-void town_entry(location spot_hit) {
+void town_entry(location spot_hit, bool is_new) {
 	ter_num_t ter = current_terrain->terrain[spot_hit.x][spot_hit.y];
 	if(scenario.ter_types[ter].special != eTerSpec::TOWN_ENTRANCE) {
 		showError("This space isn't a town entrance. Town entrances are marked by a small brown castle icon.");
@@ -3008,7 +3008,7 @@ void town_entry(location spot_hit) {
 	long old_town_num = get_town_entrance(spot_hit);
 	long town_num = pick_town_num("select-town-enter",old_town_num,scenario);
 
-	if(town_num >= 0 && town_num != old_town_num){
+	if(town_num >= 0 && (is_new || town_num != old_town_num)){
 		undo_list.add(action_ptr(new aEditTownEntrance(spot_hit, old_town_num, town_num)));
 		update_edit_menu();
 		set_town_entrance(spot_hit, town_num);
