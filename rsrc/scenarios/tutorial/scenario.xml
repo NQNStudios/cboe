@@ -43,6 +43,24 @@
         <town-start x="5" y="7" />
         <outdoor-start x="0" y="0" />
         <sector-start x="24" y="24" />
+        <special-item start-with="false" useable="false" special="-1">
+            <name>Marshy Artifact Piece</name>
+            <description>
+                <![CDATA[One of the three pieces you need to use the exit portal!]]>
+            </description>
+        </special-item>
+        <special-item start-with="false" useable="false" special="-1">
+            <name>Vault Artifact Piece</name>
+            <description>
+                <![CDATA[The second piece!]]>
+            </description>
+        </special-item>
+        <special-item start-with="false" useable="false" special="-1">
+            <name>Lake Artifact Piece</name>
+            <description>
+                <![CDATA[The last piece!]]>
+            </description>
+        </special-item>
         <shop>
             <name>Healing</name>
             <type>dead</type>
@@ -60,11 +78,19 @@
                 <heal>8</heal>
             </entries>
         </shop>
+        <string id="0">
+            <![CDATA[You carefully remove the ornaments from this altar.]]>
+        </string>
+        <string id="1">
+            <![CDATA[Lo and behold, the gods are petty!]]>
+        </string>
     </game>
     <editor>
         <default-ground>2</default-ground>
         <graphics>
             <pic index="0">terrain</pic>
+            <pic index="1">terrain</pic>
+            <pic index="2">terrain</pic>
         </graphics>
         <sdf row="0" col="0">entrance message</sdf>
         <sdf row="0" col="1">supplies message</sdf>
@@ -72,12 +98,17 @@
         <sdf row="0" col="3">pantry message</sdf>
         <sdf row="0" col="4"># spiders killed</sdf>
         <sdf row="0" col="5">party cleaned webs</sdf>
+        <sdf row="0" col="6">spider combat done</sdf>
+        <sdf row="0" col="7">gave piece</sdf>
         <sdf row="1" col="0">looked at book</sdf>
         <sdf row="1" col="1">book node</sdf>
         <sdf row="1" col="2">entry message</sdf>
         <sdf row="1" col="3">exit message</sdf>
         <sdf row="1" col="4">artifact pieces</sdf>
+        <sdf row="2" col="0">piece given</sdf>
+        <sdf row="3" col="0">piece given</sdf>
         <sdf row="200" col="0">found boat</sdf>
         <sdf row="200" col="1">exit backwoods message</sdf>
+        <sdf row="200" col="2">resting message</sdf>
     </editor>
 </scenario>

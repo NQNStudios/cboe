@@ -11,4 +11,7 @@
     <flags>
         <chop kills="30000" />
     </flags>
+    <string id="0">
+        <![CDATA[You get the last piece!]]>
+    </string>
 </town>

@@ -5,11 +5,11 @@
     <comment>Comment 1</comment>
     <comment>Comment 2</comment>
     <comment>Comment 3</comment>
-    <bounds top="3" left="3" bottom="44" right="44" />
+    <bounds top="3" left="3" bottom="34" right="47" />
     <difficulty>0</difficulty>
     <lighting>lit</lighting>
     <timer freq="2">13</timer>
-    <timer freq="2">17</timer>
+    <timer freq="0">0</timer>
     <flags>
         <chop kills="30000" />
     </flags>
@@ -34,6 +34,11 @@
     </item>
     <item id="6">
         <type>19</type>
+    </item>
+    <item id="7">
+        <type>0</type>
+        <charges>50</charges>
+        <contained>true</contained>
     </item>
     <creature id="0">
         <type>118</type>
@@ -103,5 +108,50 @@
     </string>
     <string id="30">
         <![CDATA[timer called]]>
+    </string>
+    <string id="31">
+        <![CDATA[Once again, Michael recognizes a weakened spot in the wall where mold has grown through the bricks. Casting Move Mountains here will make the opening you need to explore further.]]>
+    </string>
+    <string id="32">
+        <![CDATA[(When building your own party, you should probably always give at least one of your characters 2 levels of Priest Spells skill! Some older scenarios assume you will be able to cast Move Mountains, and to recognize vulnerable walls. You can get stuck without it.)]]>
+    </string>
+    <string id="37">
+        <![CDATA[Through the gate, you see what remains of a courtyard. The first artifact piece is in there! Too bad the gate won't open.]]>
+    </string>
+    <string id="38">
+        <![CDATA[You collect the first piece of the artifact! It's wet....]]>
+    </string>
+    <string id="39">
+        <![CDATA[Finally! A mechanism for opening one of these gates.]]>
+    </string>
+    <string id="40">
+        <![CDATA[You can operate most levers by using, looking, or moving onto them.]]>
+    </string>
+    <string id="45">
+        <![CDATA[More concerning, is how the portcullis clangs shut behind you!]]>
+    </string>
+    <string id="46">
+        <![CDATA[Well, with the front gate now closed, you'll need to find another way out.]]>
+    </string>
+    <string id="47">
+        <![CDATA[You see a window high in the southern wall of this chapel. Maybe you could crawl through it, if only you could stand on something tall.]]>
+    </string>
+    <string id="48">
+        <![CDATA[Like that altar! The gods won't mind if you move their idols aside... probably.]]>
+    </string>
+    <string id="49">
+        <![CDATA[Click the 'Use' button, or type 'u', then select a tile to use it.]]>
+    </string>
+    <string id="53">
+        <![CDATA[Disease is an extremely unpleasant status to have. Michael has a priest spell, Cure Disease, that can fix it.]]>
+    </string>
+    <string id="54">
+        <![CDATA[There appears to be a small chapel here. Maybe you can look into it after searching the courtyard to the north.]]>
+    </string>
+    <string id="55">
+        <![CDATA[This book describes how to cast a new priest spell: Disease.]]>
+    </string>
+    <string id="56">
+        <![CDATA[This book describes how to cast a new priest spell: Cure Disease.]]>
     </string>
 </town>

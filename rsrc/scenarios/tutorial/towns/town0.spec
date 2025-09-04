@@ -21,11 +21,11 @@
 	goto -1
 @once-disp-msg = 3
 	sdf 0, 0
-	msg 1, -1, -1
+	msg 1, 45, -1
 	pic 0, 4
 	ex1 -1, -1, -1
 	ex2 -1, -1, -1
-	goto -1
+	goto 29
 @once-dlog = 4
 	sdf -1, -1
 	msg 8, -1, 1
@@ -109,18 +109,151 @@
 	pic 0, 4
 	ex1 1, -1, -1
 	ex2 -1, -1, -1
-	goto -1
+	goto 17
 @disp-msg = 16
 	sdf -1, -1
 	msg 29, -1, -1
 	pic 0, 4
 	ex1 -1, -1, -1
 	ex2 -1, -1, -1
+	goto 18
+@set-sdf = 17
+	sdf 0, 4
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 0, -1, -1
+	ex2 -1, -1, -1
 	goto -1
-@disp-msg = 17
+@set-sdf = 18
+	sdf 0, 6
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@if-sdf = 19
+	sdf 0, 6
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 1, 20, -1
+	ex2 -1, -1, -1
+	goto -1
+@if-ter = 20
 	sdf -1, -1
-	msg 30, -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 13, 20, -1
+	ex2 134, 21, -1
+	goto -1
+@once-dlog = 21
+	sdf -1, -1
+	msg 31, -1, 1
+	pic 96, 1
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@if-spec-item = 22
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 0, -1, -1
+	ex2 -1, -1, -1
+	goto 23
+@disp-msg = 23
+	sdf -1, -1
+	msg 37, -1, -1
 	pic 0, 4
 	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@once-give-spec-item = 24
+	sdf 0, 7
+	msg 38, 46, -1
+	pic 0, 4
+	ex1 0, 0, -1
+	ex2 -1, -1, -1
+	goto 36
+@if-ter = 25
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 25, 24, -1
+	ex2 130, 26, -1
+	goto -1
+@once-dlog = 26
+	sdf -1, -1
+	msg 39, -1, 1
+	pic 214, 1
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@change-ter = 27
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 25, 24, -1
+	ex2 131, -1, -1
+	goto -1
+@nop = 28
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@change-ter = 29
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 24, 7, -1
+	ex2 130, -1, -1
+	goto -1
+@if-spec-item = 30
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 0, 31, -1
+	ex2 -1, -1, -1
+	goto 35
+@once-dlog = 31
+	sdf -1, -1
+	msg 47, -1, 1
+	pic 137, 1
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@spell-priest = 32
+	sdf -1, -1
+	msg 55, -1, -1
+	pic 0, 4
+	ex1 18, 0, -1
+	ex2 -1, -1, -1
+	goto -1
+@spell-priest = 33
+	sdf -1, -1
+	msg 56, -1, -1
+	pic 0, 4
+	ex1 27, 0, -1
+	ex2 -1, -1, -1
+	goto -1
+@disp-msg = 34
+	sdf -1, -1
+	msg 53, -1, -1
+	pic 0, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@block-move = 35
+	sdf -1, -1
+	msg 54, -1, -1
+	pic 0, 4
+	ex1 1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@inc-sdf = 36
+	sdf 1, 4
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 1, 0, -1
 	ex2 -1, -1, -1
 	goto -1
