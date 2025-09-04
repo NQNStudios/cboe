@@ -16,16 +16,34 @@
         </unknown>
     </personality>
     <personality id="21">
-        <title>Unused</title>
-        <look></look>
-        <name></name>
-        <job></job>
+        <title>Tired Guard</title>
+        <look>
+            <![CDATA[This guard looks tired of doing his job, but also too tired to defy his boss.]]>
+        </look>
+        <name>
+            <![CDATA["Like I'm telling you that, intruder!"]]>
+        </name>
+        <job>
+            <![CDATA["I guard the place."]]>
+        </job>
+        <unknown>
+            <![CDATA["Stop trying to confuse me."]]>
+        </unknown>
     </personality>
     <personality id="22">
-        <title>Unused</title>
-        <look></look>
-        <name></name>
-        <job></job>
+        <title>G</title>
+        <look>
+            <![CDATA[It's your old pal G, the conniving guard. "Looks like we're stuck at a dead end, hm?"]]>
+        </look>
+        <name>
+            <![CDATA["It's just G."]]>
+        </name>
+        <job>
+            <![CDATA["My job now is to get the two of us out of here with the treasure! But I'm afraid we're stuck."]]>
+        </job>
+        <unknown>
+            <![CDATA["I'll take that gold, now."]]>
+        </unknown>
     </personality>
     <personality id="23">
         <title>Unused</title>
@@ -72,9 +90,15 @@
     <node for="20">
         <keyword>heis</keyword>
         <keyword>vaul</keyword>
-        <type>reg</type>
+        <type>if-sdf</type>
+        <param>2</param>
+        <param>5</param>
+        <param>0</param>
         <text>
             <![CDATA["So you want in, huh?" She smirks. "Well the next door will require more sophistication than the one you busted down like an impatient troll. I have the tools you need, but they'll cost you."]]>
+        </text>
+        <text>
+            <![CDATA["So, the guard in the hallway is giving you trouble, huh? I have an idea for that."]]>
         </text>
     </node>
     <node for="20">
@@ -88,6 +112,54 @@
         </text>
         <text>
             <![CDATA["Sorry, bud. That's all I've got."]]>
+        </text>
+    </node>
+    <node for="20">
+        <keyword>idea</keyword>
+        <type>set-sdf</type>
+        <param>2</param>
+        <param>6</param>
+        <text>
+            <![CDATA["He's supposed to patrol between two lookout points. He gets lazy sometimes, but if you ask him about patrol duty, he has to do it! That's when you slip past."]]>
+        </text>
+    </node>
+    <node for="21">
+        <keyword>patr</keyword>
+        <keyword>duty</keyword>
+        <type>set-sdf</type>
+        <param>2</param>
+        <param>3</param>
+        <text>
+            <![CDATA["Blast! You're right. I've been slacking off. Now move along so I can do my job."]]>
+        </text>
+        <text>
+            <![CDATA[Every once in a while, this guard will now switch locations. You can wait for a turn by clicking your main character, or typing '5' on the number pad.]]>
+        </text>
+    </node>
+    <node for="22">
+        <keyword>stuc</keyword>
+        <keyword>dead</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["Well, I'll be honest. I know the way out, but you're not going anywhere without giving me the gold you found in the vault."]]>
+        </text>
+        <text>
+            <![CDATA[Technically, there is another option. You could start combat mode with 'f' and move to attack. Attacking friendly characters can be a very bad idea, but this is a role-playing game, so it's up to you. (This guard doesn't seem so tough.)]]>
+        </text>
+    </node>
+    <node for="22">
+        <keyword>purc</keyword>
+        <keyword>givi</keyword>
+        <type>buy-sdf</type>
+        <param>400</param>
+        <param>2</param>
+        <param>8</param>
+        <param>1</param>
+        <text>
+            <![CDATA["Your cooperation is much appreciated. So long, suckers!"|Well, you managed to keep at least a chunk of the gold secret, so that's nice.]]>
+        </text>
+        <text>
+            <![CDATA[You don't have enough gold. Did you loot the chest in the vault room?]]>
         </text>
     </node>
 </dialogue>

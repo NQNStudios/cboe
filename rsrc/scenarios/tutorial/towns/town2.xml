@@ -8,10 +8,17 @@
     <bounds top="3" left="3" bottom="44" right="44" />
     <difficulty>0</difficulty>
     <lighting>lit</lighting>
-    <timer freq="5">18</timer>
+    <timer freq="10">18</timer>
+    <timer freq="2">32</timer>
     <flags>
         <chop kills="30000" />
     </flags>
+    <item id="0">
+        <type>0</type>
+        <charges>500</charges>
+        <property>true</property>
+        <contained>true</contained>
+    </item>
     <creature id="0">
         <type>19</type>
         <attitude>friendly</attitude>
@@ -23,14 +30,23 @@
         <type>19</type>
         <attitude>friendly</attitude>
         <mobility>0</mobility>
-        <personality>-1</personality>
-        <face>31</face>
+        <personality>21</personality>
+        <face>71</face>
+        <ontalk>23</ontalk>
+    </creature>
+    <creature id="2">
+        <type>19</type>
+        <attitude>friendly</attitude>
+        <mobility>0</mobility>
+        <personality>22</personality>
+        <face>10</face>
+        <onkill>36</onkill>
     </creature>
     <sign id="0">
         <![CDATA[Vault Tower -|NO BREAKING AND ENTERING]]>
     </sign>
     <string id="0">
-        <![CDATA[You get the next piece!]]>
+        <![CDATA[This appears to be the central chamber of the vault! And right here, is the artifact piece you're looking for.]]>
     </string>
     <string id="1">
         <![CDATA[You've reached Vault Tower. This building is in better repair than the last one, and the front door is locked. Thissa says, "I can break thissss!"]]>
@@ -70,5 +86,44 @@
     </string>
     <string id="26">
         <![CDATA[The guard changes positions.]]>
+    </string>
+    <string id="27">
+        <![CDATA[The guard watching through this window stops you. "Hey! Move any further and I'll shoot."]]>
+    </string>
+    <string id="28">
+        <![CDATA[Maybe your buddy in the first room can help with this. (People might respond differently to the same questions after something specific happens.)]]>
+    </string>
+    <string id="29">
+        <![CDATA[You can ask people about things that aren't shown as buttons in the dialog window. Click 'Ask About' or type 'a' to do so, then type what you want to ask about.]]>
+    </string>
+    <string id="30">
+        <![CDATA[This guard will respond to the words 'patrol' or 'duty'!]]>
+    </string>
+    <string id="31">
+        <![CDATA[No sense in turning around now!]]>
+    </string>
+    <string id="32">
+        <![CDATA[Adrianna examines this door closely. "The lock is sealed magically," she observes. "I have a spell for that."]]>
+    </string>
+    <string id="33">
+        <![CDATA[Cast the mage spell 'Unlock Doors' as a third option for tricky doors where bashing or picking doesn't cut it!]]>
+    </string>
+    <string id="34">
+        <![CDATA[You take it, and the gate opens.]]>
+    </string>
+    <string id="35">
+        <![CDATA[The sneaky guard turns and flees from your presence, passing right through the wall to the east!]]>
+    </string>
+    <string id="36">
+        <![CDATA[(If you're ever stuck in a scenario, try moving into suspicious walls. Even if they're not  breakable with magic, you might find a hidden door!) ]]>
+    </string>
+    <string id="37">
+        <![CDATA[Excellent! A boat. This should take you along the water to the final Tower!]]>
+    </string>
+    <string id="38">
+        <![CDATA[Move onto the boat to board it.]]>
+    </string>
+    <string id="43">
+        <![CDATA[Having struck down your duplicitous collaborator, you notice something strange about the wall to the east.]]>
     </string>
 </town>
