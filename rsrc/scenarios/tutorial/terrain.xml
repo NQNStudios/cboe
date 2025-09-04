@@ -6293,4 +6293,28 @@
             <shortcut>t</shortcut>
         </editor>
     </terrain>
+    <terrain id="257">
+        <name>Boulder</name>
+        <pic>1000</pic>
+        <map>-1</map>
+        <blockage>move-and-shoot</blockage>
+        <transform>0</transform>
+        <fly>true</fly>
+        <boat>false</boat>
+        <ride>true</ride>
+        <archetype>false</archetype>
+        <light>0</light>
+        <step-sound>step</step-sound>
+        <trim>none</trim>
+        <ground>1</ground>
+        <trim-for>-1</trim-for>
+        <arena>9</arena>
+        <special>
+            <type>none</type>
+            <flag>-1</flag>
+            <flag>0</flag>
+            <flag>0</flag>
+        </special>
+        <editor />
+    </terrain>
 </terrains>

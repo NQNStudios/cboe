@@ -90,16 +90,6 @@
     <item id="19">
         <type>155</type>
     </item>
-    <item id="20">
-        <type>-1</type>
-        <always>true</always>
-        <property>true</property>
-    </item>
-    <item id="21">
-        <type>-1</type>
-        <always>true</always>
-        <property>true</property>
-    </item>
     <item id="22">
         <type>20</type>
         <contained>true</contained>
@@ -212,10 +202,6 @@
     </item>
     <item id="50">
         <type>171</type>
-    </item>
-    <item id="51">
-        <type>-1</type>
-        <property>true</property>
     </item>
     <item id="52">
         <type>165</type>
