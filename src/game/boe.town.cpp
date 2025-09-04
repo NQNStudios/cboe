@@ -1165,7 +1165,7 @@ void pick_lock(location where,short pc_num) {
 	short success_chance = 0;
 	short max_success_roll = (unlock_adjust * 15 + 30);
 	if(unlock_adjust < 5){
-		success_chance = minmax(max_success_roll - total_modifier, 0, 100);
+		success_chance = minmax(0, 100, max_success_roll - total_modifier);
 	}
 	if((unlock_adjust >= 5) || (r1 > max_success_roll)) {
 		add_string_to_buf("  Didn't work. (" + std::to_string(success_chance) + "\% chance)");
@@ -1203,7 +1203,7 @@ void bash_door(location where,short pc_num) {
 	r1 = get_ran(1,1,100) + total_modifier;
 	bool success_chance = 0;
 	if(unlock_adjust < 5 && univ.scenario.ter_types[terrain].flag3 == 1){
-		success_chance = minmax(max_success_roll - total_modifier, 0, 100);
+		success_chance = minmax(0, 100, max_success_roll - total_modifier);
 	}
 	if(unlock_adjust >= 5 || r1 > max_success_roll || univ.scenario.ter_types[terrain].flag3 != 1)  {
 		add_string_to_buf("  Didn't work. (" + std::to_string(success_chance) + "\% chance)");

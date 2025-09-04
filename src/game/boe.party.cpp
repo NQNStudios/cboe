@@ -1394,7 +1394,7 @@ void cast_town_spell(location where) {
 				}else{
 					total_modifier = -5 * adj + 5 * univ.town.door_diff_adjust() + univ.scenario.ter_types[ter].flag2 * 7;
 					r1 = get_ran(1,1,100) + total_modifier;
-					success_chance = minmax(min_fail_roll - 1 - total_modifier, 0, 100);
+					success_chance = minmax(0, 100, min_fail_roll - 1 - total_modifier);
 				}
 				if(r1 < min_fail_roll) {
 					add_string_to_buf("  Door unlocked.");
@@ -1416,7 +1416,7 @@ void cast_town_spell(location where) {
 				if(univ.town.is_fire_barr(where.x,where.y))
 					total_modifier -= 8;
 				short min_fail_roll = (120 - combat_percent[min(19,level)]);
-				short success_chance = minmax(min_fail_roll - 1 - total_modifier, 0, 100);
+				short success_chance = minmax(0, 100, min_fail_roll - 1 - total_modifier);
 				r1 = get_ran(1,1,100) + total_modifier;
 				if(r1 < min_fail_roll) {
 					add_string_to_buf("  Barrier broken.");
