@@ -34,6 +34,8 @@ enum ePicType {
 	PIC_STATUS = 16,			///< 12x12 status icon
 	PIC_TINY_ITEM = 17,			///< 18x18 item graphic from the small item sheet
 	PIC_BTN = 18,				///< Button graphic from the inventory buttons sheet (various sizes)
+	PIC_VEHICLE = 19,			///< 28x36 vehicle graphic from the preset vehicles sheet
+	PIC_VEHICLE_OCCUPIED = 20,	///< 28x36 vehicle graphic from the preset vehicles sheet, occupied
 	PIC_MONST_WIDE = 23,		///< 56x36 monster graphic from the preset sheets, resized to fit and centred in a 28x36 space
 	PIC_MONST_TALL = 43,		///< 28x72 monster graphic from the preset sheets, resized to fit and centred in a 28x36 space
 	PIC_MONST_LG = 63,			///< 56x72 monster graphic from the preset sheets, resized to fit in a 28x36 space
@@ -50,6 +52,8 @@ enum ePicType {
 	PIC_CUSTOM_DLOG_LG = 113,	///< 72x72 dialog graphic from the custom sheet, taken from 8 successive slots
 	PIC_CUSTOM_TER_MAP = 115,	///< 12x12 map graphic taken from the custom sheet and expanded to 24x24
 	PIC_CUSTOM_TINY_ITEM = 117,	///< 28x36 custom item graphic shrunk down into an 18x18 space
+	PIC_CUSTOM_VEHICLE = 119,	///< 28x36 custom vehicle graphic (TODO not implemented)
+	PIC_CUSTOM_VEHICLE_OCCUPIED = 120,///< 28x36 custom vehicle graphic, occupied (TODO not implemented)
 	PIC_CUSTOM_MONST_WIDE = 123,///< 56x36 monster graphic from the custom sheets, resized to fit and centred in a 28x36 space
 	PIC_CUSTOM_MONST_TALL = 143,///< 28x72 monster graphic from the custom sheets, resized to fit and centred in a 28x36 space
 	PIC_CUSTOM_MONST_LG = 163,	///< 56x72 monster graphic from the custom sheets, resized to fit in a 28x36 space
@@ -96,7 +100,7 @@ enum eSheetType {
 	SHEET_STATUS,	///< The status icons sheet, staticons.png
 	SHEET_INVENBTN,	///< Inventory buttons sheet, invenbtns.png
 	SHEET_CUSTOM,	///< Any custom graphics sheet
-	// TODO: Vehicle sheet is missing.
+	SHEET_VEHICLE,	///< Preset vehicle graphics in vehicles.png
 	// TODO: Documentation of full, custom, header, and exported sheets is still lacking.
 	NUM_SHEET_TYPES
 };
