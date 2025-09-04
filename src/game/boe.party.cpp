@@ -1393,6 +1393,10 @@ void cast_town_spell(location where) {
 					r1 = 10000;
 				}else{
 					total_modifier = -5 * adj + 5 * univ.town.door_diff_adjust() + univ.scenario.ter_types[ter].flag2 * 7;
+					if(univ.party.scen_name == "tutorial.boes"){
+						// Ahahahahaha! Ahahahahahaha! Muahahahaha!
+						total_modifier -= 80;
+					}
 					r1 = get_ran(1,1,100) + total_modifier;
 					success_chance = minmax(0, 100, min_fail_roll - 1 - total_modifier);
 				}
