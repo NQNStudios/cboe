@@ -2954,9 +2954,10 @@ void place_edit_special(location loc) {
 			is_new = true;
 		}
 		if(specials[i].spec < 0) {
-			if(edit_spec_enc(get_current_area()->specials.size()-1, editing_town ? 2: 1, nullptr, is_new)) {
+			int next_node = get_current_area()->specials.size()-1;
+			if(edit_spec_enc(next_node, editing_town ? 2: 1, nullptr, is_new)) {
 				specials[i] = loc;
-				specials[i].spec = i;
+				specials[i].spec = next_node;
 				undo_list.add(action_ptr(new aPlaceEraseSpecial("Place Special Encounter", true, specials[i])));
 				update_edit_menu();
 			}
