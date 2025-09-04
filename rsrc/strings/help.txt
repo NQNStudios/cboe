@@ -3,7 +3,7 @@ In general, you can get help by clicking on the '?' buttons or typing '?'. {scen
 
 
 Everyone responds to 'Look', 'Name', and 'Job' (use the buttons at the bottom). To ask about something people mention, click on the word (click on 'Demon' to ask about demons). Certain people respond to 'Buy' and 'Sell', which puts you in shopping mode. 
-Shortcuts: To get previous response, press the Back button (or hit space). You can press any of the bottom buttons by typing the first letter in the word. Hit Record to write notes in journal, and hit Bye (or type Escape) to stop talking.
+Shortcuts: To get previous response, press the Back button (or hit space). You can press any of the bottom buttons by typing the first letter in the word. Hit Record to write notes in journal, and hit Done (or type Escape) to stop talking.
 To cast a spell, first click on the number of the person to cast (to the upper left). Then click on the button by the spell to cast (hit Space to see other spells). Finally, if it's a spell cast on a party member, click on the correct Target button.
 Shortcut: Typing the letter before a spell picks the spell (case-sensitive), and typing '1'-'6' picks a caster. Option clicking a spell button brings up a spell description. Finally, you can often cast spells faster using the Mage Spells and Priest spells menus.
 This menu always contains all the spells an active PC can cast. Click on the name of a PC to make them active. Then select a spell from this menu to cast. Then, if you need to pick someone to cast the spell on, a window will come up for you to do so.
