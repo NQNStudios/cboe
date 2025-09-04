@@ -3230,6 +3230,7 @@
         <treasure>1</treasure>
         <value>8</value>
         <weight>1</weight>
+        <class>1</class>
         <properties />
         <ability>
             <type>lockpick</type>

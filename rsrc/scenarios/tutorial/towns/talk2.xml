@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <dialogue boes="2.0.0">
     <personality id="20">
-        <title>Unused</title>
-        <look></look>
-        <name></name>
-        <job></job>
+        <title>Shady Guard</title>
+        <look>
+            <![CDATA[This guard looks more than a little disgruntled. If you can keep her ire directed at her boss, that might be a great advantage.]]>
+        </look>
+        <name>
+            <![CDATA["Who even cares? If you must, call me G."]]>
+        </name>
+        <job>
+            <![CDATA["Guarding this vault. But one good heist could pay me off better than the wages, that's for sure."]]>
+        </job>
+        <unknown>
+            <![CDATA["Just leave the planning to me, okay?"]]>
+        </unknown>
     </personality>
     <personality id="21">
         <title>Unused</title>
@@ -60,4 +69,25 @@
         <name></name>
         <job></job>
     </personality>
+    <node for="20">
+        <keyword>heis</keyword>
+        <keyword>vaul</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["So you want in, huh?" She smirks. "Well the next door will require more sophistication than the one you busted down like an impatient troll. I have the tools you need, but they'll cost you."]]>
+        </text>
+    </node>
+    <node for="20">
+        <keyword>tool</keyword>
+        <keyword>purc</keyword>
+        <type>shop</type>
+        <param>3</param>
+        <param>1</param>
+        <text>
+            <![CDATA[Shady Guard's Wares]]>
+        </text>
+        <text>
+            <![CDATA["Sorry, bud. That's all I've got."]]>
+        </text>
+    </node>
 </dialogue>

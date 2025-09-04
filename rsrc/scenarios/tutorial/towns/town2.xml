@@ -8,10 +8,65 @@
     <bounds top="3" left="3" bottom="44" right="44" />
     <difficulty>0</difficulty>
     <lighting>lit</lighting>
+    <timer freq="5">18</timer>
     <flags>
         <chop kills="30000" />
     </flags>
+    <creature id="0">
+        <type>19</type>
+        <attitude>friendly</attitude>
+        <mobility>0</mobility>
+        <personality>20</personality>
+        <face>10</face>
+    </creature>
+    <creature id="1">
+        <type>19</type>
+        <attitude>friendly</attitude>
+        <mobility>0</mobility>
+        <personality>-1</personality>
+        <face>31</face>
+    </creature>
+    <sign id="0">
+        <![CDATA[Vault Tower -|NO BREAKING AND ENTERING]]>
+    </sign>
     <string id="0">
         <![CDATA[You get the next piece!]]>
     </string>
+    <string id="1">
+        <![CDATA[You've reached Vault Tower. This building is in better repair than the last one, and the front door is locked. Thissa says, "I can break thissss!"]]>
+    </string>
+    <string id="2">
+        <![CDATA[It may be rude, but the life of an adventurer involves breaking the rules (and other people's property) sometimes. When you try to open a locked door, you'll have the option to bash it down. When asked, choose your physically strongest character, and give it your best shot.]]>
+    </string>
+    <string id="7">
+        <![CDATA["Whoa there!"]]>
+    </string>
+    <string id="8">
+        <![CDATA[Oops. Of course this place is guarded.]]>
+    </string>
+    <string id="9">
+        <![CDATA["The boss will make me pay for that door, you know! Fix it or I'll have to follow the 'violent repulsion' protocol."]]>
+    </string>
+    <string id="10">
+        <![CDATA[You can close doors behind you with the Use command, which might come in handy for sneaking around. Type 'u' or click the 'Use' button, and see if you can get this door back on its hinges.]]>
+    </string>
+    <string id="13">
+        <![CDATA["Oi! I said, fix the door."]]>
+    </string>
+    <string id="14">
+        <![CDATA["I'll tell you what. I wouldn't mind a piece of the boss's treasure. Listen to me, and I'll tell you how to get in. We can split the stash."]]>
+    </string>
+    <string id="15">
+        <![CDATA[Press 't', or the button with a mouth on it, then select a creature to start a conversation.]]>
+    </string>
+    <string id="20">
+        <![CDATA["Hey hotshot! You'll want to give those lockpicks to your wiliest thief and equip them by clicking on them in the items panel."]]>
+    </string>
+    <string id="21">
+        <![CDATA[To view a different character's inventory, click their name in the stats panel at the top-right. If Frrrrrr isn't holding the lockpicks, select whoever is. ]]>
+    </string>
+    <string id="22">
+        <![CDATA[To give an item from one character to another click the button with a 'G' next to the lockpicks. Select Frrrrrr, who is your best lockpicker right now. Then make sure they're equipped.]]>
+    </string>
+    <string id="25" />
 </town>
