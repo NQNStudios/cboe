@@ -100,6 +100,10 @@
         <sdf row="0" col="5">party cleaned webs</sdf>
         <sdf row="0" col="6">spider combat done</sdf>
         <sdf row="0" col="7">gave piece</sdf>
+        <sdf row="0" col="8">archery message</sdf>
+        <sdf row="0" col="9">mage spells message</sdf>
+        <sdf row="0" col="10">priest spells combat message</sdf>
+        <sdf row="0" col="11">spell help message</sdf>
         <sdf row="1" col="0">looked at book</sdf>
         <sdf row="1" col="1">book node</sdf>
         <sdf row="1" col="2">entry message</sdf>

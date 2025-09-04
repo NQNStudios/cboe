@@ -65,7 +65,7 @@
         <onkill>9</onkill>
     </creature>
     <string id="0">
-        <![CDATA[Your priest, Michael, stops the party. "Let's not go in anywhere dangerous while any of us are poisoned. I'll cure us by pressing 'p' to open the Priest Spells menu, choosing myself as the caster, choosing Cure Poison, then choosing a target, and pressing 'cast.'"]]>
+        <![CDATA[Your priest, Michael, stops the party. "Let's not go in anywhere dangerous while any of us are poisoned. I'll cure us by pressing 'p' or the ankh button to open the Priest Spells menu, choosing myself as the caster, choosing Cure Poison, then choosing a target, and pressing 'cast.'"]]>
     </string>
     <string id="1">
         <![CDATA[This tower is slowly sinking into the marsh. Not fast enough to be of concern for you, though.]]>
@@ -93,9 +93,6 @@
     </string>
     <string id="17">
         <![CDATA[Press 'f' to enter combat mode. ]]>
-    </string>
-    <string id="18">
-        <![CDATA[Adrianna and Feodoric can cast mage spells. Press 'm' on their turn, use the 'Cast Mage' menu item, or click the flaming orb mutton to do so. Lots of mage spells are useful in combat! Try Flame or Fireball for wiping out enemies early on.]]>
     </string>
     <string id="22">
         <![CDATA[Now that the spiders are dead, you probably want to clean off their webs. Control+w, or Command+w on a Mac, will make the party rest for a short time in town or a dungeon, long enough to clean off any webs. You can also select 'Wait 80 Moves' in the Action menu.]]>
@@ -154,4 +151,29 @@
     <string id="56">
         <![CDATA[This book describes how to cast a new priest spell: Cure Disease.]]>
     </string>
+    <string id="57">
+        <![CDATA[Adrianna and Feodoric can cast mage spells. Press 'm' on their turn, use the 'Cast Mage' menu item, or click the flaming orb button to do so. Lots of mage spells are useful in combat! Try Flame or Fireball for wiping out enemies early on.]]>
+    </string>
+    <string id="63">
+        <![CDATA[Frrrrrr comes prepared with a bow and arrow. To fire, type 's' or click the button of an arrow, then select a tile with an enemy on it.]]>
+    </string>
+    <string id="64">
+        <![CDATA[You'll want to keep stocked up on arrows, but Frrrrrr can also wield melee weapons if you find an extra for them.]]>
+    </string>
+    <string id="69">
+        <![CDATA[Priests are useful in combat, too! They have spells like Wound for dealing damage, Stumble for disabling enemies, or Charm Foe for turning enemies against each other.]]>
+    </string>
+    <string id="70">
+        <![CDATA[Most importantly, though, they can heal your party when someone's injured!]]>
+    </string>
+    <string id="71">
+        <![CDATA[(Feodoric can also cast some priest spells.)]]>
+    </string>
+    <string id="75">
+        <![CDATA[Start combat mode before going in there!]]>
+    </string>
+    <string id="76">
+        <![CDATA[There are MANY other spells in Blades of Exile! To learn how any other spell works,  open the Mage or Priest spells menu, then hold the Alt key (or Option key on a Mac) while clicking on the spell.]]>
+    </string>
+    <string id="81" />
 </town>

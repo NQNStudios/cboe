@@ -194,11 +194,11 @@
 	ex1 25, 24, -1
 	ex2 131, -1, -1
 	goto -1
-@nop = 28
+@lever-generic = 28
 	sdf -1, -1
 	msg -1, -1, -1
 	pic 0, 4
-	ex1 -1, -1, -1
+	ex1 -1, 27, -1
 	ex2 -1, -1, -1
 	goto -1
 @change-ter = 29
@@ -255,5 +255,89 @@
 	msg -1, -1, -1
 	pic 0, 4
 	ex1 1, 0, -1
+	ex2 -1, -1, -1
+	goto -1
+@if-context = 37
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 2, -1, 45
+	ex2 -1, -1, -1
+	goto 46
+@if-statistic = 38
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 2, 39, -1
+	ex2 9, -1, -1
+	goto 40
+@once-dlog = 39
+	sdf 0, 9
+	msg 57, -1, 1
+	pic 25, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto 42
+@if-statistic = 40
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 4, 41, -1
+	ex2 7, -1, -1
+	goto 43
+@once-dlog = 41
+	sdf 0, 8
+	msg 63, -1, 1
+	pic 57, 7
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@nop = 42
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@if-statistic = 43
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 3, 44, -1
+	ex2 10, -1, -1
+	goto -1
+@once-dlog = 44
+	sdf 0, 0
+	msg 69, -1, 1
+	pic 26, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@block-move = 45
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 0, -1, -1
+	ex2 1, -1, -1
+	goto 38
+@if-sdf = 46
+	sdf 0, 6
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 1, -1, -1
+	ex2 -1, -1, -1
+	goto 47
+@block-move = 47
+	sdf -1, -1
+	msg 75, -1, -1
+	pic 0, 4
+	ex1 1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@once-dlog = 48
+	sdf 0, 11
+	msg 76, -1, 1
+	pic 14, 4
+	ex1 -1, -1, -1
 	ex2 -1, -1, -1
 	goto -1
