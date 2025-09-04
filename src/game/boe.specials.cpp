@@ -3427,7 +3427,7 @@ void ifthen_spec(const runtime_state& ctx) {
 		case eSpecType::IF_HAVE_ITEM_CLASS:
 			if(spec.ex2a > 0 && univ.party.take_class(spec.ex1a))
 				ctx.next_spec = spec.ex1b;
-			else if(spec.ex2a == 0 && univ.party.has_class(spec.ex1a))
+			else if(spec.ex2a <= 0 && univ.party.has_class(spec.ex1a))
 				ctx.next_spec = spec.ex1b;
 			break;
 		case eSpecType::IF_EQUIP_ITEM_CLASS:
