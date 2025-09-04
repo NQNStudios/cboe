@@ -12,3 +12,17 @@
 	ex1 1, 0, -1
 	ex2 -1, -1, -1
 	goto -1
+@once-dlog = 2
+	sdf -1, -1
+	msg 1, -1, 1
+	pic 19, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto 3
+@force-give = 3
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 25, -1, -1
+	ex2 -1, -1, -1
+	goto -1

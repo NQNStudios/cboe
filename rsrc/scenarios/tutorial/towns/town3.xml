@@ -7,11 +7,25 @@
     <comment>Comment 3</comment>
     <bounds top="3" left="3" bottom="44" right="44" />
     <difficulty>0</difficulty>
-    <lighting>lit</lighting>
+    <lighting>dark</lighting>
+    <onenter condition="alive">2</onenter>
     <flags>
         <chop kills="30000" />
     </flags>
     <string id="0">
-        <![CDATA[You get the last piece!]]>
+        <![CDATA[You found the last piece of the artifact! All that's left now is to return to the very first tower and cross the rune to get to the exit portal.]]>
     </string>
+    <string id="1">
+        <![CDATA[When you enter the last tower, you find only a stairway spiraling down, down, and down. Eventually the walls give way to raw cave stone, and nothing lights your way.]]>
+    </string>
+    <string id="2">
+        <![CDATA[Searching through your pack, with great luck, you find some torches! To use a torch, click the 'U' button next to it in the items panel.]]>
+    </string>
+    <string id="3">
+        <![CDATA[Adrianna and Feodoric can also both cast the mage spell 'Light', another way to help you see where you're going.]]>
+    </string>
+    <string id="4">
+        <![CDATA[Alternatively, you might choose to keep the lights off! Harder for the monsters to see you, that way.]]>
+    </string>
+    <string id="6" />
 </town>
