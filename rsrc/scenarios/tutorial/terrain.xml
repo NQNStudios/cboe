@@ -3153,7 +3153,7 @@
             <type>unlock</type>
             <flag>129</flag>
             <flag>5</flag>
-            <flag>1</flag>
+            <flag>0</flag>
         </special>
         <editor />
     </terrain>
