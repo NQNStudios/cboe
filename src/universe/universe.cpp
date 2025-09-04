@@ -117,7 +117,7 @@ const cTown& cCurTown::operator * () const {
 }
 
 int cCurTown::door_diff_adjust() {
-	return univ.scenario.has_feature_flag("door-town-difficulty") ? arena->difficulty : 0;
+	return univ.scenario.has_feature_flag("door-town-difficulty") ? univ.scenario.towns[univ.party.town_num]->difficulty : 0;
 }
 
 void cCurTown::place_preset_fields() {
