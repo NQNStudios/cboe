@@ -150,7 +150,7 @@ namespace {
 	node_properties_t S_WARP = node_builder_t(eSpecType::TOWN_RELOCATE_CREATURE)
 		.msg()
 		.loc(eSpecField::EX1A, eSpecField::EX1B, eLocType::ACTIVE_TOWN)
-		.ex2a(eSpecPicker::TOWNPERSON)
+		.ex2a(eSpecPicker::TOWNPERSON_100)
 		.ex2b(STRT_POS_MODE);
 	node_properties_t S_LABEL = node_builder_t(eSpecType::TOWN_PLACE_LABEL)
 		.msg1(eSpecPicker::MSG_SINGLE)
