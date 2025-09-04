@@ -4752,8 +4752,8 @@
         <trim-for>-1</trim-for>
         <arena>1</arena>
         <special>
-            <type>none</type>
-            <flag>-1</flag>
+            <type>use-spec</type>
+            <flag>0</flag>
             <flag>0</flag>
             <flag>0</flag>
         </special>
@@ -6312,6 +6312,56 @@
         <special>
             <type>none</type>
             <flag>-1</flag>
+            <flag>0</flag>
+            <flag>0</flag>
+        </special>
+        <editor />
+    </terrain>
+    <terrain id="258">
+        <name>Wall w. Window</name>
+        <pic>99</pic>
+        <map>99</map>
+        <blockage>none</blockage>
+        <transform>0</transform>
+        <fly>false</fly>
+        <boat>false</boat>
+        <ride>true</ride>
+        <archetype>false</archetype>
+        <light>0</light>
+        <step-sound>step</step-sound>
+        <trim>wall</trim>
+        <ground>10</ground>
+        <trim-for>-1</trim-for>
+        <arena>1</arena>
+        <special>
+            <type>none</type>
+            <flag>-1</flag>
+            <flag>0</flag>
+            <flag>0</flag>
+        </special>
+        <editor>
+            <shortcut>x</shortcut>
+        </editor>
+    </terrain>
+    <terrain id="259">
+        <name>Good Altar</name>
+        <pic>1001</pic>
+        <map>-1</map>
+        <blockage>none</blockage>
+        <transform>0</transform>
+        <fly>false</fly>
+        <boat>false</boat>
+        <ride>true</ride>
+        <archetype>false</archetype>
+        <light>0</light>
+        <step-sound>step</step-sound>
+        <trim>none</trim>
+        <ground>13</ground>
+        <trim-for>-1</trim-for>
+        <arena>1</arena>
+        <special>
+            <type>none</type>
+            <flag>0</flag>
             <flag>0</flag>
             <flag>0</flag>
         </special>

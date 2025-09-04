@@ -36,4 +36,14 @@
     <string id="16">
         <![CDATA[You have found your way back onto the overgrown road to Vault Tower!]]>
     </string>
+    <string id="17">
+        <![CDATA[In the outdoors, if you're not poisoned and you have enough food, you can rest to recover your health and spell points.]]>
+    </string>
+    <string id="18">
+        <![CDATA[Type 'r', or click the button of a tent, to do this.]]>
+    </string>
+    <string id="19">
+        <![CDATA[If you're ever low on food, Michael has a priest spell (Manna) which will summon some!]]>
+    </string>
+    <string id="22" />
 </sector>
