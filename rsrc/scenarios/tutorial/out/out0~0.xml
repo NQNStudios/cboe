@@ -6,6 +6,9 @@
         <![CDATA[West - Marshy Tower|East - Lake Tower|South - Vault Tower]]>
     </sign>
     <area top="25" left="6" bottom="36" right="21">Path to Marshy Tower</area>
+    <area top="37" left="7" bottom="41" right="22">Backwoods</area>
+    <area top="31" left="23" bottom="43" right="25">Road to Vault Tower</area>
+    <area top="27" left="26" bottom="30" right="29">Road to Lake Tower</area>
     <string id="0">
         <![CDATA[You're now exploring the great outdoors! When outdoors, each tile on the map represents a larger space, so each move you make takes more in-game time.]]>
     </string>
@@ -24,5 +27,13 @@
     <string id="8">
         <![CDATA[The terrain is getting wilder as you make your way westward. You should move diagonally to avoid dangerous terrain where possible, but this might not always be possible.]]>
     </string>
-    <string id="13" />
+    <string id="14">
+        <![CDATA[It seems like this road leads to one of the towers you need to visit, but the woods have overgrown the path. There must be another way around.]]>
+    </string>
+    <string id="15">
+        <![CDATA[You can see a tower across the water, but there's no ferry or bridge to take you across. Frustrating.]]>
+    </string>
+    <string id="16">
+        <![CDATA[You have found your way back onto the overgrown road to Vault Tower!]]>
+    </string>
 </sector>

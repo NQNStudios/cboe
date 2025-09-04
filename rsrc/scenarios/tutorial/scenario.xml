@@ -63,12 +63,21 @@
     </game>
     <editor>
         <default-ground>2</default-ground>
+        <graphics>
+            <pic index="0">terrain</pic>
+        </graphics>
         <sdf row="0" col="0">entrance message</sdf>
         <sdf row="0" col="1">supplies message</sdf>
+        <sdf row="0" col="2">dining hall message</sdf>
+        <sdf row="0" col="3">pantry message</sdf>
+        <sdf row="0" col="4"># spiders killed</sdf>
+        <sdf row="0" col="5">party cleaned webs</sdf>
         <sdf row="1" col="0">looked at book</sdf>
         <sdf row="1" col="1">book node</sdf>
         <sdf row="1" col="2">entry message</sdf>
         <sdf row="1" col="3">exit message</sdf>
         <sdf row="1" col="4">artifact pieces</sdf>
+        <sdf row="200" col="0">found boat</sdf>
+        <sdf row="200" col="1">exit backwoods message</sdf>
     </editor>
 </scenario>

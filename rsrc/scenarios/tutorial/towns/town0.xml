@@ -8,6 +8,8 @@
     <bounds top="3" left="3" bottom="44" right="44" />
     <difficulty>0</difficulty>
     <lighting>lit</lighting>
+    <timer freq="2">13</timer>
+    <timer freq="2">17</timer>
     <flags>
         <chop kills="30000" />
     </flags>
@@ -27,6 +29,36 @@
         <type>155</type>
         <contained>true</contained>
     </item>
+    <item id="5">
+        <type>19</type>
+    </item>
+    <item id="6">
+        <type>19</type>
+    </item>
+    <creature id="0">
+        <type>118</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+        <onkill>9</onkill>
+    </creature>
+    <creature id="1">
+        <type>118</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+        <onkill>9</onkill>
+    </creature>
+    <creature id="2">
+        <type>118</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+        <onkill>9</onkill>
+    </creature>
     <string id="0">
         <![CDATA[Your priest, Michael, stops the party. "Let's not go in anywhere dangerous while any of us are poisoned. I'll cure us by pressing 'p' to open the Priest Spells menu, choosing myself as the caster, choosing Cure Poison, then choosing a target, and pressing 'cast.'"]]>
     </string>
@@ -47,5 +79,29 @@
     </string>
     <string id="14">
         <![CDATA[Whenever this tower was last occupied, some supplies were left here for guards on duty. You can search containers by looking at them with 'l'/right-click, and you can take items you find lying around by pressing 'g' or the hand button.]]>
+    </string>
+    <string id="15">
+        <![CDATA[With no way around the rubble in the main hall, you wander into the dining hall. Maybe it connects with another part of the tower.]]>
+    </string>
+    <string id="16">
+        <![CDATA[Oh, no! This pantry has been infested with giant spiders.]]>
+    </string>
+    <string id="17">
+        <![CDATA[Press 'f' to enter combat mode. ]]>
+    </string>
+    <string id="18">
+        <![CDATA[Adrianna and Feodoric can cast mage spells. Press 'm' on their turn, use the 'Cast Mage' menu item, or click the flaming orb mutton to do so. Lots of mage spells are useful in combat! Try Flame or Fireball for wiping out enemies early on.]]>
+    </string>
+    <string id="22">
+        <![CDATA[Now that the spiders are dead, you probably want to clean off their webs. Control+w, or Command+w on a Mac, will make the party rest for a short time in town or a dungeon, long enough to clean off any webs. You can also select 'Wait 80 Moves' in the Action menu.]]>
+    </string>
+    <string id="28">
+        <![CDATA[You can also clean webs off of map tiles by clicking the 'Use' button (or typing 'u') and selecting a tile with webs on it.]]>
+    </string>
+    <string id="29">
+        <![CDATA[Press 'f' again, or click the Sword button, to end combat mode.]]>
+    </string>
+    <string id="30">
+        <![CDATA[timer called]]>
     </string>
 </town>
