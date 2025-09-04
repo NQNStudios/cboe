@@ -397,14 +397,14 @@ Unused
 Unused
 Unused
 Unused
-If the party has this much of the stat ...
+If the party/current PC has this much of the stat ...
 Call this special ...
 Unused
 Which statistic
 Check mode
 Unused
 Otherwise call this special
-Result depends on whether a particular skill in the party is high enough.
+Result depends on whether a particular skill in the party or current PC is high enough.
 --------------------
 Text Response?
 Unused
