@@ -393,6 +393,7 @@
     <ClCompile Include="..\..\..\src\fileio\xml-parser\tinyxmlerror.cpp" />
     <ClCompile Include="..\..\..\src\fileio\xml-parser\tinyxmlparser.cpp" />
     <ClCompile Include="..\..\..\src\gfx\gfxsheets.cpp" />
+    <ClCompile Include="..\..\..\src\gfx\graphics.cpp" />
     <ClCompile Include="..\..\..\src\gfx\render_image.cpp" />
     <ClCompile Include="..\..\..\src\gfx\render_shapes.cpp" />
     <ClCompile Include="..\..\..\src\gfx\render_text.cpp" />
@@ -449,6 +450,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\dialogxml\dialogs\btnpanel.hpp" />
+    <ClInclude Include="..\..\..\src\gfx\graphics.hpp" />
     <ClInclude Include="..\..\..\src\scenario\town_import.tpp" />
     <ClInclude Include="..\..\..\src\alchemy.hpp" />
     <ClInclude Include="..\..\..\src\damage.hpp" />
