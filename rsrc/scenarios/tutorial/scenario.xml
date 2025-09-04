@@ -78,6 +78,15 @@
                 <heal>8</heal>
             </entries>
         </shop>
+        <shop>
+            <name>Shady Guard&apos;s Wares</name>
+            <type>live</type>
+            <prompt>shop</prompt>
+            <face>10</face>
+            <entries>
+                <item quantity="2">171</item>
+            </entries>
+        </shop>
         <string id="0">
             <![CDATA[You carefully remove the ornaments from this altar.]]>
         </string>
@@ -92,6 +101,7 @@
             <pic index="1">terrain</pic>
             <pic index="2">terrain</pic>
         </graphics>
+        <item-class id="1">lockpicks</item-class>
         <sdf row="0" col="0">entrance message</sdf>
         <sdf row="0" col="1">supplies message</sdf>
         <sdf row="0" col="2">dining hall message</sdf>
@@ -110,6 +120,10 @@
         <sdf row="1" col="3">exit message</sdf>
         <sdf row="1" col="4">artifact pieces</sdf>
         <sdf row="2" col="0">piece given</sdf>
+        <sdf row="2" col="1">guard patrol dx</sdf>
+        <sdf row="2" col="2">guard patrol dy</sdf>
+        <sdf row="2" col="3">guard patrol start</sdf>
+        <sdf row="2" col="4">close the door!</sdf>
         <sdf row="3" col="0">piece given</sdf>
         <sdf row="200" col="0">found boat</sdf>
         <sdf row="200" col="1">exit backwoods message</sdf>

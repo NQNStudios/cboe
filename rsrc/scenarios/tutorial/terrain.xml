@@ -6367,4 +6367,28 @@
         </special>
         <editor />
     </terrain>
+    <terrain id="260">
+        <name>Locked Door</name>
+        <pic>90</pic>
+        <map>90</map>
+        <blockage>move-and-sight</blockage>
+        <transform>0</transform>
+        <fly>false</fly>
+        <boat>false</boat>
+        <ride>true</ride>
+        <archetype>false</archetype>
+        <light>0</light>
+        <step-sound>none</step-sound>
+        <trim>wall</trim>
+        <ground>10</ground>
+        <trim-for>-1</trim-for>
+        <arena>1</arena>
+        <special>
+            <type>unlock</type>
+            <flag>129</flag>
+            <flag>2</flag>
+            <flag>0</flag>
+        </special>
+        <editor />
+    </terrain>
 </terrains>
