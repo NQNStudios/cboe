@@ -724,8 +724,8 @@ std::istream& operator>> (std::istream& in, eSpellPat& pat) {
 
 cEnumLookup pic_type_strs = {
 	"none", "terrain", "terrain-anim", "monster-small", "dialog", "talk", "scenario", "item", "player", "field",
-	"boom", "sheet", "missile", "dialog-large", "scenario-large", "terrain-map", "status", "item-small", "", "",
-	"", "", "", "monster-wide", "", "", "", "", "", "",
+	"boom", "sheet", "missile", "dialog-large", "scenario-large", "terrain-map", "status", "item-small", "button", "vehicle",
+	"vehicle-occ", "", "", "monster-wide", "", "", "", "", "", "",
 	"", "", "", "", "", "", "", "", "", "",
 	"", "", "", "monster-tall", "", "", "", "", "", "",
 	"", "", "", "", "", "", "", "", "", "",

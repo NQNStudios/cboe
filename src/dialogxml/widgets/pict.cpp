@@ -69,6 +69,10 @@ void cPict::init(){
 	drawPict()[PIC_PARTY_MONST_TALL] = &cPict::drawPartyMonstTall;
 	drawPict()[PIC_PARTY_MONST_LG] = &cPict::drawPartyMonstLg;
 	drawPict()[PIC_BTN] = &cPict::drawInvenBtn;
+	drawPict()[PIC_VEHICLE] = &cPict::drawPresetVehicle;
+	drawPict()[PIC_VEHICLE_OCCUPIED] = &cPict::drawPresetVehicleOccupied;
+	drawPict()[PIC_CUSTOM_VEHICLE] = &cPict::drawPresetVehicle; // TODO
+	drawPict()[PIC_CUSTOM_VEHICLE_OCCUPIED] = &cPict::drawPresetVehicleOccupied;
 }
 
 std::map<ePicType,void(cPict::*)(short,rectangle,sf::RenderTarget&)>& cPict::drawPict(){
@@ -562,6 +566,7 @@ void cPict::recalcRect() {
 		case PIC_PC: case PIC_PARTY_PC:
 		case PIC_FIELD:
 		case PIC_BOOM: case PIC_CUSTOM_BOOM:
+		case PIC_VEHICLE: case PIC_VEHICLE_OCCUPIED: case PIC_CUSTOM_VEHICLE: case PIC_CUSTOM_VEHICLE_OCCUPIED:
 			bounds.width() = 28;
 			bounds.height() = 36;
 			break;
@@ -716,7 +721,12 @@ std::shared_ptr<const sf::Texture> cPict::getSheetInternal(eSheetType type, size
 					// TODO: The scenario should be allowed to define a sheet1400.png without it being ignored in favour of outhelp.png
 					purgeable = false;
 					sout << "sheet" << n;
+					break;
 			}
+			break;
+		case SHEET_VEHICLE:
+			sout << "vehicle";
+			break;
 	}
 	auto name = sout.str();
 	try {
@@ -1388,8 +1398,30 @@ void cPict::drawInvenBtn(short num, rectangle to_rect, sf::RenderTarget& targ){
 	if(num >= n_pics) return;
 	auto from_gw = getSheet(SHEET_INVENBTN);
 	if(!from_gw) return;
-	if(filled) fill_rect(getWindow(), to_rect, fillClr);
-	rect_draw_some_item(*from_gw, from_rect[num], getWindow(), to_rect, sf::BlendAlpha);
+	if(filled) fill_rect(targ, to_rect, fillClr);
+	rect_draw_some_item(*from_gw, from_rect[num], targ, to_rect, sf::BlendAlpha);
+}
+
+void cPict::drawPresetVehicle(short num, rectangle to_rect, sf::RenderTarget& targ){
+	if(num >= 3) return;
+	rectangle from_rect = {0, 0, 36, 28};
+	auto from_gw = getSheet(SHEET_VEHICLE);
+	if(!from_gw) return;
+	if(filled) fill_rect(targ, to_rect, fillClr);
+	from_rect.offset(0, num * 36);
+	rect_draw_some_item(*from_gw, from_rect, targ, to_rect, sf::BlendAlpha);
+}
+
+void cPict::drawPresetVehicleOccupied(short num, rectangle to_rect, sf::RenderTarget& targ){
+	LOG("occupied draw");
+	if(num >= 3) return;
+	rectangle from_rect = {0, 0, 36, 28};
+	auto from_gw = getSheet(SHEET_VEHICLE);
+	if(!from_gw) return;
+	if(filled) fill_rect(targ, to_rect, fillClr);
+	from_rect.offset(56, num * 36);
+	rect_draw_some_item(*from_gw, from_rect, targ, to_rect, sf::BlendAlpha);
+	LOG("occupied draw done");
 }
 
 cPict::~cPict() {}

@@ -14,3 +14,7 @@ Dialog Icon (large)
 Scenario Icon (large)
 Terrain Map Icon
 Status Icon
+
+
+Vehicle
+Vehicle (Occupied)

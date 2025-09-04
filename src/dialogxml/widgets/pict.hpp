@@ -146,6 +146,8 @@ private:
 	void drawPartyItem(short num, rectangle to_rect, sf::RenderTarget& targ);
 	void drawPartyPc(short num, rectangle to_rect, sf::RenderTarget& targ);
 	void drawInvenBtn(short num, rectangle to_rect, sf::RenderTarget& targ);
+	void drawPresetVehicle(short num, rectangle to_rect, sf::RenderTarget& targ);
+	void drawPresetVehicleOccupied(short num, rectangle to_rect, sf::RenderTarget& targ);
 	static std::map<ePicType,void(cPict::*)(short,rectangle,sf::RenderTarget&)>& drawPict();
 };
 

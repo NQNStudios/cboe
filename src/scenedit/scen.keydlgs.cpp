@@ -322,6 +322,7 @@ pic_num_t choose_graphic(short cur_choice,ePicType g_type,cDialog* parent, bool 
 		case PIC_STATUS: total_pics = 27; break;
 		case PIC_SCEN_LG: total_pics = 4; break;
 		case PIC_TER_MAP: total_pics = 990; break;
+		case PIC_VEHICLE: case PIC_VEHICLE_OCCUPIED: total_pics = 3; break;
 		case PIC_FULL:{
 			fs::path pic_dir = tempDir/scenario_temp_dir_name/"graphics";
 			if(!scenario.scen_file.has_extension()) // It's an unpacked scenario
