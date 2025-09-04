@@ -786,12 +786,18 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 			me[toggle].show();
 			dynamic_cast<cLed&>(me[toggle]).setState(value > 0 ? eLedState::led_red : eLedState::led_off);
 			break;
+		// Townperson starting from 0 with negative indices like python
 		case eSpecPicker::TOWNPERSON:
 			me[button].hide();
 			me[toggle].show();
 			dynamic_cast<cLed&>(me[toggle]).setState(value < 0 ? eLedState::led_red : eLedState::led_off);
 			me[toggle].setText("Relative to end");
 			me[button2].show();
+			break;
+		// Townperson numbered starting from 100, no negative indices allowed
+		case eSpecPicker::TOWNPERSON_100:
+			me[button].show();
+			me[toggle].hide();
 			break;
 		default:
 			me[button].show();
@@ -1739,6 +1745,13 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 				else store = -(town->creatures.size() - val);
 				dynamic_cast<cLed&>(me[item_hit]).setState(store < 0 ? eLedState::led_red : eLedState::led_off);
 			}
+			break;
+		case eSpecPicker::TOWNPERSON_100:
+			if(town->creatures.empty()){
+				showWarning("There are no creatures in this town to choose from!");
+				break;
+			}
+			store = 100 + choose_townperson(val - 100, &me);
 			break;
 		case eSpecPicker::NONE: return false;
 	}
