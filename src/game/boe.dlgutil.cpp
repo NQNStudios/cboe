@@ -69,7 +69,7 @@ extern std::map<eSkill,short> skill_max;
 extern void give_help_and_record(short help1, short help2, bool help_forced = false);
 extern void post_load();
 extern void start_new_game(bool force = false);
-extern void do_load();
+extern bool do_load();
 
 short sign_mode,person_graphic,store_person_graphic,store_sign_mode;
 long num_talk_entries;
