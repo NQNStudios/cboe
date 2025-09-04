@@ -124,6 +124,11 @@
         <sdf row="2" col="2">guard patrol dy</sdf>
         <sdf row="2" col="3">guard patrol start</sdf>
         <sdf row="2" col="4">close the door!</sdf>
+        <sdf row="2" col="5">stopped by window guard</sdf>
+        <sdf row="2" col="6">know to ask about patrol</sdf>
+        <sdf row="2" col="7">past tired guard</sdf>
+        <sdf row="2" col="8">guard paid off</sdf>
+        <sdf row="2" col="9">seen boat</sdf>
         <sdf row="3" col="0">piece given</sdf>
         <sdf row="200" col="0">found boat</sdf>
         <sdf row="200" col="1">exit backwoods message</sdf>
