@@ -68,5 +68,7 @@
     <string id="22">
         <![CDATA[To give an item from one character to another click the button with a 'G' next to the lockpicks. Select Frrrrrr, who is your best lockpicker right now. Then make sure they're equipped.]]>
     </string>
-    <string id="25" />
+    <string id="26">
+        <![CDATA[The guard changes positions.]]>
+    </string>
 </town>

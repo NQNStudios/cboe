@@ -79,8 +79,8 @@
 	sdf -1, -1
 	msg -1, -1, -1
 	pic 0, 4
-	ex1 -101, -102, -1
-	ex2 1, 1, -1
+	ex1 2, 4, -1
+	ex2 101, -101, -1
 	goto 16
 @set-ptr = 12
 	sdf 2, 1
@@ -89,39 +89,39 @@
 	ex1 101, -1, -1
 	ex2 -1, -1, -1
 	goto 13
-@set-ptr = 13
-	sdf 2, 2
+@set-sdf = 13
+	sdf 2, 1
 	msg -1, -1, -1
 	pic 0, 4
-	ex1 102, -1, -1
+	ex1 1, -1, -1
 	ex2 -1, -1, -1
-	goto 14
+	goto -1
 @set-sdf = 14
 	sdf 2, 1
 	msg -1, -1, -1
 	pic 0, 4
-	ex1 2, -1, -1
-	ex2 -1, -1, -1
-	goto 15
-@set-sdf = 15
-	sdf 2, 2
-	msg -1, -1, -1
-	pic 0, 4
-	ex1 4, -1, -1
+	ex1 3, -1, -1
 	ex2 -1, -1, -1
 	goto -1
-@sdf-times = 16
+@if-sdf = 15
 	sdf 2, 1
 	msg -1, -1, -1
 	pic 0, 4
-	ex1 2, 1, -1
+	ex1 3, 13, -1
 	ex2 -1, -1, -1
-	goto 17
-@sdf-times = 17
-	sdf 2, 2
-	msg -1, -1, -1
+	goto 14
+@disp-sm-msg = 16
+	sdf -1, -1
+	msg 26, -1, -1
 	pic 0, 4
-	ex1 2, 2, -1
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto 15
+@nop = 17
+	sdf -1, -1
+	msg -1, -1, -1
+	pic -1, 4
+	ex1 -1, -1, -1
 	ex2 -1, -1, -1
 	goto -1
 @if-sdf = 18
@@ -135,6 +135,13 @@
 	sdf 2, 4
 	msg 7, -1, 1
 	pic 18, 3
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@nop = 20
+	sdf -1, -1
+	msg -1, -1, -1
+	pic 0, 4
 	ex1 -1, -1, -1
 	ex2 -1, -1, -1
 	goto -1

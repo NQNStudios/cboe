@@ -120,7 +120,7 @@
         <sdf row="1" col="3">exit message</sdf>
         <sdf row="1" col="4">artifact pieces</sdf>
         <sdf row="2" col="0">piece given</sdf>
-        <sdf row="2" col="1">guard patrol dx</sdf>
+        <sdf row="2" col="1">guard patrol direction</sdf>
         <sdf row="2" col="2">guard patrol dy</sdf>
         <sdf row="2" col="3">guard patrol start</sdf>
         <sdf row="2" col="4">close the door!</sdf>
