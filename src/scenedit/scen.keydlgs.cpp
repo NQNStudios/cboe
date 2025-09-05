@@ -804,6 +804,7 @@ static void setup_node_field(cDialog& me, std::string field, short value, const 
 		// Townperson numbered starting from 100, no negative indices allowed
 		case eSpecPicker::TOWNPERSON_100:
 			me[button].show();
+			me[button].setText("Choose");
 			me[toggle].hide();
 			break;
 		default:
