@@ -5,7 +5,7 @@ Makes the selected PC more skilled for a short time. Works like the priest spell
 Decreases the morale of the victim. Casting this on a weak foe will make the foe flee. Even if the monster doesn't flee, later castings have a higher chance of success.
 This spell fills the selected space with a short-lasting wall of fire.
 This draining spell identifies all the unidentified items being held by your characters.
-This spell is cast during combat. When cast, you receive information about the monster you target: current health, spell points, morale, etc.
+This spell is cast during combat. When cast, you receive information about the monster you target: current health, resistances, spell points, morale, etc.
 This spell covers the target with sticky goo, slowing it down and interfering with its attacks.
 This spell lets you see everything in a short radius around you, even spaces blocked off by walls. It's useful for finding secret passages, for example.
 Poisons the target creature. This does a fair amount of damage, but it takes time to happen.
