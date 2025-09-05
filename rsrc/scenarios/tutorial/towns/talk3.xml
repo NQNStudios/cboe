@@ -1,28 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <dialogue boes="2.0.0">
     <personality id="30">
-        <title>Unused</title>
-        <look></look>
-        <name></name>
-        <job></job>
+        <title>Death</title>
+        <look>
+            <![CDATA[For centuries, people have lived with their unanswered questions about Death. It's your lucky day to get those questions answered by the very embodiment of the idea itself!]]>
+        </look>
+        <name>
+            <![CDATA["Death."]]>
+        </name>
+        <job>
+            <![CDATA["I tend to lost souls."]]>
+        </job>
+        <unknown>
+            <![CDATA["Don't make this any more complicated than it is."]]>
+        </unknown>
     </personality>
     <personality id="31">
-        <title>Unused</title>
-        <look></look>
-        <name></name>
-        <job></job>
+        <title>Healer</title>
+        <look>
+            <![CDATA[This healer is certainly in odd company.]]>
+        </look>
+        <name>
+            <![CDATA["That's not important right now. I'm here to help fix your situation."]]>
+        </name>
+        <job>
+            <![CDATA["I'm one half of what you might call the ultimate good cop, bad cop routine. Let my heal your companion, then I'll move along."]]>
+        </job>
+        <unknown>
+            <![CDATA["What do you mean?"]]>
+        </unknown>
     </personality>
     <personality id="32">
-        <title>Unused</title>
-        <look></look>
-        <name></name>
-        <job></job>
+        <title>Trainer</title>
+        <look>
+            <![CDATA[This person exists solely to train adventurers.]]>
+        </look>
+        <name>
+            <![CDATA["Trainer."]]>
+        </name>
+        <job>
+            <![CDATA["Training. You give me gold and skill points, I make you good at things."]]>
+        </job>
+        <unknown>
+            <![CDATA["What was that?"]]>
+        </unknown>
     </personality>
     <personality id="33">
-        <title>Unused</title>
-        <look></look>
-        <name></name>
-        <job></job>
+        <title>Merchant</title>
+        <look>
+            <![CDATA[This merchant looks apologetic. "I promise I'm the last person getting between you and a real adventure!"]]>
+        </look>
+        <name>
+            <![CDATA["Stephen." (Stephen Merchant?)]]>
+        </name>
+        <job>
+            <![CDATA["I can identify your items, and you can sell me the ones you don't want! It's always smart to have your items identified. I can tell you right now that one of the items in these boxes is cursed."]]>
+        </job>
+        <unknown>
+            <![CDATA["Huh?"]]>
+        </unknown>
     </personality>
     <personality id="34">
         <title>Unused</title>
@@ -60,4 +96,103 @@
         <name></name>
         <job></job>
     </personality>
+    <node for="30">
+        <keyword>deat</keyword>
+        <keyword>lost</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["There are three types of death you need to be concerned about: the normal kind, petrification, and dusting."]]>
+        </text>
+    </node>
+    <node for="30">
+        <keyword>conc</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["When you're dead, you're not much help to your party. If you're the only one who can unlock doors, for example, your teammates might be completely stuck without you!"]]>
+        </text>
+        <text>
+            <![CDATA["And you don't gain experience, either."]]>
+        </text>
+    </node>
+    <node for="30">
+        <keyword>norm</keyword>
+        <keyword>kind</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["Some deaths are just death. Not much else to say about those, but a Raise Dead spell will sort you out. Probably. Actually, casting those yourself, you run the risk of dusting the target. And if they do come back, they won't be as strong as before. That's a high risk operation when you're inexperienced."]]>
+        </text>
+        <text>
+            <![CDATA["You're probably better off paying a professional healer like my associate here to fix your deaths when you're getting started on your adventures."]]>
+        </text>
+    </node>
+    <node for="30">
+        <keyword>petr</keyword>
+        <keyword>ston</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["Watch out for basilisks and the like. They can stone you with just a glance, which is just annoying. Stoning's cheaper to reverse than your average death, but you won't learn that spell for yourself until later."]]>
+        </text>
+    </node>
+    <node for="30">
+        <keyword>dust</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["Dusting is the worst kind of death. It's very expensive to get sorted. It happens when you take a hit so big it quite simply blows you away. You get obliterated. It can also happen if you mess up trying to Raise a normally dead person."]]>
+        </text>
+        <text>
+            <![CDATA["At a low level, if you have multiple party members dead, frankly, there's no coming back from it. Especially if it's your magic casters. Sometimes you're better off deleting your companions and making new ones in a major town. But between you and me, the easiest thing is to save often so you can just reload."]]>
+        </text>
+    </node>
+    <node for="31">
+        <keyword>situ</keyword>
+        <keyword>heal</keyword>
+        <type>shop</type>
+        <param>0</param>
+        <param>0</param>
+        <text>
+            <![CDATA[Healer]]>
+        </text>
+        <text>
+            <![CDATA["You should be good to go. We won't keep you any longer."]]>
+        </text>
+    </node>
+    <node for="30">
+        <keyword>save</keyword>
+        <keyword>relo</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["Type 'Control+s', or 'Command+s' on a Mac, to save your game. I do it all the time, it's how I'm basically immortal. Then it's 'Control+o' or 'Command+o' to reload."]]>
+        </text>
+        <text>
+            <![CDATA["Once you've created your own save file, the game will also make autosaves for you. Those can come in handy."]]>
+        </text>
+    </node>
+    <node for="31">
+        <keyword>keep</keyword>
+        <keyword>good</keyword>
+        <type>call-local</type>
+        <param>23</param>
+        <text />
+    </node>
+    <node for="32">
+        <keyword>trai</keyword>
+        <keyword>purc</keyword>
+        <type>train</type>
+        <text />
+    </node>
+    <node for="33">
+        <keyword>iden</keyword>
+        <type>id</type>
+        <param>50</param>
+        <text>
+            <![CDATA["Potions, scrolls, wands... it's best to know what they do before you use them."]]>
+        </text>
+    </node>
+    <node for="33">
+        <keyword>curs</keyword>
+        <type>reg</type>
+        <text>
+            <![CDATA["Yeah, cursed weapons and armor will really getcha. Equip one, and you won't be able to get rid of it until the curse is removed!"]]>
+        </text>
+    </node>
 </dialogue>

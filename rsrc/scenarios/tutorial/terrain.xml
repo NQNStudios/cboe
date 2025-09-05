@@ -6391,4 +6391,30 @@
         </special>
         <editor />
     </terrain>
+    <terrain id="261">
+        <name>Cave Floor</name>
+        <pic>0</pic>
+        <map>0</map>
+        <blockage>none</blockage>
+        <transform>0</transform>
+        <fly>false</fly>
+        <boat>false</boat>
+        <ride>true</ride>
+        <archetype>true</archetype>
+        <light>0</light>
+        <step-sound>step</step-sound>
+        <trim>none</trim>
+        <ground>0</ground>
+        <trim-for>-1</trim-for>
+        <arena>1</arena>
+        <special>
+            <type>monst-block</type>
+            <flag>-1</flag>
+            <flag>0</flag>
+            <flag>0</flag>
+        </special>
+        <editor>
+            <shortcut>c</shortcut>
+        </editor>
+    </terrain>
 </terrains>

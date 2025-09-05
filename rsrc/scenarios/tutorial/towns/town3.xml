@@ -12,6 +12,138 @@
     <flags>
         <chop kills="30000" />
     </flags>
+    <item id="0">
+        <type>0</type>
+        <charges>1500</charges>
+        <contained>true</contained>
+    </item>
+    <item id="1">
+        <type>261</type>
+        <contained>true</contained>
+    </item>
+    <item id="2">
+        <type>262</type>
+        <contained>true</contained>
+    </item>
+    <item id="3">
+        <type>201</type>
+        <contained>true</contained>
+    </item>
+    <item id="4">
+        <type>103</type>
+        <contained>true</contained>
+    </item>
+    <item id="5">
+        <type>115</type>
+        <contained>true</contained>
+    </item>
+    <item id="6">
+        <type>96</type>
+        <contained>true</contained>
+    </item>
+    <item id="7">
+        <type>51</type>
+        <contained>true</contained>
+    </item>
+    <item id="8">
+        <type>122</type>
+        <contained>true</contained>
+    </item>
+    <item id="9">
+        <type>245</type>
+        <contained>true</contained>
+    </item>
+    <item id="10">
+        <type>3</type>
+        <charges>4</charges>
+        <contained>true</contained>
+    </item>
+    <item id="11">
+        <type>1</type>
+        <charges>6</charges>
+        <contained>true</contained>
+    </item>
+    <item id="12">
+        <type>2</type>
+        <charges>5</charges>
+        <contained>true</contained>
+    </item>
+    <creature id="0">
+        <type>84</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+        <onkill>13</onkill>
+    </creature>
+    <creature id="1">
+        <type>60</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+        <onkill>14</onkill>
+    </creature>
+    <creature id="2">
+        <type>63</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+        <onkill>15</onkill>
+    </creature>
+    <creature id="3">
+        <type>67</type>
+        <attitude>docile</attitude>
+        <mobility>0</mobility>
+        <personality>30</personality>
+        <face>21</face>
+    </creature>
+    <creature id="4">
+        <type>22</type>
+        <attitude>docile</attitude>
+        <mobility>0</mobility>
+        <personality>31</personality>
+        <face>41</face>
+    </creature>
+    <creature id="5">
+        <type>15</type>
+        <attitude>docile</attitude>
+        <mobility>0</mobility>
+        <personality>32</personality>
+        <face>12</face>
+    </creature>
+    <creature id="6">
+        <type>82</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+    </creature>
+    <creature id="7">
+        <type>82</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+    </creature>
+    <creature id="8">
+        <type>82</type>
+        <attitude>hostile-a</attitude>
+        <mobility>1</mobility>
+        <personality>-1</personality>
+        <face>0</face>
+    </creature>
+    <creature id="9">
+        <type>2</type>
+        <attitude>docile</attitude>
+        <mobility>0</mobility>
+        <personality>33</personality>
+        <face>8</face>
+    </creature>
+    <sign id="0">
+        <![CDATA[Remember to check often for secret doors and passages! (There might be a shortcut to get out of here.)]]>
+    </sign>
     <string id="0">
         <![CDATA[You found the last piece of the artifact! All that's left now is to return to the very first tower and cross the rune to get to the exit portal.]]>
     </string>
@@ -27,5 +159,28 @@
     <string id="4">
         <![CDATA[Alternatively, you might choose to keep the lights off! Harder for the monsters to see you, that way.]]>
     </string>
-    <string id="6" />
+    <string id="7">
+        <![CDATA[Your path is blocked by a priest, and Death itself.]]>
+    </string>
+    <string id="13">
+        <![CDATA["I see you have lost someone! I'm here to explain the intricacies of your situation."]]>
+    </string>
+    <string id="14">
+        <![CDATA["Congratulations on getting this far without suffering loss! However, it's time for a lesson in mortality."]]>
+    </string>
+    <string id="15">
+        <![CDATA[Death points its finger at you.]]>
+    </string>
+    <string id="16">
+        <![CDATA["We'll get out of your way after we get all your people breathing again."]]>
+    </string>
+    <string id="17">
+        <![CDATA[Death and its ironic companion leave you, opening the way.]]>
+    </string>
+    <string id="18">
+        <![CDATA[Around the corner is another person trying to teach you something. This time, it's a trainer!]]>
+    </string>
+    <string id="19">
+        <![CDATA[Here are some free skill points. Try talking to them.]]>
+    </string>
 </town>
