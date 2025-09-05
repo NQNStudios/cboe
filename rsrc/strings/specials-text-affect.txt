@@ -110,7 +110,7 @@ Unused
 Unused
 PC Status
 0 - raise dead, 1 - hurt
-Unused
+0 - no saving throw, 1 - saving throw allowed
 Unused
 Unused
 Unused

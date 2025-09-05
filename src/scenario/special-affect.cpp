@@ -40,6 +40,7 @@ namespace {
 		.msg()
 		.ex1a(STRT_STATUS)
 		.ex1b(eSpecPicker::TOGGLE);
+		.ex1c(eSpecPicker::TOGGLE);
 	node_properties_t S_STATUS = node_builder_t(eSpecType::AFFECT_STATUS)
 		.msg()
 		.ex1b(eSpecPicker::TOGGLE)
