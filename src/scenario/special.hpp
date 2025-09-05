@@ -121,13 +121,14 @@ enum eCallerType {
 	SPEC_SPOT,
 	TIMER // town, global
 	// TODO more ways to call a node:
-	// TOWNPERSON_DEATH
+	// TOWNPERSON_EVENT (talk to, kill)
 	// TOWN_ENTRY (still alive/been abandoned/hostile)
 	// SPECIAL_TERRAIN (use/walk on)
 	// TALKING (call town/call global)
 	// ITEM_ABILITY
 	// MONSTER_ABILITY
 	// SCENARIO_START
+	// MONSTER_TYPE_SEEN
 	// and probably more!
 };
 
