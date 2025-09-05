@@ -2764,6 +2764,18 @@ void kill_pc(cPlayer& which_pc,eMainStatus type) {
 				}
 		if(type == eMainStatus::DEAD || type == eMainStatus::DUST)
 			play_sound(21);
+		switch(type){
+			case eMainStatus::DEAD:
+				give_help(71, 72);
+				break;
+			case eMainStatus::STONE:
+				give_help(73, 74);
+				break;
+			case eMainStatus::DUST:
+				give_help(75, 76);
+				break;
+			default: break;
+		}
 		which_pc.main_status = type;
 		which_pc.ap = 0;
 	}

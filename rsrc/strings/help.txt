@@ -68,12 +68,12 @@ This character will, for a fee, recharge some of your items whose charges have b
 A special node just triggered, and since you previously enabled it, you are now in step-through mode. Take a look at the transcript - it gives you the node that is about to execute, together with the type and number (useful if you need to locate it in the editor).
 To execute that node, simply press any key (or click the mouse button). After the node has executed, if it calls another one, you will see it in the transcript. Keep pressing a key to step through the nodes. If you wish to exit step-through mode in the middle of a node sequence, simply press Escape.
 
-
-
-
-
-
-
+One of your characters has just died. Their items will be dropped where they were standing and you will be unable to use any of their abilities. You may want to reload an earlier save, or delete this character and make a new one—but there are other options to reverse this unfortunate condition.
+If you find a healer, they may be able to bring this character back to life for a hefty price. At higher levels, your priests may also cast 'Raise Dead.' At low levels, death is a very big deal.
+One of your characters has just been turned to stone. Their items will be dropped where they were standing and you will be unable to use any of their abilities. You may want to reload an earlier save, or delete this character and make a new one—but there are other options to reverse this unfortunate condition.
+If you find a healer, they may be able to un-petrify this character—at a huge price. At higher levels, your priests may also cast 'Destone.' At low levels, you probably can't afford to save a petrified character.
+One of your characters has just been turned to dust. Their items will be dropped where they were standing and you will be unable to use any of their abilities. You may want to reload an earlier save, or delete this character and make a new one—but there are other options to reverse this unfortunate condition.
+If you find a healer, they may be able to resurrect this character—at an enormous price. At higher levels, your priests may also cast 'Resurrection.' At low levels, you probably can't afford to save a dusted character.
 
 
 
