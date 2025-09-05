@@ -525,3 +525,19 @@ Unused
 Otherwise call this special
 Result depends on the status of a quest.
 --------------------
+If Monster(s) Alive?
+Unused
+Unused
+Unused
+Unused
+Unused
+Unused
+Unused
+First monster
+Last monster
+Specific attitude?
+If at least this many are alive ...
+Call this special ...
+Unused
+Otherwise call this special
+Result depends on how many monsters within the given range of townpeople are alive and present.

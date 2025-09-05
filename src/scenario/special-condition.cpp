@@ -9,7 +9,7 @@
 #include "special-conditions.hpp"
 
 // Note: If adding a new node type below, be sure to adjust the end point here too.
-node_category_info_t CAT_COND{eSpecType::IF_SDF, eSpecType::IF_QUEST};
+node_category_info_t CAT_COND{eSpecType::IF_SDF, eSpecType::IF_MONSTERS_ALIVE};
 
 namespace {
 	node_properties_t S_SDF = node_builder_t(eSpecType::IF_SDF)
@@ -164,5 +164,11 @@ namespace {
 		.ex1a(eSpecPicker::QUEST)
 		.ex1b(STRT_QUEST_STATUS)
 		.ex1c(eSpecPicker::NODE)
+		.no_preview();
+	node_properties_t S_MONSTERS_ALIVE = node_builder_t(eSpecType::IF_MONSTERS_ALIVE)
+		.ex1a(eSpecPicker::TOWNPERSON)
+		.ex1b(eSpecPicker::TOWNPERSON)
+		.ex1c(STRT_ATTITUDE_FILTER)
+		.ex2b(eSpecPicker::NODE)
 		.no_preview();
 }
