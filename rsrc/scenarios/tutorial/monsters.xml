@@ -1283,6 +1283,7 @@
         <attitude>hostile-a</attitude>
         <summon>1</summon>
         <treasure>0</treasure>
+        <onsight>4</onsight>
         <attacks>
             <attack type="claw">2d4</attack>
         </attacks>
@@ -1353,6 +1354,7 @@
         <attitude>hostile-a</attitude>
         <summon>3</summon>
         <treasure>0</treasure>
+        <onsight>5</onsight>
         <attacks>
             <attack type="bite">3d8</attack>
             <attack type="claw">1d13</attack>
@@ -1450,7 +1452,7 @@
         </abilities>
     </monster>
     <monster id="67">
-        <name>Spectre</name>
+        <name>Death</name>
         <pic w="1" h="1">60</pic>
         <race>undead</race>
         <level>14</level>
@@ -1934,6 +1936,7 @@
         <treasure>2</treasure>
         <mage>2</mage>
         <priest>2</priest>
+        <onsight>3</onsight>
         <attacks>
             <attack type="swing">0d0</attack>
             <attack type="claw">1d10</attack>

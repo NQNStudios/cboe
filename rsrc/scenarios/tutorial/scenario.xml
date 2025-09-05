@@ -93,6 +93,25 @@
         <string id="1">
             <![CDATA[Lo and behold, the gods are petty!]]>
         </string>
+        <string id="2">
+            <![CDATA[Ah, an imp! These tricky little things (and all other infernal creatures, like demons) are immune to fire damage, so your Flame and Fireball spells won't do any good.]]>
+        </string>
+        <string id="3">
+            <![CDATA[Different monsters have different resistances and vulnerabilities. You can learn them through trial and error, or you can use a mage spell, Scry Monsters, to learn them directly. When you scry a monster,  you keep its information to read whenever you want in the 'Monsters' menu.]]>
+        </string>
+        <string id="8">
+            <![CDATA[Aargh! A zombie!]]>
+        </string>
+        <string id="9">
+            <![CDATA[Zombies and other undead creatures are immune to cold damage. Your priest spell casters, Feodoric and Michael, have a spell (Turn Undead) which is quite good at returning these things to the afterlife.]]>
+        </string>
+        <string id="14">
+            <![CDATA[Ghasts are bad news. These undead creatures will attack you many times in the same turn, and stun you so you can't defend yourself.]]>
+        </string>
+        <string id="15">
+            <![CDATA[With extra-fatal enemies like these, it's smart to wipe them out before you deal with lower-priority targets. You can also use the mage spell 'Slow' to prevent them from acting on their turn. Don't forget about that one!]]>
+        </string>
+        <string id="19" />
     </game>
     <editor>
         <default-ground>2</default-ground>
@@ -130,6 +149,13 @@
         <sdf row="2" col="8">guard paid off</sdf>
         <sdf row="2" col="9">seen boat</sdf>
         <sdf row="3" col="0">piece given</sdf>
+        <sdf row="3" col="1">death message</sdf>
+        <sdf row="3" col="2">learned about zombies</sdf>
+        <sdf row="3" col="3">learned about imp</sdf>
+        <sdf row="3" col="4">learned about ghast</sdf>
+        <sdf row="3" col="5">party loop index</sdf>
+        <sdf row="3" col="6">saw skill trainer</sdf>
+        <sdf row="3" col="7">death gone</sdf>
         <sdf row="200" col="0">found boat</sdf>
         <sdf row="200" col="1">exit backwoods message</sdf>
         <sdf row="200" col="2">resting message</sdf>
