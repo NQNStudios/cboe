@@ -18,7 +18,7 @@ namespace {
 		.ex1b(eSpecPicker::NODE)
 		.ex2a(STRT_TARG_MODE)
 		.when(eSpecField::EX2A == 2, 1)
-			.ex2b()
+			.ex2b(eSpecPicker::TOWNPERSON_100)
 		.end();
 	node_properties_t S_DAMAGE = node_builder_t(eSpecType::DAMAGE)
 		.msg()
