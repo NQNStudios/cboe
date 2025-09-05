@@ -934,6 +934,10 @@ static void place_talk_face() {
 	}
 }
 
+// Please forgive me
+int current_line_height = 18;
+int current_point_size = 18;
+
 void click_talk_rect(word_rect_t word) {
 	if(recording){
 		record_click_talk_rect(word, word.on == PRESET_WORD_ON);
@@ -946,8 +950,8 @@ void click_talk_rect(word_rect_t word) {
 	wordRect.width() += 10; // Arbitrary extra space fixes #481 and shouldn't cause any problems
 	TextStyle style;
 	style.font = FONT_DUNGEON;
-	style.pointSize = 18;
-	style.lineHeight = 18;
+	style.pointSize = current_point_size;
+	style.lineHeight = current_line_height;
 	style.colour = word.on;
 	win_draw_string(mainPtr(), wordRect, word.word, eTextMode::WRAP, style);
 	place_talk_face();
@@ -985,7 +989,7 @@ void place_talk_str(std::string str_to_place,std::string str_to_place2,short col
 	area_rect.inset(1,1);
 	tileImage(talk_gworld(), area_rect,bg[12]);
 	
-	// Place name oftalkee
+	// Place name of talkee
 	style.colour = Colours::SHADOW; 
 	style.lineHeight = 18;
 	dest_rect = title_rect;
@@ -1011,7 +1015,7 @@ void place_talk_str(std::string str_to_place,std::string str_to_place2,short col
 	style.colour = Colours::NAVY; 
 	// First determine the offsets of clickable words.
 	// The added spaces ensure that end-of-word boundaries are found
-	std::string str = str_to_place + " |" + str_to_place2 + " ";
+	std::string str = str_to_place + " ||" + str_to_place2 + " ";
 
 	std::vector<hilite_t> hilites;
 	std::vector<int> nodes;
@@ -1039,8 +1043,11 @@ void place_talk_str(std::string str_to_place,std::string str_to_place2,short col
 	short height = lines * (style.lineHeight+1);
 	if(height >= word_place_rect.height()){
 		short overflow = height - preset_word_locs.back().y;
-		style.lineHeight -= ceil(overflow / (float) lines);
+		style.pointSize -= round(overflow / (float) lines);
+		style.lineHeight -= round(overflow / (float) lines);
 	}
+	current_line_height = style.lineHeight;
+	current_point_size = style.pointSize;
 
 	std::vector<rectangle> word_rects = draw_string_hilite(talk_gworld(), word_place_rect, str, style, hilites, color ? CUSTOM_WORD_ON : CUSTOM_WORD_OFF);
 	
