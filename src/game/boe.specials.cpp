@@ -2746,6 +2746,8 @@ void affect_spec(const runtime_state& ctx) {
 				int i = 0;
 				if(spec.ex1a == 2)
 					ctx.cur_target = &univ.party;
+				// TODO the next 2 cases are swapped from what the scenedit picker puts!
+				// I don't know which is correct, but changing this one is more likely to break scenarios
 				else if(spec.ex1a == 1) {
 					i = select_pc(eSelectPC::ONLY_LIVING);
 					if(i != 6)
