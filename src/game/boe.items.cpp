@@ -304,18 +304,7 @@ void make_town_hostile() {
 	return;
 }
 
-// Set Attitude node adapted from *i, meant to replace make_town_hostile node
-void set_town_attitude(short lo,short hi,eAttitude att) {
-	short num;
-	
-	if(is_combat() && which_combat_type == 0)
-		return;
-
-	give_help(53,0);
-
-	static std::set<eAttitude> hostile_attitudes = { eAttitude::HOSTILE_A, eAttitude::HOSTILE_B };
-	univ.town.monst.hostile = hostile_attitudes.count(att);
-
+void foreach_townperson(short lo, short hi, std::function<void(cCreature&)> func) {
 	long long num_monst = univ.town.monst.size();
 	
 	// Nice smart indexing, like Python :D
@@ -332,22 +321,39 @@ void set_town_attitude(short lo,short hi,eAttitude att) {
 	
 	for(short i = lo; i <= hi; i++) {
 		if(univ.town.monst[i].is_alive() && univ.town.monst[i].summon_time == 0){
-			univ.town.monst[i].attitude = att;
-			num = univ.town.monst[i].number;
-			// If made hostile, make mobile
-			if(!univ.town.monst[i].is_friendly()) {
-				univ.town.monst[i].mobility = 1;
-				// If a "guard", give a power boost
-				if(univ.scenario.scen_monsters[num].guard) {
-					univ.town.monst[i].active = eCreatureStatus::ALERTED;
-					univ.town.monst[i].health *= 3;
-					univ.town.monst[i].status[eStatus::HASTE_SLOW] = 8;
-					univ.town.monst[i].status[eStatus::BLESS_CURSE] = 8;
-				}
-				
-			}
+			func(univ.town.monst[i]);
 		}
 	}
+}
+
+// Set Attitude node adapted from *i, meant to replace make_town_hostile node
+void set_town_attitude(short lo,short hi,eAttitude att) {
+	
+	if(is_combat() && which_combat_type == 0)
+		return;
+
+	// TODO this message would happen even if a node were making hostile monsters friendly or modifying a small range,
+	// or if it's a dungeon, not a friendly town
+	give_help(53,0);
+
+	static std::set<eAttitude> hostile_attitudes = { eAttitude::HOSTILE_A, eAttitude::HOSTILE_B };
+	univ.town.monst.hostile = hostile_attitudes.count(att);
+
+	foreach_townperson(lo, hi, [att](cCreature& creature) -> void {
+		creature.attitude = att;
+		short num = creature.number;
+		// If made hostile, make mobile
+		if(!creature.is_friendly()) {
+			creature.mobility = 1;
+			// If a "guard", give a power boost
+			if(univ.scenario.scen_monsters[num].guard) {
+				creature.active = eCreatureStatus::ALERTED;
+				creature.health *= 3;
+				creature.status[eStatus::HASTE_SLOW] = 8;
+				creature.status[eStatus::BLESS_CURSE] = 8;
+			}
+		}
+	});
 	
 	// In some towns, doin' this'll getcha' killed.
 	// (Or something else! Killing the party would be the responsibility of whatever special node is called.)

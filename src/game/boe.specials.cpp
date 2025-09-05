@@ -3805,6 +3805,41 @@ void ifthen_spec(const runtime_state& ctx) {
 			if(univ.party.in_horse >= 0 && (spec.ex1b < 0 || spec.ex1b == univ.party.in_horse))
 				ctx.next_spec = spec.ex1c;
 			break;
+		case eSpecType::IF_MONSTERS_ALIVE:{
+			if(univ.party.town_num == 200){
+				showError("This node can only run in town!");
+				ctx.next_spec = -1;
+				break;
+			}
+			if(spec.ex1c < -3 || spec.ex1c > 3){
+				showError("Invalid attitude (0-Friendly Docile, 1-Hostile A, 2-Friendly Will Fight, 3-Hostile B).");
+				break;
+			}
+			int min = spec.ex2a;
+			int count = 0;
+			foreach_townperson(spec.ex1a, spec.ex1b, [&count, spec](cCreature& creature) -> void {
+				std::map<eAttitude, int> att_counts;
+				// I know there must be many better ways of doing this...
+				if(spec.ex1c == 0 || spec.ex1c == -2 || spec.ex1c == -3){
+					att_counts[eAttitude::DOCILE] = 1;
+				}
+				if(spec.ex1c == 1 || spec.ex1c == -1 || spec.ex1c == -3){
+					att_counts[eAttitude::HOSTILE_A] = 1;
+				}
+				if(spec.ex1c == 2 || spec.ex1c == -2 || spec.ex1c == -3){
+					att_counts[eAttitude::FRIENDLY] = 1;
+				}
+				if(spec.ex1c == 3 || spec.ex1c == -1 || spec.ex1c == -3){
+					att_counts[eAttitude::HOSTILE_B] = 1;
+				}
+				count += att_counts[creature.attitude];
+			});
+			if(count >= min){
+				ctx.next_spec = spec.ex2b;
+			}else{
+				ctx.next_spec = spec.jumpto;
+			}
+		}break;
 		default:
 			showError(fmt::format("Special node type \"{}\" is either miscategorized or unimplemented!", (*cur_node.type).name()));
 			break;
