@@ -642,6 +642,12 @@ short choose_text(eStrType list, unsigned short cur_choice, cDialog* parent, std
 				}
 			}
 			break;
+		case STRT_ATTITUDE_FILTER:
+			strings = {"Any", "Any Friendly", "Any Hostile"};
+			for(std::string str : attitude_disp_strs){
+				strings.push_back(str);
+			}
+			break;
 	}
 	if(cur_choice < 0 || cur_choice >= strings.size())
 		cur_choice = -1;
@@ -1560,6 +1566,7 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 				case STRT_BOAT: title = "Which boat?"; break;
 				case STRT_HORSE: title = "Which horse?"; break;
 				case STRT_TALK: title = "Which personality?"; break;
+				case STRT_ATTITUDE_FILTER: title = "What attitude(s)?"; break;
 				default: title = "Title not set for this string type!!!"; break;
 			}
 			if(fcn.str_type == STRT_SECTOR && fcn.continuation == eSpecField::NONE) {
@@ -1591,6 +1598,8 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 				store += 79;
 			} else if(fcn.str_type == STRT_ANY_SPELL && store >= nMageSpells) {
 				store += 100 - nMageSpells;
+			} else if(fcn.str_type == STRT_ATTITUDE_FILTER) {
+				store -= 3;
 			}
 		} break;
 		case eSpecPicker::PICTURE: {
@@ -1727,7 +1736,7 @@ static bool edit_spec_enc_value(cDialog& me, std::string item_hit, node_stack_t&
 		case eSpecPicker::POINTER: store = val; break; // TODO: Not implemented...
 		case eSpecPicker::TOWNPERSON:
 			if(town->creatures.empty()){
-				showWarning("There are no creatures in this town to change attitude!");
+				showWarning("There are no creatures in this town to choose from!");
 				break;
 			}
 			if(alt_button){
