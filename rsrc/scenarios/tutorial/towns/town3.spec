@@ -193,12 +193,12 @@
 	pic 0, 4
 	ex1 10, 0, -1
 	ex2 -1, -1, -1
-	goto -1
-@once = 28
+	goto 31
+@if-sdf = 28
 	sdf 3, 6
 	msg -1, -1, -1
 	pic 0, 4
-	ex1 -1, -1, -1
+	ex1 1, -1, -1
 	ex2 -1, -1, -1
 	goto 26
 @set-sdf = 29
@@ -215,3 +215,10 @@
 	ex1 1, -1, -1
 	ex2 -1, -1, -1
 	goto 17
+@set-sdf = 31
+	sdf 3, 6
+	msg -1, -1, -1
+	pic 0, 4
+	ex1 1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
