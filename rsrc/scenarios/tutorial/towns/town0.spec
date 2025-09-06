@@ -307,7 +307,7 @@
 	ex2 10, -1, -1
 	goto -1
 @once-dlog = 44
-	sdf 0, 0
+	sdf 0, 10
 	msg 69, -1, 1
 	pic 26, 4
 	ex1 -1, -1, -1
@@ -338,6 +338,13 @@
 	sdf 0, 11
 	msg 76, -1, 1
 	pic 14, 4
+	ex1 -1, -1, -1
+	ex2 -1, -1, -1
+	goto -1
+@once-disp-msg = 49
+	sdf 0, 12
+	msg 82, -1, -1
+	pic 0, 4
 	ex1 -1, -1, -1
 	ex2 -1, -1, -1
 	goto -1

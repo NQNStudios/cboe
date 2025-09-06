@@ -24,7 +24,7 @@
             <![CDATA["That's not important right now. I'm here to help fix your situation."]]>
         </name>
         <job>
-            <![CDATA["I'm one half of what you might call the ultimate good cop, bad cop routine. Let my heal your companion, then I'll move along."]]>
+            <![CDATA["I'm one half of what you might call the ultimate good cop, bad cop routine. Let me heal your companion, then we'll move along."]]>
         </job>
         <unknown>
             <![CDATA["What do you mean?"]]>
@@ -153,7 +153,7 @@
             <![CDATA[Healer]]>
         </text>
         <text>
-            <![CDATA["You should be good to go. We won't keep you any longer."]]>
+            <![CDATA["You're clear to go. We won't keep you any longer."]]>
         </text>
     </node>
     <node for="30">
@@ -169,7 +169,7 @@
     </node>
     <node for="31">
         <keyword>keep</keyword>
-        <keyword>good</keyword>
+        <keyword>clea</keyword>
         <type>call-local</type>
         <param>23</param>
         <text />

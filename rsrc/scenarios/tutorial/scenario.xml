@@ -133,6 +133,7 @@
         <sdf row="0" col="9">mage spells message</sdf>
         <sdf row="0" col="10">priest spells combat message</sdf>
         <sdf row="0" col="11">spell help message</sdf>
+        <sdf row="0" col="12">looked through portcullis</sdf>
         <sdf row="1" col="0">looked at book</sdf>
         <sdf row="1" col="1">book node</sdf>
         <sdf row="1" col="2">entry message</sdf>
