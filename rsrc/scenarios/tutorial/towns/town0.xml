@@ -175,5 +175,7 @@
     <string id="76">
         <![CDATA[There are MANY other spells in Blades of Exile! To learn how any other spell works,  open the Mage or Priest spells menu, then hold the Alt key (or Option key on a Mac) while clicking on the spell.]]>
     </string>
-    <string id="81" />
+    <string id="82">
+        <![CDATA[Through this portcullis, you can see the next piece of the artifact. But you can't get it open.]]>
+    </string>
 </town>
