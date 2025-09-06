@@ -59,7 +59,7 @@ You've just written what this special encounter says down in your adventure jour
 One of your characters has just been cursed. That character will function worse in combat, be hit more easily, and take more damage from blows for a while. Curses wear off fairly quickly.
 You have mounted a horse.  A horse doubles your speed when moving outdoors: you'll spend much less time moving from town to town and will have an easier time evading monsters. To dismount, pause (by clicking on your party or hitting '5' on the keypad).
 You have just boarded a boat. Steer the boat onto land to get out. Certain boats can pass over lava. When using a boat outdoors, you can enter towns on the shore by steering the boat into them.
-This command bring up a map of the area you're in. Generally, maps of dungeons and the outdoors will be remembered. However, if a town undergoes some sort of major change, you'll lose your map for that town.
+This command brings up a map of the area you're in. Generally, maps of dungeons and the outdoors will be remembered. However, if a town undergoes some sort of major change, you'll lose your map for that town.
 Your health is a measure of how much punishment you can take before dying - the more the better. Whenever you get hit, you lose some health. Taking damage when your health is down to 0 will kill you.
 Your spell points are what you expend to cast spells. Each spell drains away some of your spell points. Time and rest restore them. When creating a character, you get 3 bonus spell points for every level of Mage and Priest Spells skill you buy.
 Some doors can't be opened no matter what you try. For example, portcullises can almost never be opened by picking locks or bashing.
