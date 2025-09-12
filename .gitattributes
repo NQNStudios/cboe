@@ -2,3 +2,8 @@
 src/fileio/gzstream/** linguist-vendored
 src/fileio/xml-parser/** linguist-vendored
 src/fileio/xml-parser/tinyprint.* -linguist-vendored
+
+*.exs -linguist-detectable -linguist-language=Scenario
+*.boes -linguist-detectable -linguist-language=Scenario
+*.SAV -linguist-detectable -linguist-language=Party
+*.exg -linguist-detectable -linguist-language=Party
