@@ -109,6 +109,7 @@ void cShop::addItem(size_t n, cItem item, size_t quantity, int chance) {
 		items.resize(i + 1);
 	}
 	if(item.variety == eItemType::NO_ITEM) return;
+	item.ident = true;
 	items[i].type = chance == 100 ? eShopItemType::ITEM : eShopItemType::OPT_ITEM;
 	items[i].item = item;
 	items[i].quantity = quantity;
