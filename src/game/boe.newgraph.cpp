@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <vector>
 #include <iostream>
+#include <boost/algorithm/string/trim.hpp>
 
 #include "boe.global.hpp"
 
@@ -1013,10 +1014,31 @@ void place_talk_str(std::string str_to_place,std::string str_to_place2,short col
 	}
 	
 	style.colour = Colours::NAVY; 
-	// First determine the offsets of clickable words.
-	// The added spaces ensure that end-of-word boundaries are found
-	std::string str = str_to_place + " ||" + str_to_place2 + " ";
 
+	boost::algorithm::trim_right(str_to_place);
+
+	std::string str = str_to_place;
+
+	// I guess there could probably be a blank first part of the string
+	if(!str.empty()){
+		char last = str.back();
+		// The added spaces ensure that end-of-word boundaries are found.
+		str += " ";
+
+		// If the first string ends in a hard stop, insert a paragraph break.
+		static std::set<char> hard_stops = {'.', '!', '?', '"'};
+		if(hard_stops.count(last)){
+			str += "||";
+		}
+
+		// Otherwise, don't line break at all, because some old scenarios
+		// like Nightfall actually split *sentences* between the two parts.
+	}
+
+	// The added spaces ensure that end-of-word boundaries are found.
+	str += str_to_place2 + " ";
+
+	// First determine the offsets of clickable words.
 	std::vector<hilite_t> hilites;
 	std::vector<int> nodes;
 	int wordStart = 0, wordEnd = 0;
