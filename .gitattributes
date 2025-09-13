@@ -1,4 +1,5 @@
-**/*.spec linguist-language=Text
+**/*.spec linguist-language=SpecialNodes
+**/*.map linguist-language=Maps
 src/fileio/gzstream/** linguist-vendored
 src/fileio/xml-parser/** linguist-vendored
 src/fileio/xml-parser/tinyprint.* -linguist-vendored
