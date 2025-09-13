@@ -197,7 +197,7 @@
 				},
 				{
 					name: install dependencies,
-					run: 'sudo apt-get update && sudo apt-get install scons libxml2-utils zlib1g libsfml-dev libboost-all-dev zenity'
+					run: 'sudo apt-get update && sudo apt-get install scons cmake libxml2-utils zlib1g libsfml-dev libboost-all-dev zenity'
 				},
 				{
 					name: install TGUI,
