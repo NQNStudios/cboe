@@ -1,7 +1,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#define SHOWCASE 1
+// This flag marks a build for live showcase. Starting the tutorial will reset all help dialogs.
+// #define SHOWCASE 1
 
 #ifdef __APPLE__
 extern eMenuChoice menuChoice;
