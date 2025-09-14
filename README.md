@@ -1,4 +1,4 @@
-[![CI status](https://github.com/calref/cboe/actions/workflows/ci.yml/badge.svg)](https://github.com/calref/cboe/actions/workflows/ci.yml)
+[![CI status](https://k7izh9.gitea.cloud/openboe/oboe/actions/workflows/ci.yml/badge.svg)](https://k7izh9.gitea.cloud/openboe/oboe/actions/workflows/ci.yml)
 
 Open Blades of Exile
 ====================
@@ -147,6 +147,5 @@ Helpful Links
 #openboe on irc.libera.chat)
 * [Original Game Source](http://www.spiderwebsoftware.com/blades/opensource.html) - Where
   it all began. Warning: Terrifying code.
-* [Experimental Windows/Mac Builds](http://pentalithia.ca/oboe/?C=M;O=D) - will be put
-  up whenever Celtic Minstrel feels like it.
 * [Official Web Site](https://openboe.com/) - The hub for all things OpenBoE. The documentation is also in viewable format, and there is an archive of all known scenarios that could be located.
+* [The itch.io page](https://nqn.itch.io/blades-of-exile) - if you just want to get the game and play it.
