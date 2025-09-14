@@ -1576,9 +1576,7 @@ short damage_monst(cCreature& victim, short who_hit, short how_much, eDamageType
 	
 	if(victim.is_friendly() && who_hit < 7 &&
 		((!processing_fields && !monsters_going) || (processing_fields && !univ.party.hostiles_present))) {
-		add_string_to_buf("Damaged an innocent.");
-		victim.attitude = eAttitude::HOSTILE_A;
-		make_town_hostile();
+		monst_hit_town_reaction(victim, true);
 	}
 	
 	return how_much;

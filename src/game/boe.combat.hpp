@@ -28,6 +28,7 @@ bool combat_next_step();
 bool pick_next_pc();
 void combat_run_monst();
 void do_monster_turn();
+void monst_hit_town_reaction(iLiving& monst_hit, bool print = false);
 void monster_attack(short who_att,iLiving* target);
 void monst_fire_missile(short m_num,short bless,std::pair<eMonstAbil,uAbility> abil,location source,iLiving* target);
 void monst_basic_abil(short m_num, std::pair<eMonstAbil,uAbility> abil, iLiving* target);
