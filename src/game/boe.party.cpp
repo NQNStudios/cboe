@@ -2085,7 +2085,7 @@ static bool finish_pick_spell(cDialog& me, bool spell_toast, const short store_s
 }
 
 void print_cast_status(eCastStatus status, eSkill type, std::string pc_name) {
-	std::string prefix = pc_name.empty() ? "Cast" : fmt::format("Cast ({}): ", pc_name);
+	std::string prefix = pc_name.empty() ? "Cast: " : fmt::format("Cast ({}): ", pc_name);
 	// When multiple PCs are checked, explain why each one can't cast.
 	switch(status){
 		case CAST_OK: break;
