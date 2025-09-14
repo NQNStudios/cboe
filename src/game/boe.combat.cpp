@@ -213,6 +213,23 @@ void start_outdoor_combat(cOutdoors::cCreature encounter,location where,short nu
 	start_outdoor_combat(encounter.what_monst, where, num_walls);
 }
 
+void monst_hit_town_reaction(iLiving& monst_hit, bool print){
+	if(monst_hit.is_friendly()){
+		// Charmed enemy is fair game
+		if(monst_hit.status[eStatus::CHARM] > 0){
+			monst_hit.status[eStatus::CHARM] = 0;
+			add_string_to_buf("Charm dispelled.");
+			if(cCreature* check = dynamic_cast<cCreature*>(&monst_hit)){
+				check->attitude = eAttitude::HOSTILE_A;
+			}
+		}else{
+			// This message only prints when a spell was cast, not when you've confirmed attacking a friendly
+			if(print) add_string_to_buf("Damaged an innocent.");
+			make_town_hostile();
+		}
+	}
+}
+
 bool pc_combat_move(location destination) {
 	std::string create_line;
 	short s1;
@@ -268,8 +285,7 @@ bool pc_combat_move(location destination) {
 				else if(result == "attack") do_attack = true;
 			}
 			if(do_attack) {
-				if(monst_hit->is_friendly())
-					make_town_hostile();
+				monst_hit_town_reaction(*monst_hit);
 				univ.current_pc().last_attacked = monst_hit;
 				pc_attack(univ.cur_pc,monst_hit);
 				return true;
@@ -1186,7 +1202,7 @@ void do_combat_cast(location target) {
 								else {
 									cCreature* cur_monst = dynamic_cast<cCreature*>(victim);
 									if(cur_monst && cur_monst->is_friendly() && spell_being_cast != eSpell::SCRY_MONSTER && spell_being_cast != eSpell::CAPTURE_SOUL)
-										make_town_hostile();
+										monst_hit_town_reaction(*cur_monst);
 									switch(spell_being_cast) {
 										case eSpell::ACID_SPRAY:
 											store_m_type = 0;

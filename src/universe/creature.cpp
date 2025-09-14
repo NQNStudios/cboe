@@ -243,6 +243,7 @@ void cCreature::sleep(eStatus which_status,int amount,int penalty) {
 		if(which_status == eStatus::CHARM) {
 			if(amount <= 0 || amount > 3) amount = 2;
 			attitude = eAttitude(amount);
+			status[eStatus::CHARM] = amount;
 			spell_note(eSpellNote::CHARMED);
 		} else if(which_status == eStatus::FORCECAGE) {
 			status[eStatus::FORCECAGE] = amount;
