@@ -60,6 +60,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+      - name: test butler
+        run: './.github/workflows/scripts/butler_push.sh test'
+        shell: bash
+        if: ${{ startsWith(github.ref, 'refs/tags/') && matrix.configuration == 'Release' && matrix.os.name != 'macos' }}
+
       - name: Download dependency build
         uses: robinraju/release-downloader@v1
         with:
