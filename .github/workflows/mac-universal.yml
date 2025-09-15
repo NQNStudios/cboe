@@ -28,6 +28,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: test butler
+        run: './.github/workflows/scripts/butler_push.sh test'
+        shell: bash
+        if: ${{ startsWith(github.ref, 'refs/tags/') && matrix.configuration == 'Release' && matrix.os.name != 'macos' }}
+
       # Download macos-intel
       - uses: robinraju/release-downloader@v1
         id: download
