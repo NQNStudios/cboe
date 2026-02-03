@@ -10,10 +10,10 @@
 	url = https://github.com/tplgy/cppcodec
 [submodule "deps/fix-rpaths"]
 	path = deps/fix-rpaths
-	url = https://k7izh9.gitea.cloud/NQN/fix-rpaths
+	url = https://codeberg.org/NQNStudios/fix-rpaths
 [submodule "deps/fmtlib"]
 	path = deps/fmtlib
 	url = http://github.com/fmtlib/fmt
 [submodule "rsrc/scenarios/custom"]
 	path = rsrc/scenarios/custom
-	url = https://k7izh9.gitea.cloud/openboe/boe-scenarios
+	url = https://codeberg.org/openboe/boe-scenarios
