@@ -31,7 +31,7 @@ jobs:
           suffix: '-intel'
           flag: x86_64
           deps: macos-universal
-          version: 13
+          version: 14
           scons-script: './.github/workflows/scripts/mac/scons-build.sh'
         - name: macos
           flag: arm64
