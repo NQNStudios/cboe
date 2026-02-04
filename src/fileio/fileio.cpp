@@ -90,6 +90,13 @@ void init_directories(const char* exec_path) {
 	add_resmgr_paths(tempDir/"data");
 	tempDir /= "Temporary Files";
 	
+#if defined(SFML_SYSTEM_MACOS) && !defined(DEBUG)
+	std::string logpath = (tempDir.parent_path()/"bladeslog.txt").string();
+	logfile.open(logpath.c_str(), std::ios::out);
+	std::cout.rdbuf(&logfile);
+	std::cerr.rdbuf(&logfile);
+#endif
+
 	// Depending on the build environment, we may need to redirect stdout and stderr.
 #ifdef _MSC_VER
 #ifdef DEBUG
