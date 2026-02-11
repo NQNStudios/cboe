@@ -202,10 +202,11 @@ if platform == "darwin":
 			for search_path in paths:
 				check_path = path.join(search_path, dep)
 				if path.exists(check_path):
+					_, symlinkbase = split_path(check_path)
+					dest_path = path.join(target[0].path, symlinkbase)
 					check_path = path.realpath(check_path)
 					src_dir, basefile = split_path(check_path)
 					src_path = path.join(src_dir, basefile)
-					dest_path = path.join(target[0].path, basefile)
 					if path.exists(dest_path):
 						break
 					# Copying .frameworks needs to preserve symlinks by using cp -a.
