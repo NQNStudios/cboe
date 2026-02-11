@@ -86,6 +86,9 @@ env.VariantDir('#build/obj', 'src')
 env.VariantDir('#build/obj/test', 'test')
 env.VariantDir('#build/obj/deps', 'deps')
 
+if env['release'] and platform == 'darwin':
+	env.Append(CCFLAGS=['-mmacosx-version-min=10.15'])
+
 if not env['release']:
 	if platform in ['posix', 'darwin']:
 		env.Append(CCFLAGS=['-g','-O0', '-D' 'DEBUG=1'])
